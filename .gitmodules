@@ -1,0 +1,21 @@
+[submodule "vendor/selene"]
+	path = vendor/selene
+	url = https://github.com/jeremyong/Selene.git
+[submodule "vendor/sol"]
+	path = vendor/sol
+	url = https://github.com/ThePhD/sol2.git
+[submodule "vendor/lua"]
+	path = vendor/lua
+	url = https://github.com/lua/lua.git
+[submodule "vendor/lua-intf"]
+	path = vendor/lua-intf
+	url = https://github.com/SteveKChiu/lua-intf.git
+[submodule "vendor/lua-api-pp"]
+	path = vendor/lua-api-pp
+	url = https://github.com/OldFisher/lua-api-pp.git
+[submodule "vendor/luabind"]
+	path = vendor/luabind
+	url = https://github.com/Wohlhabend-Networks/luabind-deboostified.git
+[submodule "vendor/luawrapper"]
+	path = vendor/luawrapper
+	url = https://github.com/ahupowerdns/luawrapper.git
