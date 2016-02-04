@@ -19,3 +19,6 @@
 [submodule "vendor/luawrapper"]
 	path = vendor/luawrapper
 	url = https://github.com/ahupowerdns/luawrapper.git
+[submodule "vendor/Catch"]
+	path = vendor/Catch
+	url = https://github.com/philsquared/Catch.git
