@@ -22,3 +22,6 @@
 [submodule "vendor/Catch"]
 	path = vendor/Catch
 	url = https://github.com/philsquared/Catch.git
+[submodule "vendor/nonius.deps"]
+	path = vendor/nonius.deps
+	url = https://github.com/ThePhD/nonius.deps.git
