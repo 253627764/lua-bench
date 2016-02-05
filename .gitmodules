@@ -27,4 +27,4 @@
 	url = https://github.com/ThePhD/nonius.deps.git
 [submodule "vendor/kaguya"]
 	path = vendor/kaguya
-url=https://github.com/satoren/kaguya.git
+	url=https://github.com/satoren/kaguya.git
