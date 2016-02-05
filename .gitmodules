@@ -22,9 +22,6 @@
 [submodule "vendor/Catch"]
 	path = vendor/Catch
 	url = https://github.com/philsquared/Catch.git
-[submodule "vendor/nonius.deps"]
-	path = vendor/nonius.deps
-	url = https://github.com/ThePhD/nonius.deps.git
 [submodule "vendor/kaguya"]
 	path = vendor/kaguya
 	url=https://github.com/satoren/kaguya.git
