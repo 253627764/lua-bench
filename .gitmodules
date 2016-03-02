@@ -28,3 +28,6 @@
 [submodule "vendor/nonius.deps"]
 	path = vendor/nonius.deps
 	url = https://github.com/ThePhD/nonius.deps.git
+[submodule "vendor/oolua"]
+	path = vendor/oolua
+	url = https://github.com/elite-lang/oolua

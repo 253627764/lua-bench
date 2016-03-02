@@ -148,6 +148,11 @@
     <ClCompile Include="lua\src\lzio.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lua\include\lauxlib.h" />
+    <ClInclude Include="lua\include\lua.h" />
+    <ClInclude Include="lua\include\lua.hpp" />
+    <ClInclude Include="lua\include\luaconf.h" />
+    <ClInclude Include="lua\include\lualib.h" />
     <ClInclude Include="lua\src\lapi.h" />
     <ClInclude Include="lua\src\lauxlib.h" />
     <ClInclude Include="lua\src\lcode.h" />

@@ -15,6 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="nonius.h++" />
+    <None Include="nonius\nonius.h++" />
   </ItemGroup>
 </Project>

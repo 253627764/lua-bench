@@ -126,20 +126,28 @@
     <ClInclude Include="src\bench_lua_function.hpp" />
     <ClInclude Include="src\bench_set.hpp" />
     <ClInclude Include="src\bench_usertype.hpp" />
+    <ClInclude Include="src\nonius_multi_reporter.h++" />
+    <ClInclude Include="src\platform.hpp" />
+    <ClInclude Include="src\system_info.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\strings.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="vendor\lua-api-pp.vcxproj">
-      <Project>{51d0cc6b-6ef2-4dd3-a008-5a032d2257b9}</Project>
-    </ProjectReference>
     <ProjectReference Include="vendor\lua.vcxproj">
       <Project>{48551477-5b65-4b56-88ce-5b7a066bfd3a}</Project>
     </ProjectReference>
     <ProjectReference Include="vendor\luabind.vcxproj">
       <Project>{d22b207c-4c50-4d0d-b7f5-de3061b21381}</Project>
     </ProjectReference>
+    <ProjectReference Include="vendor\oolua.vcxproj">
+      <Project>{ce5765bb-dba9-4276-abd1-035315887b0b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\nonius.h++">
+      <FileType>CppHeader</FileType>
+    </ClInclude>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

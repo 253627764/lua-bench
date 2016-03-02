@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sol.hpp"
-#include "nonius/nonius.h++"
+#include "nonius.h++"
 
 static sol::state prepare_lua_function_state( ) {
 	sol::state lua;
@@ -76,7 +76,7 @@ struct c_direct_lua_bench {
 	}
 };
 
-void bench_lua_function( const std::string& dir,  std::string& configurationname, const std::string& platformname ) {
+void bench_lua_function( const std::string& dir ) {
 	nonius::configuration cfg;
 	cfg.output_file = dir + "sol.functions (lua source) - " + configurationname + " " + platformname + ".html";
 	cfg.title = "sol::function (lua source) (" + configurationname + " " + platformname + ")";
@@ -88,5 +88,5 @@ void bench_lua_function( const std::string& dir,  std::string& configurationname
 		nonius::benchmark("protected_function - call<>", sol_protected_call_lua_bench()),
 		nonius::benchmark( "plain C", c_direct_lua_bench( ) ),
 	};
-	nonius::go( cfg, std::begin( benchmarks ), std::end( benchmarks ), nonius::html_reporter( ) );
+	nonius::go( cfg, std::begin( benchmarks ), std::end( benchmarks ), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter( ) ) );
 }

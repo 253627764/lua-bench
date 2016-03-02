@@ -1,0 +1,249 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="oolua\src\class_from_stack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_check_result.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_chunk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_error.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_exception.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_function.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_helpers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_open.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_pull.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_push.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_ref.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_registration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_script.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_stack_dump.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_string.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\oolua_table.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\proxy_storage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\push_pointer_internal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="oolua\src\stack_get.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="oolua\include\char_arrays.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\class_from_stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\default_trait_caller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\dsl_va_args.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\lua_includes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\lvd_type_traits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\lvd_types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_boilerplate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_check_result.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_chunk.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_config.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_dsl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_dsl_export.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_error.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_exception.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_helpers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_open.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_pull.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_push.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_ref.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_registration.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_registration_fwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_script.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_stack_dump.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_stack_fwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_string.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_table.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_traits.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_traits_fwd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\oolua_version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\platform_check.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_base_checker.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_caller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_class.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_constructor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_constructor_param_tester.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_function_dispatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_function_exports.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_member_function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_none_member_function.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_operators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_public_member.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_stack_helper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_tag_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_tags.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\proxy_userdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\push_pointer_internal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\stack_get.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\type_converters.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\type_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="oolua\include\typelist_structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
