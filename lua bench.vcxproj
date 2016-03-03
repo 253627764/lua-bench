@@ -129,6 +129,7 @@
     <ClInclude Include="src\nonius_multi_reporter.h++" />
     <ClInclude Include="src\platform.hpp" />
     <ClInclude Include="src\system_info.hpp" />
+    <ClInclude Include="src\table_test.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\strings.txt" />
