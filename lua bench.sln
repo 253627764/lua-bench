@@ -29,6 +29,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "kaguya", "vendor\kaguya.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "oolua", "vendor\oolua.vcxproj", "{CE5765BB-DBA9-4276-ABD1-035315887B0B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sol bench", "sol bench.vcxproj", "{43C3B60C-DBE7-409F-A605-B92ED1C368D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -133,6 +135,14 @@ Global
 		{CE5765BB-DBA9-4276-ABD1-035315887B0B}.Release|x64.Build.0 = Release|x64
 		{CE5765BB-DBA9-4276-ABD1-035315887B0B}.Release|x86.ActiveCfg = Release|Win32
 		{CE5765BB-DBA9-4276-ABD1-035315887B0B}.Release|x86.Build.0 = Release|Win32
+		{43C3B60C-DBE7-409F-A605-B92ED1C368D3}.Debug|x64.ActiveCfg = Debug|x64
+		{43C3B60C-DBE7-409F-A605-B92ED1C368D3}.Debug|x64.Build.0 = Debug|x64
+		{43C3B60C-DBE7-409F-A605-B92ED1C368D3}.Debug|x86.ActiveCfg = Debug|Win32
+		{43C3B60C-DBE7-409F-A605-B92ED1C368D3}.Debug|x86.Build.0 = Debug|Win32
+		{43C3B60C-DBE7-409F-A605-B92ED1C368D3}.Release|x64.ActiveCfg = Release|x64
+		{43C3B60C-DBE7-409F-A605-B92ED1C368D3}.Release|x64.Build.0 = Release|x64
+		{43C3B60C-DBE7-409F-A605-B92ED1C368D3}.Release|x86.ActiveCfg = Release|Win32
+		{43C3B60C-DBE7-409F-A605-B92ED1C368D3}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

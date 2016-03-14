@@ -5,7 +5,7 @@
 #ifdef _WIN32
 #define LUA_BENCH_PLATFORM "Windows"
 #elif defined(APPLE)
-#define LUA_BENCH_PLATFORM "Windows"
+#define LUA_BENCH_PLATFORM "Apple"
 #else
 // Probably some kind of *Nix
 #define LUA_BENCH_PLATFORM "*Nix"

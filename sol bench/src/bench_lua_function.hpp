@@ -76,16 +76,16 @@ struct c_direct_lua_bench {
 	}
 };
 
-void bench_lua_function( const std::string& dir ) {
+void bench_lua_function( const std::string& dir, const std::string& configurationname, const std::string& platformname ) {
 	nonius::configuration cfg;
 	cfg.output_file = dir + "sol.functions (lua source) - " + configurationname + " " + platformname + ".html";
 	cfg.title = "sol::function (lua source) (" + configurationname + " " + platformname + ")";
 	cfg.samples = 100;
 	nonius::benchmark benchmarks[] = {
-		nonius::benchmark("function - function_result", sol_function_result_lua_bench()),
-		nonius::benchmark("function - call<>", sol_call_lua_bench()),
-		nonius::benchmark("protected_function - function_result", sol_protected_function_result_lua_bench()),
-		nonius::benchmark("protected_function - call<>", sol_protected_call_lua_bench()),
+		nonius::benchmark( "function - function_result", sol_function_result_lua_bench()),
+		nonius::benchmark( "function - call<>", sol_call_lua_bench()),
+		nonius::benchmark( "protected_function - function_result", sol_protected_function_result_lua_bench()),
+		nonius::benchmark( "protected_function - call<>", sol_protected_call_lua_bench()),
 		nonius::benchmark( "plain C", c_direct_lua_bench( ) ),
 	};
 	nonius::go( cfg, std::begin( benchmarks ), std::end( benchmarks ), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter( ) ) );

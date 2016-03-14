@@ -15,96 +15,129 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sol\compatibility\5.0.0.h">
+    <ClInclude Include="sol\sol.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\compatibility\5.1.0.h">
+    <ClInclude Include="sol\sol\compatibility.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\compatibility\5.x.x.h">
+    <ClInclude Include="sol\sol\compatibility\5.0.0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\compatibility\version.hpp">
+    <ClInclude Include="sol\sol\compatibility\5.1.0.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\compatibility.hpp">
+    <ClInclude Include="sol\sol\compatibility\5.x.x.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\debug.hpp">
+    <ClInclude Include="sol\sol\compatibility\version.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\default_construct.hpp">
+    <ClInclude Include="sol\sol\debug.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\demangle.hpp">
+    <ClInclude Include="sol\sol\demangle.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\deprecate.hpp">
+    <ClInclude Include="sol\sol\deprecate.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\error.hpp">
+    <ClInclude Include="sol\sol\error.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\function.hpp">
+    <ClInclude Include="sol\sol\function.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\function_result.hpp">
+    <ClInclude Include="sol\sol\function_result.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\function_types.hpp">
+    <ClInclude Include="sol\sol\function_types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\object.hpp">
+    <ClInclude Include="sol\sol\object.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\proxy.hpp">
+    <ClInclude Include="sol\sol\proxy.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\proxy_base.hpp">
+    <ClInclude Include="sol\sol\proxy_base.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\reference.hpp">
+    <ClInclude Include="sol\sol\reference.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\resolve.hpp">
+    <ClInclude Include="sol\sol\resolve.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\stack.hpp">
+    <ClInclude Include="sol\sol\stack.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\state.hpp">
+    <ClInclude Include="sol\sol\state.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\state_view.hpp">
+    <ClInclude Include="sol\sol\state_view.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\table.hpp">
+    <ClInclude Include="sol\sol\table.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\table_core.hpp">
+    <ClInclude Include="sol\sol\table_core.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\traits.hpp">
+    <ClInclude Include="sol\sol\traits.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\tuple.hpp">
+    <ClInclude Include="sol\sol\tuple.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\types.hpp">
+    <ClInclude Include="sol\sol\types.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\usertype.hpp">
+    <ClInclude Include="sol\sol\usertype.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol\usertype_traits.hpp">
+    <ClInclude Include="sol\sol\usertype_traits.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol.hpp">
+    <ClInclude Include="sol\sol\thread.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\raii.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\protected_function_result.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\protected_function.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\overload.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\function_types_usertype.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\function_types_static.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\function_types_overload.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\function_types_member.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\function_types_core.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\function_types_allocator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\coroutine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="sol\compatibility\5.x.x.inl">
+    <None Include="sol\sol\compatibility\5.x.x.inl">
       <Filter>Header Files</Filter>
     </None>
   </ItemGroup>

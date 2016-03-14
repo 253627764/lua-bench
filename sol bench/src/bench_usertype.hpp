@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sol.hpp"
-#include "nonius/nonius.h++"
+#include "nonius.h++"
 
 struct woof {
 	int var;

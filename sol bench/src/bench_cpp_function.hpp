@@ -1,7 +1,7 @@
 #pragma once
 
 #include "sol.hpp"
-#include "nonius/nonius.h++"
+#include "nonius.h++"
 
 static sol::state prepare_cpp_function_state( ) {
 	sol::state lua;
