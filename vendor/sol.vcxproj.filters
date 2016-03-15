@@ -135,6 +135,15 @@
     <ClInclude Include="sol\sol\coroutine.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sol\sol\inheritance.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\table_iterator.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\userdata.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="sol\sol\compatibility\5.x.x.inl">

@@ -6,15 +6,15 @@ namespace lb { namespace table {
 	const char key_c_str[] = "value";
 	const int key_int = 0;
 	const void* key_light_user_data = nullptr;
-	const int value = 0;
+	const int value = 24;
 	
 	struct generic_get {
 
-	}
+	};
 
 	template <typename T>
 	void get_setup(T&& tableobject, Key&& key) {
-		tableobject[key] = 0;
+		tableobject[key] = value;
 	}
 
 	template <typename T, typename Key>
@@ -29,14 +29,14 @@ namespace lb { namespace table {
 
 	template <typename T, typename Key0, typename Key1>
 	void get_chain_setup(T&& tableobject, Key0&& key0, Key1&& key1) {
-		tableobject[key0][key1] = 0;
+		tableobject[key0][key1] = value;
 	}
 
 	template <typename T, typename Key0, typename Key1>
 	int get_chain_bench(T&& tableobject, Key0&& key0, Key1&& key1) {
 		int r = 0;
 		for (int i = 0; i < 100; ++i) {
-			int v = tableobject[key];
+			int v = tableobject[key0][key1];
 			r += v;
 		}
 		return r;

@@ -48,6 +48,12 @@
     <ClCompile Include="lua bench\src\selene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lua bench\src\plain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lua bench\src\luwra.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="platform.hpp">

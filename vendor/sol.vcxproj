@@ -129,6 +129,7 @@
     <ClInclude Include="sol\sol\function_types_overload.hpp" />
     <ClInclude Include="sol\sol\function_types_static.hpp" />
     <ClInclude Include="sol\sol\function_types_usertype.hpp" />
+    <ClInclude Include="sol\sol\inheritance.hpp" />
     <ClInclude Include="sol\sol\object.hpp" />
     <ClInclude Include="sol\sol\overload.hpp" />
     <ClInclude Include="sol\sol\protected_function.hpp" />
@@ -143,10 +144,12 @@
     <ClInclude Include="sol\sol\state_view.hpp" />
     <ClInclude Include="sol\sol\table.hpp" />
     <ClInclude Include="sol\sol\table_core.hpp" />
+    <ClInclude Include="sol\sol\table_iterator.hpp" />
     <ClInclude Include="sol\sol\thread.hpp" />
     <ClInclude Include="sol\sol\traits.hpp" />
     <ClInclude Include="sol\sol\tuple.hpp" />
     <ClInclude Include="sol\sol\types.hpp" />
+    <ClInclude Include="sol\sol\userdata.hpp" />
     <ClInclude Include="sol\sol\usertype.hpp" />
     <ClInclude Include="sol\sol\usertype_traits.hpp" />
   </ItemGroup>
