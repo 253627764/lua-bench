@@ -18,9 +18,6 @@
     <ClCompile Include="vendor\lua-api-pp\luapp\impl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="sol bench\src\sol_bench.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lua bench\src\lua_bench.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
     <ClCompile Include="lua bench\src\plain.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lua bench\src\luwra.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="platform.hpp">
@@ -62,25 +56,10 @@
     <ClInclude Include="system_info.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="sol bench\src\bench_cpp_function.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sol bench\src\bench_get.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sol bench\src\bench_lua_function.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sol bench\src\bench_set.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="sol bench\src\bench_usertype.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="lua bench\src\bench_table.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lua bench\src\lua_bench.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lua bench\src\lua_bench_wrap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

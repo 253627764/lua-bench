@@ -3,10 +3,12 @@
 #include <cassert>
 
 namespace lb { namespace table {
-	const char key_c_str[] = "value";
+	const char key_c_str_a[] = "value";
+	const char key_c_str_b[] = "warble";
+	const char key_c_str_c[] = "ulahibe";
+	const int value = 24;
 	const int key_int = 0;
 	const void* key_light_user_data = nullptr;
-	const int value = 24;
 	
 	struct generic_get {
 

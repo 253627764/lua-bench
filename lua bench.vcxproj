@@ -123,24 +123,17 @@
     <ClCompile Include="lua bench\src\luabind.cpp" />
     <ClCompile Include="lua bench\src\luawrapper.cpp" />
     <ClCompile Include="lua bench\src\lua_bench.cpp" />
-    <ClCompile Include="lua bench\src\luwra.cpp" />
     <ClCompile Include="lua bench\src\oolua.cpp" />
     <ClCompile Include="lua bench\src\plain.cpp" />
     <ClCompile Include="lua bench\src\selene.cpp" />
     <ClCompile Include="lua bench\src\sol.cpp" />
-    <ClCompile Include="sol bench\src\sol_bench.cpp" />
     <ClCompile Include="vendor\lua-api-pp\luapp\impl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lua bench\src\lua_bench.hpp" />
-    <ClInclude Include="sol bench\src\bench_cpp_function.hpp" />
-    <ClInclude Include="sol bench\src\bench_get.hpp" />
-    <ClInclude Include="sol bench\src\bench_lua_function.hpp" />
-    <ClInclude Include="sol bench\src\bench_set.hpp" />
-    <ClInclude Include="sol bench\src\bench_usertype.hpp" />
+    <ClInclude Include="lua bench\src\lua_bench_wrap.hpp" />
     <ClInclude Include="platform.hpp" />
     <ClInclude Include="system_info.hpp" />
-    <ClInclude Include="lua bench\src\bench_table.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\strings.txt" />

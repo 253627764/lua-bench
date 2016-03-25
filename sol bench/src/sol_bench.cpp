@@ -3,7 +3,7 @@
 #include "bench_get.hpp"
 #include "bench_set.hpp"
 #include "bench_usertype.hpp"
-#include "platform.hpp"
+#include "../../platform.hpp"
 
 int main(int argc, char* argv[]) {
 #ifndef INTERNAL_BENCHMARKS

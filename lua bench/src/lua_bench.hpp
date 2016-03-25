@@ -136,4 +136,23 @@ namespace lb {
 	void selene_member_variable_get(nonius::chronometer& meter);
 	void luwra_member_variable_get(nonius::chronometer& meter);
 
+	struct basic {
+		int var;
+
+		basic() : var() {
+
+		}
+
+		int get() const {
+			return var;
+		}
+
+		void set( int x ) {
+			var = x;
+		}
+	};
+
+	inline int basic_call(int x) {
+		return x;
+	}
 }
