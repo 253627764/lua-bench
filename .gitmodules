@@ -31,3 +31,6 @@
 [submodule "vendor/oolua"]
 	path = vendor/oolua
 	url = https://github.com/elite-lang/oolua
+[submodule "vendor/luacppinterface"]
+	path = vendor/luacppinterface
+	url = https://github.com/davidsiaw/luacppinterface.git
