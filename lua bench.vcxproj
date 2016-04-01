@@ -121,6 +121,7 @@
     <ClCompile Include="lua bench\src\lua-api-pp.cpp" />
     <ClCompile Include="lua bench\src\lua-intf.cpp" />
     <ClCompile Include="lua bench\src\luabind.cpp" />
+    <ClCompile Include="lua bench\src\luacppinterface.cpp" />
     <ClCompile Include="lua bench\src\luawrapper.cpp" />
     <ClCompile Include="lua bench\src\lua_bench.cpp" />
     <ClCompile Include="lua bench\src\oolua.cpp" />
@@ -144,6 +145,9 @@
     </ProjectReference>
     <ProjectReference Include="vendor\luabind.vcxproj">
       <Project>{d22b207c-4c50-4d0d-b7f5-de3061b21381}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\luacppinterface.vcxproj">
+      <Project>{aa5a7419-8c83-4b8a-8242-8b9df012f06f}</Project>
     </ProjectReference>
     <ProjectReference Include="vendor\oolua.vcxproj">
       <Project>{ce5765bb-dba9-4276-abd1-035315887b0b}</Project>

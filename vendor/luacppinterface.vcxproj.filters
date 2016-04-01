@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="luacppinterface\LuaCppInterface\luacoroutine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="luacppinterface\LuaCppInterface\luacppinterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="luacppinterface\LuaCppInterface\luafunction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="luacppinterface\LuaCppInterface\luareference.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="luacppinterface\LuaCppInterface\luatable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luacoroutine.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luacppinterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luafunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luafunctionbase.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luageneralgenericfunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luagenericfunction.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\lualightuserdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luareference.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luatable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luatype.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luatypetemplates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luauserdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luauserdatabindtemplates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luauserdataforwards.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luacppinterface\LuaCppInterface\luavoidgenericfunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
