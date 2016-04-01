@@ -31,6 +31,3 @@
 [submodule "vendor/oolua"]
 	path = vendor/oolua
 	url = https://github.com/elite-lang/oolua
-[submodule "vendor/luwra"]
-	path = vendor/luwra
-	url = https://github.com/vapourismo/luwra.git

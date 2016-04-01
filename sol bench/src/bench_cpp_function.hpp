@@ -30,7 +30,7 @@ struct sol_protected_call_cpp_bench {
 		sol::state lua = prepare_cpp_function_state( );
 		auto measurement = [ & ] ( int run_index ) {
 			sol::protected_function r = lua[ "r" ];
-			int value = r.call<int>( );
+			int value = r( );
 			return value;
 		};
 		meter.measure( measurement );
