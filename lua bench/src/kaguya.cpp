@@ -7,7 +7,11 @@ namespace lb {
 		kaguya::State lua;
 		lua["value"] = 24;
 		meter.measure([&](int i) {
-			int x = lua["value"];
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = lua["value"];
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -15,7 +19,9 @@ namespace lb {
 	void kaguya_global_string_set_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
 		meter.measure([&](int i) {
-			lua["value"] = 24;
+			for (int i = 0; i < repetition; ++i) {
+				lua["value"] = i;
+			}
 		});
 	}
 
@@ -25,17 +31,23 @@ namespace lb {
 		lua["value"]["warble"] = 24;
 		kaguya::LuaTable t = lua["value"];
 		meter.measure([&](int i) {
-			int x = t["warble"];
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = t["warble"];
+				v += x;
+			}
 			return x;
 		});
 	}
 
 	void kaguya_table_set_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
-		lua["value"] = kaguya::NewTable();
-		kaguya::LuaTable t = lua["value"];
+		lua["warble"] = kaguya::NewTable();
+		kaguya::LuaTable t = lua["warble"];
 		meter.measure([&](int i) {
-			t["warble"] = 24;
+			for (int i = 0; i < repetition; ++i) {
+				t["value"] = i;
+			}
 		});
 	}
 
@@ -45,7 +57,11 @@ namespace lb {
 		lua["ulahibe"]["warble"] = kaguya::NewTable();
 		lua["ulahibe"]["warble"]["value"] = 24;
 		meter.measure([&](int i) {
-			int x = lua["ulahibe"]["warble"]["value"];
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = lua["ulahibe"]["warble"]["value"];
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -56,19 +72,18 @@ namespace lb {
 		lua["ulahibe"]["warble"] = kaguya::NewTable();
 		lua["ulahibe"]["warble"]["value"] = 24;
 		meter.measure([&](int i) {
-			lua["ulahibe"]["warble"]["value"] = 24;
+			for (int i = 0; i < repetition; ++i) {
+				lua["ulahibe"]["warble"]["value"] = i;
+			}
 		});
 	}
 
 	void kaguya_c_function_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
 		lua["f"].setFunction(basic_call);
-		lua["run"] = 0;
+		auto code = repeated_code("f(i)");
 		meter.measure([&](int i) {
-			lua(R"(
-				f(run)
-				run += 1
-			)");
+			lua(code);
 		});
 	}
 
@@ -79,7 +94,11 @@ namespace lb {
 		end)");
 		kaguya::LuaFunction f = lua["f"];
 		meter.measure([&](int i) {
-			int x = f(i);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f(i);
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -89,7 +108,11 @@ namespace lb {
 		lua["f"].setFunction(basic_call);
 		kaguya::LuaFunction f = lua["f"];
 		meter.measure([&](int i) {
-			int x = f(i);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f(i);
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -102,9 +125,10 @@ namespace lb {
 			.addMemberFunction("get", &basic::get)
 			.addMemberFunction("set", &basic::set)
 			);
-		lua("b = basic:new()");
+		lua("b = basic.new()");
+		auto code = repeated_code("b:set(i) b:get()");
 		meter.measure([&](int i) {
-			lua("b:set(20)\nb:get()");
+			lua(code);
 		});
 	}
 
@@ -116,9 +140,10 @@ namespace lb {
 			.addMemberFunction("get", &basic::get)
 			.addMemberFunction("set", &basic::set)
 			);
-		lua("b = basic:new()");
+		lua("b = basic.new()");
+		auto code = repeated_code("b.var = i");
 		meter.measure([&](int i) {
-			lua("b.var = 20");
+			lua(code);
 		});
 	}
 
@@ -129,8 +154,9 @@ namespace lb {
 			.addMember("var", &basic::var)
 		);
 		lua("b = basic:new()");
+		auto code = repeated_code("x = b.var");
 		meter.measure([&](int i) {
-			lua("x = b.var");
+			lua(code);
 		});
 	}
 

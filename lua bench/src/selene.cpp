@@ -7,7 +7,11 @@ namespace lb {
 		sel::State lua;
 		lua["value"] = 24;
 		meter.measure([&](int i) {
-			int x = lua["value"];
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = lua["value"];
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -15,15 +19,21 @@ namespace lb {
 	void selene_global_string_set_measure(nonius::chronometer& meter) {
 		sel::State lua;
 		meter.measure([&](int i) {
-			lua["value"] = i;
+			for (int i = 0; i < repetition; ++i) {
+				lua["value"] = i;
+			}
 		});
 	}
 
 	void selene_chained_get_measure(nonius::chronometer& meter) {
 		sel::State lua;
-		lua["value"]["warble"] = 24;
+		lua["ulahibe"]["warble"]["value"] = 24;
 		meter.measure([&](int i) {
-			int x = lua["value"]["warble"];
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = lua["ulahibe"]["warble"]["value"];
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -31,16 +41,22 @@ namespace lb {
 	void selene_chained_set_measure(nonius::chronometer& meter) {
 		sel::State lua;
 		meter.measure([&](int i) {
-			lua["value"]["warble"] = 24;
+			for (int i = 0; i < repetition; ++i) {
+				lua["ulahibe"]["warble"]["value"] = i;
+			}
 		});
 	}
 
 	void selene_table_get_measure(nonius::chronometer& meter) {
 		sel::State lua;
-		auto t = lua["value"];
-		t["warble"] = 24;
+		auto t = lua["warble"];
+		t["value"] = 24;
 		meter.measure([&](int i) {
-			int x = t["warble"];
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = t["value"];
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -49,19 +65,18 @@ namespace lb {
 		sel::State lua;
 		auto t = lua["value"];
 		meter.measure([&](int i) {
-			t["warble"] = 24;
+			for (int i = 0; i < repetition; ++i) {
+				t["warble"] = i;
+			}
 		});
 	}
 
 	void selene_c_function_measure(nonius::chronometer& meter) {
 		sel::State lua;
 		lua["f"] = basic_call;
-		lua["run"] = 0;
+		auto code = repeated_code("f(i)");
 		meter.measure([&](int i) {
-			lua(R"(
-				f(run)
-				run += 1
-			)");
+			lua(code.c_str());
 		});
 	}
 
@@ -72,7 +87,11 @@ namespace lb {
 		end)");
 		sel::function<int(int)> f = lua["f"];
 		meter.measure([&](int i) {
-			int x = f(i);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f(i);
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -82,7 +101,11 @@ namespace lb {
 		lua["f"] = basic_call;
 		sel::function<int(int)> f = lua["f"];
 		meter.measure([&](int i) {
-			int x = f(i);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f(i);
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -94,34 +117,41 @@ namespace lb {
 			"set", &basic::set
 		);
 		lua("b = basic.new()");
+		auto code = repeated_code("b:set(i) b:get()");
 		meter.measure([&](int i) {
-			lua("b:set(20)\nb:get()");
+			lua(code.c_str());
 		});
 	}
 
 	void selene_member_variable_set(nonius::chronometer& meter) {
-		sel::State lua;
+		/*sel::State lua;
 		lua["A"].SetClass<basic>(
 			"var", &basic::var,
 			"set", &basic::set,
 			"get", &basic::get
 		);
 		lua("b = basic.new()");
+		auto code = repeated_code("b:set_var(i)");
 		meter.measure([&](int i) {
-			lua("b:set_var(20)");
+			lua(code.c_str());
+		});*/
+		meter.measure([&](int i) {
 		});
 	}
 
 	void selene_member_variable_get(nonius::chronometer& meter) {
-		sel::State lua;
+		/*sel::State lua;
 		lua["basic"].SetClass<basic>(
 			"var", &basic::var,
 			"set", &basic::set,
 			"get", &basic::get
 			);
 		lua("b = basic.new()");
+		auto code = repeated_code("b:var()");
 		meter.measure([&](int i) {
-			lua("b:var()");
+			lua(code.c_str());
+		});*/
+		meter.measure([&](int i) {
 		});
 	}
 

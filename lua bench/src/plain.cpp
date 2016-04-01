@@ -9,9 +9,13 @@ namespace lb {
 		lua_pushinteger(L, 24);
 		lua_setglobal(L, "value");
 		meter.measure([&](int i) {
-			lua_getglobal(L, "value");
-			int x = static_cast<int>(lua_tointeger(L, -1));
-			lua_pop(L, 1);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				lua_getglobal(L, "value");
+				int v = static_cast<int>(lua_tointeger(L, -1));
+				x += v;
+				lua_pop(L, 1);
+			}
 			return x;
 		});
 	}
@@ -31,9 +35,13 @@ namespace lb {
 		lua_pushinteger(L, 24);
 		lua_setfield(L, -2, "value");
 		meter.measure([&](int i) {
-			lua_getfield(L, -1, "value");
-			int x = static_cast<int>(lua_tointeger(L, -1));
-			lua_pop(L, 1);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				lua_getfield(L, -1, "value");
+				int v = static_cast<int>(lua_tointeger(L, -1));
+				x += v;
+				lua_pop(L, 1);
+			}
 			return x;
 		});
 		lua_pop(L, 1);
@@ -46,8 +54,10 @@ namespace lb {
 		lua_pushinteger(L, 24);
 		lua_setfield(L, -2, "value");
 		meter.measure([&](int i) {
-			lua_pushinteger(L, i);
-			lua_setfield(L, -2, "value");
+			for (int i = 0; i < repetition; ++i) {
+				lua_pushinteger(L, i);
+				lua_setfield(L, -2, "value");
+			}
 		});
 		lua_pop(L, 1);
 	}
@@ -61,11 +71,15 @@ namespace lb {
 		lua_setfield(L, -2, "value");
 		lua_setglobal(L, "ulahibe");
 		meter.measure([&](int i) {
-			lua_getglobal(L, "ulahibe");
-			lua_getfield(L, -1, "warble");
-			lua_getfield(L, -1, "value");
-			int x = static_cast<int>(lua_tointeger(L, -1));
-			lua_pop(L, 3);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				lua_getglobal(L, "ulahibe");
+				lua_getfield(L, -1, "warble");
+				lua_getfield(L, -1, "value");
+				int v = static_cast<int>(lua_tointeger(L, -1));
+				x += v;
+				lua_pop(L, 3);
+			}
 			return x;
 		});
 	}
@@ -75,15 +89,17 @@ namespace lb {
 		lua_createtable(L, 0, 0);
 		lua_createtable(L, 0, 0);
 		lua_pushinteger(L, 24);
-		lua_setfield(L, -2, "warble");
 		lua_setfield(L, -2, "value");
+		lua_setfield(L, -2, "warble");
 		lua_setglobal(L, "ulahibe");
 		meter.measure([&](int i) {
-			lua_getglobal(L, "ulahibe");
-			lua_getfield(L, -1, "warble");
-			lua_pushinteger(L, 24);
-			lua_setfield(L, -2, "value");
-			lua_pop(L, 2);
+			for (int i = 0; i < repetition; ++i) {
+				lua_getglobal(L, "ulahibe");
+				lua_getfield(L, -1, "warble");
+				lua_pushinteger(L, 24);
+				lua_setfield(L, -2, "value");
+				lua_pop(L, 2);
+			}
 		});
 	}
 
@@ -93,11 +109,9 @@ namespace lb {
 		lua_setglobal(L, "f");
 		lua_pushinteger(L, 0);
 		lua_setglobal(L, "run");
+		auto code = repeated_code("f(i)");
 		meter.measure([&](int i) {
-			if (!luaL_dostring(L, R"(
-				f(run)
-				run += 1
-			)"))
+			if (!luaL_dostring(L, code.c_str()))
 				lua_error(L);
 		});
 	}
@@ -108,11 +122,15 @@ namespace lb {
 			return i;
 		end)");
 		meter.measure([&](int i) {
-			lua_getglobal(L, "f");
-			lua_pushinteger(L, i);
-			lua_pcallk(L, 1, 1, LUA_NOREF, 0, nullptr);
-			int x = static_cast<int>(lua_tointeger(L, -1));
-			lua_pop(L, 1);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				lua_getglobal(L, "f");
+				lua_pushinteger(L, i);
+				lua_pcallk(L, 1, 1, LUA_NOREF, 0, nullptr);
+				int v = static_cast<int>(lua_tointeger(L, -1));
+				x += v;
+				lua_pop(L, 1);
+			}
 			return x;
 		});
 		lua_pop(L, 1);
@@ -124,11 +142,15 @@ namespace lb {
 		lua_setglobal(L, "f");
 		lua_pushinteger(L, 0);
 		meter.measure([&](int i) {
-			lua_getglobal(L, "f");
-			lua_pushinteger(L, i);
-			lua_pcallk(L, 1, 1, LUA_NOREF, 0, nullptr);
-			int x = static_cast<int>(lua_tointeger(L, -1));
-			lua_pop(L, 1);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				lua_getglobal(L, "f");
+				lua_pushinteger(L, i);
+				lua_pcallk(L, 1, 1, LUA_NOREF, 0, nullptr);
+				int v = static_cast<int>(lua_tointeger(L, -1));
+				x += v;
+				lua_pop(L, 1);
+			}
 			return x;
 		});
 	}
@@ -150,8 +172,9 @@ namespace lb {
 		lua_setmetatable(L, -1);
 		lua_setglobal(L, "b");
 
+		auto code = repeated_code("b:set(i) b:get()");
 		meter.measure([&](int i) {
-			if (!luaL_dostring(L, "b:set(20)\nb:get()"))
+			if (!luaL_dostring(L, code.c_str()))
 				lua_error(L);
 		});
 	}
@@ -173,8 +196,9 @@ namespace lb {
 		lua_setmetatable(L, -1);
 		lua_setglobal(L, "b");
 		
+		auto code = repeated_code("b.var = i");
 		meter.measure([&](int i) {
-			if (!luaL_dostring(L, "b.var = 20"))
+			if (!luaL_dostring(L, code.c_str()))
 				lua_error(L);
 		});
 	}
@@ -195,9 +219,9 @@ namespace lb {
 		new (*s)basic();
 		lua_setmetatable(L, -1);
 		lua_setglobal(L, "b");
-
+		auto code = repeated_code("x = b.var");
 		meter.measure([&](int i) {
-			if (!luaL_dostring(L, "x = b.var"))
+			if (!luaL_dostring(L, code.c_str()))
 				lua_error(L);
 		});
 	}

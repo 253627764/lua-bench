@@ -34,3 +34,9 @@
 [submodule "vendor/luacppinterface"]
 	path = vendor/luacppinterface
 	url = https://github.com/davidsiaw/luacppinterface.git
+[submodule "vendor/slb"]
+	path = vendor/slb
+	url = https://github.com/xgene/slb.git
+[submodule "vendor/swig"]
+	path = vendor/swig
+	url = https://github.com/swig/swig.git

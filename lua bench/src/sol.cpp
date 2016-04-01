@@ -7,23 +7,34 @@ namespace lb {
 		sol::state lua;
 		lua["value"] = 24;
 		meter.measure([&](int i) {
-			return lua.get<int>("value");
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = lua.get<int>("value");
+				x += v;
+			}
+			return x;
 		});
 	}
 
 	void sol_global_string_set_measure(nonius::chronometer& meter) {
 		sol::state lua;
 		meter.measure([&](int i) {
-			lua.set("value", 24);
+			for (int i = 0; i < repetition; ++i) {
+				lua.set("value", i);
+			}
 		});
 	}
 
 	void sol_table_get_measure(nonius::chronometer& meter) {
 		sol::state lua;
-		lua.create_table("value", 0, 0, "warble", 24);
-		sol::table t = lua["value"];
+		lua.create_table("warble", 0, 0, "value", 24);
+		sol::table t = lua["warble"];
 		meter.measure([&](int i) {
-			int x = t["warble"];
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = t["value"];
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -33,36 +44,39 @@ namespace lb {
 		lua.create_table("value", 0, 0);
 		sol::table x = lua["value"];
 		meter.measure([&](int i) {
-			x.set("warble", 24);
+			for (int i = 0; i < repetition; ++i)
+				x.set("warble", i);
 		});
 	}
 
 	void sol_chained_get_measure(nonius::chronometer& meter) {
 		sol::state lua;
-		lua.create_table("value", 0, 0, "warble", lua.create_table(0, 0, "ulahibe", 24));
+		lua.create_table("ulahibe", 0, 0, "warble", lua.create_table(0, 0, "value", 24));
 		meter.measure([&](int i) {
-			int x = lua["value"]["warble"]["ulahibe"];
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = lua["ulahibe"]["warble"]["value"];
+				x += v;
+			}
 			return x;
 		});
 	}
 
 	void sol_chained_set_measure(nonius::chronometer& meter) {
 		sol::state lua;
-		lua.create_table("value", 0, 0, "warble", lua.create_table(0, 0, "ulahibe", 24));
+		lua.create_table("ulahibe", 0, 0, "warble", lua.create_table(0, 0, "value", 24));
 		meter.measure([&](int i) {
-			lua["value"]["warble"]["ulahibe"] = 24;
+			for (int i = 0; i < repetition; ++i)
+				lua["ulahibe"]["warble"]["value"] = i;
 		});
 	}
 
 	void sol_c_function_measure(nonius::chronometer& meter) {
 		sol::state lua;
 		lua.set_function("f", basic_call);
-		lua["run"] = 0;
+		std::string code = repeated_code("f(i)");
 		meter.measure([&](int i) {
-			lua.script(R"(
-				f(run)
-				run += 1
-			)");
+			lua.script(code);
 		});
 	}
 
@@ -73,7 +87,11 @@ namespace lb {
 		end)");
 		sol::function f = lua["f"];
 		meter.measure([&](int i) {
-			int x = f(i);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f(i);
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -83,7 +101,11 @@ namespace lb {
 		lua.set_function("f", basic_call);
 		sol::function f = lua["f"];
 		meter.measure([&](int i) {
-			int x = f(i);
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f(i);
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -93,8 +115,9 @@ namespace lb {
 		lua.new_usertype<basic>("basic",
 			"get", &basic::get,
 			"set", &basic::set);
+		std::string code = repeated_code("b:set(i) b:get()");
 		meter.measure([&](int i) {
-			lua.script("b:set(20)\nb:get()");
+			lua.script(code);
 		});
 	}
 
@@ -105,8 +128,9 @@ namespace lb {
 			"get", &basic::get,
 			"set", &basic::set);
 		lua.script("b = basic:new()");
+		std::string code = repeated_code("b.var = i");
 		meter.measure([&](int i) {
-			lua.script("b.var = 20");
+			lua.script(code);
 		});
 	}
 
@@ -115,8 +139,9 @@ namespace lb {
 		lua.new_usertype<basic>("basic",
 			"var", &basic::var);
 		lua.script("b = basic:new()");
+		std::string code = repeated_code("x = b.var");
 		meter.measure([&](int i) {
-			lua.script("x = b.var");
+			lua.script(code);
 		});
 	}
 
