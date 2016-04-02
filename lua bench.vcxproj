@@ -73,8 +73,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\luawrapper;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -82,8 +82,8 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\luawrapper;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -93,8 +93,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\luawrapper;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -108,8 +108,8 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\luawrapper;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -127,7 +127,9 @@
     <ClCompile Include="lua bench\src\oolua.cpp" />
     <ClCompile Include="lua bench\src\plain.cpp" />
     <ClCompile Include="lua bench\src\selene.cpp" />
+    <ClCompile Include="lua bench\src\slb3.cpp" />
     <ClCompile Include="lua bench\src\sol.cpp" />
+    <ClCompile Include="lua bench\src\swig.cpp" />
     <ClCompile Include="vendor\lua-api-pp\luapp\impl.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +153,12 @@
     </ProjectReference>
     <ProjectReference Include="vendor\oolua.vcxproj">
       <Project>{ce5765bb-dba9-4276-abd1-035315887b0b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\slb3.vcxproj">
+      <Project>{7ba76acf-1e4a-47ee-9f72-cb1c509621ba}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\swig.vcxproj">
+      <Project>{8fb8fa3a-9581-45a7-88b7-9b5f198894d4}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

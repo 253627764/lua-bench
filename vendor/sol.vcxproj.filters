@@ -177,6 +177,15 @@
     <ClInclude Include="sol\sol\stack_push.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sol\sol\bond.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\stack_proxy.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sol\sol\stack_reference.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="sol\sol\compatibility\5.x.x.inl">

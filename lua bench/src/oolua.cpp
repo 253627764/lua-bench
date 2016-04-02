@@ -4,6 +4,13 @@
 
 namespace lb {
 	
+/*	OOLUA_PROXY(basic)
+//		OOLUA_MGET_MSET(var)
+//		OOLUA_MFUNC_CONST(get)
+//		OOLUA_MFUNC(set)
+	OOLUA_PROXY_END
+	*/
+
 	OOLUA_CFUNC(basic_call, oo_basic_call);
 	static const int oolua_value = 24;
 
@@ -25,7 +32,7 @@ namespace lb {
 	void oolua_global_string_set_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
-		set_global(vm, "value", 24);
+		set_global(vm, "value", oolua_value);
 		meter.measure([&vm]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -159,15 +166,18 @@ namespace lb {
 	}
 
 	void oolua_member_function_call(nonius::chronometer& meter) {
-
+		meter.measure([&](int i) {
+		});
 	}
 
 	void oolua_member_variable_set(nonius::chronometer& meter) {
-
+		meter.measure([&](int i) {
+		});
 	}
 
 	void oolua_member_variable_get(nonius::chronometer& meter) {
-
+		meter.measure([&](int i) {
+		});
 	}
 
 }

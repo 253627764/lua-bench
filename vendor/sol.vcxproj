@@ -110,6 +110,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="sol\sol.hpp" />
+    <ClInclude Include="sol\sol\bond.hpp" />
     <ClInclude Include="sol\sol\compatibility.hpp" />
     <ClInclude Include="sol\sol\compatibility\5.0.0.h" />
     <ClInclude Include="sol\sol\compatibility\5.1.0.h" />
@@ -150,7 +151,9 @@
     <ClInclude Include="sol\sol\stack_get.hpp" />
     <ClInclude Include="sol\sol\stack_pop.hpp" />
     <ClInclude Include="sol\sol\stack_probe.hpp" />
+    <ClInclude Include="sol\sol\stack_proxy.hpp" />
     <ClInclude Include="sol\sol\stack_push.hpp" />
+    <ClInclude Include="sol\sol\stack_reference.hpp" />
     <ClInclude Include="sol\sol\state.hpp" />
     <ClInclude Include="sol\sol\state_view.hpp" />
     <ClInclude Include="sol\sol\table.hpp" />
