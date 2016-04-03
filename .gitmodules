@@ -37,3 +37,6 @@ url=https://github.com/ThePhD/lua-api-pp.git
 [submodule "vendor/swig"]
 	path = vendor/swig
 	url = https://github.com/swig/swig.git
+[submodule "vendor/selene"]
+	path = vendor/selene
+	url = https://github.com/ThePhD/Selene.git
