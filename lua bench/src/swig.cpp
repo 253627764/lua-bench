@@ -161,20 +161,8 @@ namespace lb {
 
 	void swig_member_function_call(nonius::chronometer& meter) {
 		lua_State* L = lua_newstate(nullptr, nullptr);
-		luaL_Reg funcs[] = {
-			{"__index", &basic_index_wrap },
-			{"__newindex", &basic_newindex_wrap },
-			{ "set", &basic_set_wrap },
-			{ "get", &basic_get_wrap },
-			{ nullptr, nullptr }
-		};
-		luaL_newmetatable(L, "struct_basic");
-		luaL_setfuncs(L, funcs, 0);
-		basic** s = static_cast<basic**>(lua_newuserdata(L, sizeof(basic*) + sizeof(basic)));
-		*s = *(s + 1);
-		new (*s)basic();
-		lua_setmetatable(L, -1);
-		lua_setglobal(L, "b");
+		luaopen_lb(L);
+		luaL_dostring(L, "b = lb.new_basic()");
 
 		auto code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
@@ -185,20 +173,8 @@ namespace lb {
 
 	void swig_member_variable_set(nonius::chronometer& meter) {
 		lua_State* L = lua_newstate(nullptr, nullptr);
-		luaL_Reg funcs[] = {
-			{ "__index", &basic_index_wrap },
-			{ "__newindex", &basic_newindex_wrap },
-			{ "set", &basic_set_wrap },
-			{ "get", &basic_get_wrap },
-			{ nullptr, nullptr }
-		};
-		luaL_newmetatable(L, "struct_basic");
-		luaL_setfuncs(L, funcs, 0);
-		basic** s = static_cast<basic**>(lua_newuserdata(L, sizeof(basic*) + sizeof(basic)));
-		*s = *(s + 1);
-		new (*s)basic();
-		lua_setmetatable(L, -1);
-		lua_setglobal(L, "b");
+		luaopen_lb(L);
+		luaL_dostring(L, "b = lb.new_basic()");
 		
 		auto code = repeated_code("b.var = i");
 		meter.measure([&]() {
@@ -209,20 +185,8 @@ namespace lb {
 
 	void swig_member_variable_get(nonius::chronometer& meter) {
 		lua_State* L = lua_newstate(nullptr, nullptr);
-		luaL_Reg funcs[] = {
-			{ "__index", &basic_index_wrap },
-			{ "__newindex", &basic_newindex_wrap },
-			{ "set", &basic_set_wrap },
-			{ "get", &basic_get_wrap },
-			{ nullptr, nullptr }
-		};
-		luaL_newmetatable(L, "struct_basic");
-		luaL_setfuncs(L, funcs, 0);
-		basic** s = static_cast<basic**>(lua_newuserdata(L, sizeof(basic*) + sizeof(basic)));
-		*s = *(s + 1);
-		new (*s)basic();
-		lua_setmetatable(L, -1);
-		lua_setglobal(L, "b");
+		luaopen_lb(L);
+		luaL_dostring(L, "b = lb.new_basic()");
 		auto code = repeated_code("x = b.var");
 		meter.measure([&]() {
 			if (!luaL_dostring(L, code.c_str()))

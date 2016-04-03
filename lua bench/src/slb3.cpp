@@ -38,38 +38,18 @@ namespace lb {
 	}
 
 	void slb3_chained_get_measure(nonius::chronometer& meter) {
-		SLB::Manager m;
-		ShitScript lua(&m);
-		lua.doString(R"(function f (i)
-			return i;
-		end)");
 		meter.measure([]() {});
 	}
 
 	void slb3_chained_set_measure(nonius::chronometer& meter) {
-		SLB::Manager m;
-		ShitScript lua(&m);
-		lua.doString(R"(function f (i)
-			return i;
-		end)");
 		meter.measure([]() {});
 	}
 
 	void slb3_table_get_measure(nonius::chronometer& meter) {
-		SLB::Manager m;
-		ShitScript lua(&m);
-		lua.doString(R"(function f (i)
-			return i;
-		end)");
 		meter.measure([]() {});
 	}
 
 	void slb3_table_set_measure(nonius::chronometer& meter) {
-		SLB::Manager m;
-		ShitScript lua(&m);
-		lua.doString(R"(function f (i)
-			return i;
-		end)");
 		meter.measure([]() {});
 	}
 
@@ -89,7 +69,7 @@ namespace lb {
 		lua.doString(R"(function f (i)
 			return i;
 		end)");
-		SLB::LuaCall<int(int)> f(lua.getState(), "f");
+		SLB::LuaCall<int(int)> f(lua.lua_state(), "f");
 		meter.measure([&](int i) {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -104,7 +84,7 @@ namespace lb {
 		SLB::Manager m;
 		ShitScript lua(&m);
 		m.set("f", SLB::FuncCall::create(basic_call));
-		SLB::LuaCall<int(int)> f(lua.getState(), "f");
+		SLB::LuaCall<int(int)> f(lua.lua_state(), "f");
 		meter.measure([&](int i) {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -129,21 +109,11 @@ namespace lb {
 	}
 
 	void slb3_member_variable_set(nonius::chronometer& meter) {
-		SLB::Manager m;
-		ShitScript lua(&m);
-		lua.doString(R"(function f (i)
-			return i;
-		end)");
 		// Unsupported
 		meter.measure([]() {});
 	}
 
 	void slb3_member_variable_get(nonius::chronometer& meter) {
-		SLB::Manager m;
-		ShitScript lua(&m);
-		lua.doString(R"(function f (i)
-			return i;
-		end)");
 		// Unsupported
 		meter.measure([]() {});
 	}

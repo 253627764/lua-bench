@@ -6,7 +6,7 @@
 
 namespace lb {
 
-	int basic_call_wrap(lua_State* L) {
+	inline int basic_call_wrap(lua_State* L) {
 		int x = basic_call(static_cast<int>(lua_tointeger(L, -1)));
 		lua_pushinteger(L, x);
 		return 1;
