@@ -142,24 +142,4 @@ namespace lb {
 	inline std::string repeated_code(std::string code) {
 		return "for i=0," + repetition_s + "do " + code + " end";
 	}
-
-	struct basic {
-		int var;
-
-		basic() : var() {
-
-		}
-
-		int get() const {
-			return var;
-		}
-
-		void set( int x ) {
-			var = x;
-		}
-	};
-
-	inline int basic_call(int x) {
-		return x;
-	}
 }

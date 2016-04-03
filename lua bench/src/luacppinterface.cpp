@@ -1,4 +1,5 @@
 #include "lua_bench.hpp"
+#include "basic.hpp"
 #include <luacppinterface.h>
 
 namespace lb {

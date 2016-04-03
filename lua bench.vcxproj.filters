@@ -57,6 +57,9 @@
     <ClCompile Include="lua bench\src\swig.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lua bench\src\swig_basic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="platform.hpp">
@@ -71,8 +74,14 @@
     <ClInclude Include="lua bench\src\lua_bench_wrap.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lua bench\src\basic.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\strings.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lua bench\src\basic.i" />
   </ItemGroup>
 </Project>

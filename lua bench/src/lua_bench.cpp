@@ -1,12 +1,7 @@
 #include "lua_bench.hpp"
 #include <nonius.h++>
-#include <kaguya/kaguya.hpp>
 
 int main(int argc, char* argv[]) {
-	kaguya::State state;
-	state("multresfun =function() return 1,2,4 end");//registering multiple results function
-	int a, b, c;
-	kaguya::tie(a, b, c) = state["multresfun"]();
 #if 0
 	nonius::configuration cfg;
 	cfg.output_file = "lua_bench tests";

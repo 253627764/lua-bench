@@ -1,4 +1,5 @@
 #include "lua_bench.hpp"
+#include "basic.hpp"
 #include <selene.h>
 
 namespace lb {
@@ -6,7 +7,7 @@ namespace lb {
 	void selene_global_string_get_measure(nonius::chronometer& meter) {
 		sel::State lua;
 		lua["value"] = 24;
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = lua["value"];
@@ -18,7 +19,7 @@ namespace lb {
 
 	void selene_global_string_set_measure(nonius::chronometer& meter) {
 		sel::State lua;
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i) {
 				lua["value"] = i;
 			}
@@ -28,7 +29,7 @@ namespace lb {
 	void selene_chained_get_measure(nonius::chronometer& meter) {
 		sel::State lua;
 		lua["ulahibe"]["warble"]["value"] = 24;
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = lua["ulahibe"]["warble"]["value"];
@@ -40,7 +41,7 @@ namespace lb {
 
 	void selene_chained_set_measure(nonius::chronometer& meter) {
 		sel::State lua;
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i) {
 				lua["ulahibe"]["warble"]["value"] = i;
 			}
@@ -51,7 +52,7 @@ namespace lb {
 		sel::State lua;
 		auto t = lua["warble"];
 		t["value"] = 24;
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = t["value"];
@@ -64,7 +65,7 @@ namespace lb {
 	void selene_table_set_measure(nonius::chronometer& meter) {
 		sel::State lua;
 		auto t = lua["value"];
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i) {
 				t["warble"] = i;
 			}
@@ -75,7 +76,7 @@ namespace lb {
 		sel::State lua;
 		lua["f"] = basic_call;
 		auto code = repeated_code("f(i)");
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			lua(code.c_str());
 		});
 	}
@@ -86,7 +87,7 @@ namespace lb {
 			return i;
 		end)");
 		sel::function<int(int)> f = lua["f"];
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = f(i);
@@ -100,7 +101,7 @@ namespace lb {
 		sel::State lua;
 		lua["f"] = basic_call;
 		sel::function<int(int)> f = lua["f"];
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = f(i);
@@ -118,7 +119,7 @@ namespace lb {
 		);
 		lua("b = basic.new()");
 		auto code = repeated_code("b:set(i) b:get()");
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			lua(code.c_str());
 		});
 	}
@@ -132,10 +133,10 @@ namespace lb {
 		);
 		lua("b = basic.new()");
 		auto code = repeated_code("b:set_var(i)");
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			lua(code.c_str());
 		});*/
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 		});
 	}
 
@@ -148,10 +149,10 @@ namespace lb {
 			);
 		lua("b = basic.new()");
 		auto code = repeated_code("b:var()");
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			lua(code.c_str());
 		});*/
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 		});
 	}
 

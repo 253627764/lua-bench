@@ -130,9 +130,11 @@
     <ClCompile Include="lua bench\src\slb3.cpp" />
     <ClCompile Include="lua bench\src\sol.cpp" />
     <ClCompile Include="lua bench\src\swig.cpp" />
+    <ClCompile Include="lua bench\src\swig_basic.cpp" />
     <ClCompile Include="vendor\lua-api-pp\luapp\impl.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="lua bench\src\basic.hpp" />
     <ClInclude Include="lua bench\src\lua_bench.hpp" />
     <ClInclude Include="lua bench\src\lua_bench_wrap.hpp" />
     <ClInclude Include="platform.hpp" />
@@ -160,6 +162,9 @@
     <ProjectReference Include="vendor\swig.vcxproj">
       <Project>{8fb8fa3a-9581-45a7-88b7-9b5f198894d4}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lua bench\src\basic.i" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

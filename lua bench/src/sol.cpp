@@ -1,4 +1,5 @@
 #include "lua_bench.hpp"
+#include "basic.hpp"
 #include <sol.hpp>
 
 namespace lb {
