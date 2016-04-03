@@ -1,6 +1,3 @@
-[submodule "vendor/selene"]
-	path = vendor/selene
-	url = https://github.com/ThePhD/Selene.git
 [submodule "vendor/sol"]
 	path = vendor/sol
 	url = https://github.com/ThePhD/sol2.git
