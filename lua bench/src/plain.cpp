@@ -5,8 +5,15 @@
 
 namespace lb {
 
+	inline int atpanic(lua_State* L) {
+		const char* message = lua_tostring(L, -1);
+		std::string err = message ? message : "An unexpected error occurred and forced the lua state to call atpanic";
+		throw std::runtime_error(err);
+	}
+
 	void plain_global_string_get_measure(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
 		lua_pushinteger(L, 24);
 		lua_setglobal(L, "value");
 		meter.measure([&]() {
@@ -22,7 +29,9 @@ namespace lb {
 	}
 
 	void plain_global_string_set_measure(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
+
 		meter.measure([&]() {
 			lua_pushinteger(L, 24);
 			lua_setglobal(L, "value");
@@ -30,11 +39,15 @@ namespace lb {
 	}
 
 	void plain_table_get_measure(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
+
 		lua_createtable(L, 0, 0);
-		lua_setglobal(L, "warble");
 		lua_pushinteger(L, 24);
 		lua_setfield(L, -2, "value");
+		lua_setglobal(L, "warble");
+		
+		lua_getglobal(L, "warble");
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -49,11 +62,15 @@ namespace lb {
 	}
 
 	void plain_table_set_measure(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
+
 		lua_createtable(L, 0, 0);
-		lua_setglobal(L, "warble");
 		lua_pushinteger(L, 24);
 		lua_setfield(L, -2, "value");
+		lua_setglobal(L, "warble");
+		
+		lua_getglobal(L, "warble");
 		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i) {
 				lua_pushinteger(L, i);
@@ -64,12 +81,14 @@ namespace lb {
 	}
 
 	void plain_chained_get_measure(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
+
 		lua_createtable(L, 0, 0);
 		lua_createtable(L, 0, 0);
 		lua_pushinteger(L, 24);
-		lua_setfield(L, -2, "warble");
 		lua_setfield(L, -2, "value");
+		lua_setfield(L, -2, "warble");
 		lua_setglobal(L, "ulahibe");
 		meter.measure([&]() {
 			int x = 0;
@@ -86,7 +105,9 @@ namespace lb {
 	}
 
 	void plain_chained_set_measure(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
+
 		lua_createtable(L, 0, 0);
 		lua_createtable(L, 0, 0);
 		lua_pushinteger(L, 24);
@@ -105,23 +126,26 @@ namespace lb {
 	}
 
 	void plain_c_function_measure(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
+
 		lua_pushcfunction(L, &basic_call_wrap);
 		lua_setglobal(L, "f");
 		lua_pushinteger(L, 0);
 		lua_setglobal(L, "run");
 		auto code = repeated_code("f(i)");
 		meter.measure([&]() {
-			if (!luaL_dostring(L, code.c_str()))
+			if (luaL_dostring(L, code.c_str()))
 				lua_error(L);
 		});
 	}
 
 	void plain_lua_function_measure(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
-		luaL_loadstring(L, R"(function f (i)
-			return i;
-		end)");
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
+		if (luaL_dostring(L, "function f (i) return i end"))
+			lua_error(L);
+
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -134,14 +158,15 @@ namespace lb {
 			}
 			return x;
 		});
-		lua_pop(L, 1);
 	}
 
 	void plain_c_through_lua_function_measure(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
+
 		lua_pushcfunction(L, &basic_call_wrap);
 		lua_setglobal(L, "f");
-		lua_pushinteger(L, 0);
+		
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -157,72 +182,53 @@ namespace lb {
 	}
 
 	void plain_member_function_call(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
+
+		basic** s = static_cast<basic**>(lua_newuserdata(L, sizeof(basic*)));
+		basic b;
+		*s = &b;
 		luaL_Reg funcs[] = {
-			{"__index", &basic_index_wrap },
-			{"__newindex", &basic_newindex_wrap },
+			//{ "__index", &basic_index_wrap },
+			//{ "__newindex", &basic_newindex_wrap },
 			{ "set", &basic_set_wrap },
 			{ "get", &basic_get_wrap },
 			{ nullptr, nullptr }
 		};
 		luaL_newmetatable(L, "struct_basic");
+		lua_createtable(L, 0, 0);
 		luaL_setfuncs(L, funcs, 0);
-		basic** s = static_cast<basic**>(lua_newuserdata(L, sizeof(basic*) + sizeof(basic)));
-		*s = *(s + 1);
-		new (*s)basic();
-		lua_setmetatable(L, -1);
+		lua_setfield(L, -2, "__index");
+		lua_setmetatable(L, -2);
 		lua_setglobal(L, "b");
 
 		auto code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
-			if (!luaL_dostring(L, code.c_str()))
+			if (luaL_dostring(L, code.c_str()))
 				lua_error(L);
 		});
 	}
 
-	void plain_member_variable_set(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
-		luaL_Reg funcs[] = {
-			{ "__index", &basic_index_wrap },
-			{ "__newindex", &basic_newindex_wrap },
-			{ "set", &basic_set_wrap },
-			{ "get", &basic_get_wrap },
-			{ nullptr, nullptr }
-		};
-		luaL_newmetatable(L, "struct_basic");
-		luaL_setfuncs(L, funcs, 0);
-		basic** s = static_cast<basic**>(lua_newuserdata(L, sizeof(basic*) + sizeof(basic)));
-		*s = *(s + 1);
-		new (*s)basic();
-		lua_setmetatable(L, -1);
-		lua_setglobal(L, "b");
-		
-		auto code = repeated_code("b.var = i");
-		meter.measure([&]() {
-			if (!luaL_dostring(L, code.c_str()))
-				lua_error(L);
-		});
-	}
+	void plain_member_variable(nonius::chronometer& meter) {
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, atpanic);
 
-	void plain_member_variable_get(nonius::chronometer& meter) {
-		lua_State* L = lua_newstate(nullptr, nullptr);
+		basic** s = static_cast<basic**>(lua_newuserdata(L, sizeof(basic*)));
+		basic b;
+		*s = &b;
 		luaL_Reg funcs[] = {
 			{ "__index", &basic_index_wrap },
 			{ "__newindex", &basic_newindex_wrap },
-			{ "set", &basic_set_wrap },
-			{ "get", &basic_get_wrap },
 			{ nullptr, nullptr }
 		};
 		luaL_newmetatable(L, "struct_basic");
 		luaL_setfuncs(L, funcs, 0);
-		basic** s = static_cast<basic**>(lua_newuserdata(L, sizeof(basic*) + sizeof(basic)));
-		*s = *(s + 1);
-		new (*s)basic();
-		lua_setmetatable(L, -1);
+		lua_setmetatable(L, -2);
 		lua_setglobal(L, "b");
-		auto code = repeated_code("x = b.var");
+
+		auto code = repeated_code("b.var = i\nx = b.var");
 		meter.measure([&]() {
-			if (!luaL_dostring(L, code.c_str()))
+			if (luaL_dostring(L, code.c_str()))
 				lua_error(L);
 		});
 	}

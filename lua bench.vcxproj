@@ -74,8 +74,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX 0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -83,8 +84,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX 0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link />
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -94,7 +96,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX 0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -109,7 +111,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\sol;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX 0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -144,6 +146,9 @@
     <Text Include="src\strings.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="vendor\lua-intf.vcxproj">
+      <Project>{8458de51-6c31-4c01-a8e2-3f8b377d470c}</Project>
+    </ProjectReference>
     <ProjectReference Include="vendor\lua.vcxproj">
       <Project>{48551477-5b65-4b56-88ce-5b7a066bfd3a}</Project>
     </ProjectReference>

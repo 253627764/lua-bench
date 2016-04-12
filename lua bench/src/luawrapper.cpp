@@ -146,21 +146,11 @@ namespace lb {
 		});
 	}
 
-	void luawrapper_member_variable_set(nonius::chronometer& meter) {
+	void luawrapper_member_variable(nonius::chronometer& meter) {
 		LuaContext lua;
 		lua.registerMember("var", &basic::var);
 		lua.writeVariable("b", basic());
-		auto code = repeated_code("b.var = i");
-		meter.measure([&]() {
-			lua.executeCode(code.c_str());
-		});
-	}
-
-	void luawrapper_member_variable_get(nonius::chronometer& meter) {
-		LuaContext lua;
-		lua.registerMember("var", &basic::var);
-		lua.writeVariable("b", basic());
-		auto code = repeated_code("x = b.var");
+		auto code = repeated_code("b.var = i\nx = b.var");
 		meter.measure([&]() {
 			lua.executeCode(code.c_str());
 		});

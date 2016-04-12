@@ -113,7 +113,8 @@ namespace lb {
 
 	void selene_member_function_call(nonius::chronometer& meter) {
 		sel::State lua;
-		lua["A"].SetClass<basic>(
+		lua.HandleExceptionsPrintingToStdOut();
+		lua["basic"].SetClass<basic>(
 			"get", &basic::get,
 			"set", &basic::set
 		);
@@ -124,36 +125,20 @@ namespace lb {
 		});
 	}
 
-	void selene_member_variable_set(nonius::chronometer& meter) {
-		/*sel::State lua;
-		lua["A"].SetClass<basic>(
-			"var", &basic::var,
-			"set", &basic::set,
-			"get", &basic::get
-		);
-		lua("b = basic.new()");
-		auto code = repeated_code("b:set_var(i)");
-		meter.measure([&]() {
-			lua(code.c_str());
-		});*/
-		meter.measure([&]() {
-		});
-	}
-
-	void selene_member_variable_get(nonius::chronometer& meter) {
+	void selene_member_variable(nonius::chronometer& meter) {
 		/*sel::State lua;
 		lua["basic"].SetClass<basic>(
 			"var", &basic::var,
 			"set", &basic::set,
 			"get", &basic::get
-			);
+		);
 		lua("b = basic.new()");
-		auto code = repeated_code("b:var()");
+		auto code = repeated_code("b:set_var(i)\nx = b:var()");
 		meter.measure([&]() {
 			lua(code.c_str());
 		});*/
-		meter.measure([&]() {
-		});
+		//meter.measure([&]() {
+		//});
 	}
 
 }

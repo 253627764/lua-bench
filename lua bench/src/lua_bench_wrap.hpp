@@ -32,6 +32,14 @@ namespace lb {
 	inline int basic_index_wrap(lua_State* L) {
 		std::size_t sz;
 		const char* name = lua_tolstring(L, 2, &sz);
+		if (strcmp(name, "get") == 0) {
+			lua_pushcclosure(L, basic_get_wrap, 0);
+			return 1;
+		}
+		if (strcmp(name, "set") == 0) {
+			lua_pushcclosure(L, basic_set_wrap, 0);
+			return 1;
+		}
 		if (strcmp(name, "var") != 0) {
 			lua_pop(L, 2);
 			return 0;

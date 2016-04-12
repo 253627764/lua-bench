@@ -3,16 +3,19 @@
 #include <lua.hpp>
 #include <oolua.h>
 
-namespace lb {
-	
-/*	OOLUA_PROXY(basic)
-//		OOLUA_MGET_MSET(var)
-//		OOLUA_MFUNC_CONST(get)
-//		OOLUA_MFUNC(set)
-	OOLUA_PROXY_END
-	*/
+OOLUA_PROXY(basic)
+	OOLUA_MGET_MSET(var)
+	OOLUA_MFUNC_CONST(get)
+	OOLUA_MFUNC(set)
+OOLUA_PROXY_END
 
-	OOLUA_CFUNC(basic_call, oo_basic_call);
+OOLUA_EXPORT_FUNCTIONS_CONST(basic, get)
+OOLUA_EXPORT_FUNCTIONS(basic, set)
+
+OOLUA_CFUNC(basic_call, oo_basic_call)
+
+namespace lb {
+
 	static const int oolua_value = 24;
 
 	void oolua_global_string_get_measure(nonius::chronometer& meter) {
@@ -129,7 +132,7 @@ namespace lb {
 		Script vm;
 		set_global(vm, "f", oo_basic_call);
 		std::string code = repeated_code("f(i)");
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			vm.run_chunk(code);
 		});
 	}
@@ -141,7 +144,7 @@ namespace lb {
 			return i;
 		end)");
 		Lua_function f(vm);
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = f("f", i);
@@ -156,7 +159,7 @@ namespace lb {
 		Script vm;
 		set_global(vm, "f", oo_basic_call);
 		Lua_function f(vm);
-		meter.measure([&](int i) {
+		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = f("f", i);
@@ -167,17 +170,24 @@ namespace lb {
 	}
 
 	void oolua_member_function_call(nonius::chronometer& meter) {
-		meter.measure([&](int i) {
+		using namespace OOLUA;
+		Script vm;
+		vm.register_class<basic>();
+		vm.run_chunk("b = basic:new()");
+		std::string code = repeated_code("b:set(i) b:get()");
+		meter.measure([&]() {
+			vm.run_chunk(code);
 		});
 	}
 
-	void oolua_member_variable_set(nonius::chronometer& meter) {
-		meter.measure([&](int i) {
-		});
-	}
-
-	void oolua_member_variable_get(nonius::chronometer& meter) {
-		meter.measure([&](int i) {
+	void oolua_member_variable(nonius::chronometer& meter) {
+		using namespace OOLUA;
+		Script vm;
+		vm.register_class<basic>();
+		vm.run_chunk("b = basic:new()");
+		std::string code = repeated_code("b.var = i\nx = b.var");
+		meter.measure([&]() {
+			vm.run_chunk(code);
 		});
 	}
 

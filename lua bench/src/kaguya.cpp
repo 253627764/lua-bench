@@ -11,7 +11,7 @@ namespace lb {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = lua["value"];
-				x += v;
+				x +=  v;
 			}
 			return x;
 		});
@@ -133,32 +133,11 @@ namespace lb {
 		});
 	}
 
-	void kaguya_member_variable_set(nonius::chronometer& meter) {
-		kaguya::State lua;
-		lua["basic"].setClass<basic>(kaguya::ClassMetatable<basic>()
-			.addConstructor()
-			.addMember("var", &basic::var)
-			.addMemberFunction("get", &basic::get)
-			.addMemberFunction("set", &basic::set)
-			);
-		lua("b = basic.new()");
-		auto code = repeated_code("b.var = i");
-		meter.measure([&]() {
-			lua(code);
-		});
-	}
-
-	void kaguya_member_variable_get(nonius::chronometer& meter) {
-		kaguya::State lua;
-		lua["basic"].setClass<basic>(kaguya::ClassMetatable<basic>()
-			.addConstructor()
-			.addMember("var", &basic::var)
-		);
-		lua("b = basic:new()");
-		auto code = repeated_code("x = b.var");
-		meter.measure([&]() {
-			lua(code);
-		});
+	void kaguya_member_variable(nonius::chronometer& meter) {
+		// Does not support member variable syntax:
+		// turns it into a function, unfortunately
+		//meter.measure([&]() {
+		//});
 	}
 
 }

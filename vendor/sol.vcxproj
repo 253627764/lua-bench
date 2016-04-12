@@ -149,6 +149,7 @@
     <ClInclude Include="sol\sol\stack_core.hpp" />
     <ClInclude Include="sol\sol\stack_field.hpp" />
     <ClInclude Include="sol\sol\stack_get.hpp" />
+    <ClInclude Include="sol\sol\stack_guard.hpp" />
     <ClInclude Include="sol\sol\stack_pop.hpp" />
     <ClInclude Include="sol\sol\stack_probe.hpp" />
     <ClInclude Include="sol\sol\stack_proxy.hpp" />
