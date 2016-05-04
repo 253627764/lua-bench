@@ -4,3 +4,8 @@ x64/
 x86/
 results/
 swigwin-3.0.8/
+obj/
+lua bench tests*
+bin/
+__pycache__/
+build.ninja
