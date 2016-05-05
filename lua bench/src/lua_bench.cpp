@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
 	nonius::configuration rootcfg;
 	rootcfg.output_file = "lua bench tests";
 	rootcfg.title = "lua bench tests";
-	rootcfg.samples = 1;
+	rootcfg.samples = 100;
 	rootcfg.list_benchmarks = true;
 	rootcfg.list_reporters = true;
 	rootcfg.verbose = true;
