@@ -19,31 +19,31 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AA5A7419-8C83-4B8A-8242-8B9DF012F06F}</ProjectGuid>
-    <RootNamespace>luacppinterface</RootNamespace>
+    <ProjectGuid>{1D8D24BE-4764-437D-B5AA-F1E702B005D3}</ProjectGuid>
+    <RootNamespace>luwra</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Utility</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -73,8 +73,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>lua/include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -82,8 +80,6 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>lua/include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -93,8 +89,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>lua/include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -108,8 +102,6 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>lua/include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -117,33 +109,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="luacppinterface\LuaCppInterface\luacoroutine.cpp" />
-    <ClCompile Include="luacppinterface\LuaCppInterface\luacppinterface.cpp" />
-    <ClCompile Include="luacppinterface\LuaCppInterface\luafunction.cpp" />
-    <ClCompile Include="luacppinterface\LuaCppInterface\luareference.cpp" />
-    <ClCompile Include="luacppinterface\LuaCppInterface\luatable.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="luacppinterface\LuaCppInterface\luacoroutine.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luacppinterface.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luafunction.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luafunctionbase.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luageneralgenericfunctions.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luagenericfunction.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\lualightuserdata.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luareference.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luatable.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luatype.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luatypetemplates.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luauserdata.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luauserdatabindtemplates.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luauserdataforwards.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luavoidgenericfunctions.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="lua.vcxproj">
-      <Project>{48551477-5b65-4b56-88ce-5b7a066bfd3a}</Project>
-    </ProjectReference>
+    <ClInclude Include="luwra\lib\luwra.hpp" />
+    <ClInclude Include="luwra\lib\luwra\auxiliary.hpp" />
+    <ClInclude Include="luwra\lib\luwra\common.hpp" />
+    <ClInclude Include="luwra\lib\luwra\compat.hpp" />
+    <ClInclude Include="luwra\lib\luwra\fields.hpp" />
+    <ClInclude Include="luwra\lib\luwra\functions.hpp" />
+    <ClInclude Include="luwra\lib\luwra\generic.hpp" />
+    <ClInclude Include="luwra\lib\luwra\methods.hpp" />
+    <ClInclude Include="luwra\lib\luwra\stack.hpp" />
+    <ClInclude Include="luwra\lib\luwra\state.hpp" />
+    <ClInclude Include="luwra\lib\luwra\types.hpp" />
+    <ClInclude Include="luwra\lib\luwra\usertypes.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

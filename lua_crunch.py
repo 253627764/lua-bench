@@ -2,25 +2,19 @@ import matplotlib.pyplot as plt
 import csv
 
 
-bench_files = [
-	"lua bench tests kaguya.csv",
-	"lua bench tests kaguya.csv",
-	"lua bench tests kaguya.csv",
-	"lua bench tests kaguya.csv",
-	"lua bench tests kaguya.csv",
-	"lua bench tests kaguya.csv",
-	"lua bench tests kaguya.csv",
-	"lua bench tests kaguya.csv",
-	"lua bench tests luaapipp.csv",
-	"lua bench tests luacppinterface.csv",
-	"lua bench tests luawrapper.csv",
-	"lua bench tests oolua.csv",
-	"lua bench tests plain C.csv",
-	"lua bench tests selene.csv",
-	"lua bench tests slb3.csv",
-	"lua bench tests sol.csv",
-	"lua bench tests swig.csv",
-	"lua bench tests luwra.csv",
+bench_targets = [
+	{ "lua-intf", "lua bench tests lua-intf.csv", "#000000" },
+	{ "luabind", "lua bench tests luabind.csv", "#000000" },
+	{ "lua-api-pp", "lua bench tests lua-api-pp.csv", "#000000" },
+	{ "luacppinterface", "lua bench tests luacppinterface.csv", "#000000" },
+	{ "luawrapper", "lua bench tests luawrapper.csv", "#000000" },
+	{ "oolua", "lua bench tests oolua.csv", "#000000" },
+	{ "plain C", "lua bench tests plain C.csv", "#000000" },
+	{ "selene", "lua bench tests selene.csv", "#000000" },
+	{ "slb3", "lua bench tests slb3.csv", "#000000" },
+	{ "sol", "lua bench tests sol.csv", "#000000" },
+	{ "swig", "lua bench tests swig.csv", "#000000" },
+	{ "luwra", "lua bench tests luwra.csv", "#000000" },
 ]
 
 class benchmark_result:
@@ -51,7 +45,7 @@ class benchmark_result:
 			k = row[0]
 			v = row[1]
 			k = str(k)
-			k = k.split('-')
+			k = k.split(' - ')[2]
 			
 			
 

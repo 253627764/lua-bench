@@ -15,66 +15,66 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LuaIntf\impl\CppArg.h">
+    <ClInclude Include="lua-intf\LuaIntf\impl\CppArg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\impl\CppBindClass.h">
+    <ClInclude Include="lua-intf\LuaIntf\impl\CppBindClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\impl\CppBindModule.h">
+    <ClInclude Include="lua-intf\LuaIntf\impl\CppBindModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\impl\CppFunction.h">
+    <ClInclude Include="lua-intf\LuaIntf\impl\CppFunction.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\impl\CppInvoke.h">
+    <ClInclude Include="lua-intf\LuaIntf\impl\CppInvoke.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\impl\CppObject.h">
+    <ClInclude Include="lua-intf\LuaIntf\impl\CppObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\impl\LuaException.h">
+    <ClInclude Include="lua-intf\LuaIntf\impl\LuaException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\impl\LuaType.h">
+    <ClInclude Include="lua-intf\LuaIntf\impl\LuaType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\LuaCompat.h">
+    <ClInclude Include="lua-intf\LuaIntf\LuaCompat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\LuaContext.h">
+    <ClInclude Include="lua-intf\LuaIntf\LuaContext.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\LuaIntf.h">
+    <ClInclude Include="lua-intf\LuaIntf\LuaIntf.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\LuaRef.h">
+    <ClInclude Include="lua-intf\LuaIntf\LuaRef.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LuaIntf\LuaState.h">
+    <ClInclude Include="lua-intf\LuaIntf\LuaState.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="LuaIntf\src\CppBindClass.cpp">
+    <ClCompile Include="lua-intf\LuaIntf\src\CppBindClass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LuaIntf\src\CppBindModule.cpp">
+    <ClCompile Include="lua-intf\LuaIntf\src\CppBindModule.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LuaIntf\src\CppFunction.cpp">
+    <ClCompile Include="lua-intf\LuaIntf\src\CppFunction.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LuaIntf\src\CppObject.cpp">
+    <ClCompile Include="lua-intf\LuaIntf\src\CppObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LuaIntf\src\LuaCompat.cpp">
+    <ClCompile Include="lua-intf\LuaIntf\src\LuaCompat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LuaIntf\src\LuaRef.cpp">
+    <ClCompile Include="lua-intf\LuaIntf\src\LuaRef.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LuaIntf\src\LuaState.cpp">
+    <ClCompile Include="lua-intf\LuaIntf\src\LuaState.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

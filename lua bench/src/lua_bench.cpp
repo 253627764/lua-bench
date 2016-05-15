@@ -10,7 +10,7 @@ int main(int argc, char* argv[]) {
 	rootcfg.list_benchmarks = true;
 	rootcfg.list_reporters = true;
 	rootcfg.verbose = true;
-
+#if 0
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("plain C - global get", lb::plain_global_string_get_measure),
@@ -26,6 +26,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("plain C - member variable", lb::plain_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " plain C";
 		cfg.output_file += " plain C";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -45,6 +46,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("sol - member variable", lb::sol_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " sol";
 		cfg.output_file += " sol";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -63,6 +65,7 @@ int main(int argc, char* argv[]) {
 //			nonius::benchmark("selene - member variable", lb::selene_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " selene";
 		cfg.output_file += " selene";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -81,6 +84,7 @@ int main(int argc, char* argv[]) {
 //			nonius::benchmark("kaguya - member variable", lb::kaguya_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " kaguya";
 		cfg.output_file += " kaguya";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -99,6 +103,7 @@ int main(int argc, char* argv[]) {
 //			nonius::benchmark("slb3 - member variable", lb::slb3_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " slb3";
 		cfg.output_file += " slb3";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -118,6 +123,7 @@ int main(int argc, char* argv[]) {
 
 		};
 		auto cfg = rootcfg;
+		cfg.title += " luawrapper";
 		cfg.output_file += " luawrapper";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -137,6 +143,7 @@ int main(int argc, char* argv[]) {
 
 		};
 		auto cfg = rootcfg;
+		cfg.title += " swig";
 		cfg.output_file += " swig";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -155,6 +162,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("oolua - member variable", lb::oolua_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " oolua";
 		cfg.output_file += " oolua";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -173,7 +181,28 @@ int main(int argc, char* argv[]) {
 //			nonius::benchmark("luacppinterface - member variable", lb::luacppinterface_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " luacppinterface";
 		cfg.output_file += " luacppinterface";
+		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
+	}
+#endif
+	{
+		nonius::benchmark benchmarks[] = {
+			nonius::benchmark("luwra - global get", lb::luwra_global_string_get_measure),
+			nonius::benchmark("luwra - global set", lb::luwra_global_string_set_measure),
+			nonius::benchmark("luwra - table get", lb::luwra_table_get_measure),
+			nonius::benchmark("luwra - table set", lb::luwra_table_set_measure),
+			nonius::benchmark("luwra - table chained get", lb::luwra_chained_get_measure),
+			nonius::benchmark("luwra - table chained set", lb::luwra_chained_set_measure),
+			nonius::benchmark("luwra - c function", lb::luwra_c_function_measure),
+			nonius::benchmark("luwra - c function through lua", lb::luwra_c_through_lua_function_measure),
+			nonius::benchmark("luwra - lua function", lb::luwra_lua_function_measure),
+			nonius::benchmark("luwra - member function calls", lb::luwra_member_function_call),
+			//			nonius::benchmark("lua_api_pp - member variable", lb::lua_api_pp_member_variable),
+		};
+		auto cfg = rootcfg;
+		cfg.title += " luwra";
+		cfg.output_file += " luwra";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
 	{
@@ -187,10 +216,11 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("lua_api_pp - c function", lb::lua_api_pp_c_function_measure),
 			nonius::benchmark("lua_api_pp - c function through lua", lb::lua_api_pp_c_through_lua_function_measure),
 			nonius::benchmark("lua_api_pp - lua function", lb::lua_api_pp_lua_function_measure),
-//			nonius::benchmark("lua_api_pp - member function calls", lb::lua_api_pp_member_function_call),
+			nonius::benchmark("lua_api_pp - member function calls", lb::lua_api_pp_member_function_call),
 //			nonius::benchmark("lua_api_pp - member variable", lb::lua_api_pp_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " lua-api-pp";
 		cfg.output_file += " lua-api-pp";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -210,6 +240,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("luabind - member variable", lb::luabind_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " luabind";
 		cfg.output_file += " luabind";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
@@ -229,6 +260,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("lua_intf - member variable", lb::lua_intf_member_variable),
 		};
 		auto cfg = rootcfg;
+		cfg.title += " lua-intf";
 		cfg.output_file += " lua-intf";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}

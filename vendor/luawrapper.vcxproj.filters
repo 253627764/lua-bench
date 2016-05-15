@@ -15,10 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\LuaContext.hpp">
+    <ClInclude Include="luawrapper\include\LuaContext.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\misc\exception.hpp">
+    <ClInclude Include="luawrapper\include\misc\exception.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
