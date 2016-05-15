@@ -30,12 +30,6 @@
     <ClCompile Include="luacppinterface\LuaCppInterface\luatable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="luacppinterface\LuaCppInterface\luastringconversion.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="luacppinterface\LuaCppInterface\luaerror.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="luacppinterface\LuaCppInterface\luacoroutine.h">
@@ -81,15 +75,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="luacppinterface\LuaCppInterface\luavoidgenericfunctions.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="luacppinterface\LuaCppInterface\luastringconversion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="luacppinterface\LuaCppInterface\luaerror.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="luacppinterface\LuaCppInterface\luacppinclude.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

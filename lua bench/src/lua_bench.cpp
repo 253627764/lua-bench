@@ -167,8 +167,8 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("luacppinterface - table chained get", lb::luacppinterface_chained_get_measure),
 			nonius::benchmark("luacppinterface - table chained set", lb::luacppinterface_chained_set_measure),
 			nonius::benchmark("luacppinterface - c function", lb::luacppinterface_c_function_measure),
-//			nonius::benchmark("luacppinterface - c function through lua", lb::luacppinterface_c_through_lua_function_measure),
-//			nonius::benchmark("luacppinterface - lua function", lb::luacppinterface_lua_function_measure),
+			nonius::benchmark("luacppinterface - c function through lua", lb::luacppinterface_c_through_lua_function_measure),
+			nonius::benchmark("luacppinterface - lua function", lb::luacppinterface_lua_function_measure),
 			nonius::benchmark("luacppinterface - member function calls", lb::luacppinterface_member_function_call),
 //			nonius::benchmark("luacppinterface - member variable", lb::luacppinterface_member_variable),
 		};

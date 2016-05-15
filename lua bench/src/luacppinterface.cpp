@@ -91,7 +91,7 @@ namespace lb {
 
 	void luacppinterface_lua_function_measure(nonius::chronometer& meter) {
 		// Fucking broken
-		/*Lua l;
+		Lua l;
 		auto lua = l.GetGlobalEnvironment();
 		l.RunScript(R"(function f (i)
 			return i;
@@ -103,13 +103,12 @@ namespace lb {
 			for (int i = 0; i < repetition; ++i)
 				x += f.Invoke(i);
 			return x;
-		});*/
-		//meter.measure([&]() {});
+		});
 	}
 
 	void luacppinterface_c_through_lua_function_measure(nonius::chronometer& meter) {
 		// Broken as shit
-		/*Lua l;
+		Lua l;
 		auto lua = l.GetGlobalEnvironment();
 		lua.Set("f", l.CreateFunction<int(int)>(basic_call));
 		
@@ -119,8 +118,7 @@ namespace lb {
 			for (int i = 0; i < repetition; ++i)
 				x += f.Invoke(i);
 			return x;
-		});*/
-		//meter.measure([&]() {});
+		});
 	}
 
 	void luacppinterface_member_function_call(nonius::chronometer& meter) {

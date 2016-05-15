@@ -150,16 +150,14 @@ namespace lb {
 	}
 
 	void lua_api_pp_member_function_call(nonius::chronometer& meter) {
-		/*lua::State l;
+		// Unsupported -- only allows for metatable functions, not regular functions??
+		lua::State l;
 		l.call(lua::mkcf<setup>);
 		l.runString("b = basic_new()");
 		std::string code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
 			l.runString(code);
-		});*/
-		// Unsupported -- only allows for metatable functions, not regular functions??
-		//meter.measure([]() {
-		//});
+		});
 	}
 
 	void lua_api_pp_member_variable(nonius::chronometer& meter) {

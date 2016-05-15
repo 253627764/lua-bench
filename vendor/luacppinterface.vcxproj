@@ -120,24 +120,19 @@
   <ItemGroup>
     <ClCompile Include="luacppinterface\LuaCppInterface\luacoroutine.cpp" />
     <ClCompile Include="luacppinterface\LuaCppInterface\luacppinterface.cpp" />
-    <ClCompile Include="luacppinterface\LuaCppInterface\luaerror.cpp" />
     <ClCompile Include="luacppinterface\LuaCppInterface\luafunction.cpp" />
     <ClCompile Include="luacppinterface\LuaCppInterface\luareference.cpp" />
-    <ClCompile Include="luacppinterface\LuaCppInterface\luastringconversion.cpp" />
     <ClCompile Include="luacppinterface\LuaCppInterface\luatable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="luacppinterface\LuaCppInterface\luacoroutine.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luacppinclude.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\luacppinterface.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luaerror.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\luafunction.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\luafunctionbase.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\luageneralgenericfunctions.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\luagenericfunction.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\lualightuserdata.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\luareference.h" />
-    <ClInclude Include="luacppinterface\LuaCppInterface\luastringconversion.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\luatable.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\luatype.h" />
     <ClInclude Include="luacppinterface\LuaCppInterface\luatypetemplates.h" />
