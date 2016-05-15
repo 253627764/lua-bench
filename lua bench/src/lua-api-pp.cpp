@@ -1,8 +1,10 @@
 #include "lua_bench.hpp"
 #include "basic.hpp"
+#include "lua_bench_wrap.hpp"
 #include <luapp/lua.hpp>
+#include <lua.hpp>
 
-LUAPP_USERDATA(basic, "basic")
+LUAPP_USERDATA(basic, "basic");
 
 namespace lb {
 	
@@ -26,6 +28,7 @@ namespace lb {
 		c.mt<basic>() = lua::Table::records(c,
 			"get", basic_get,
 			"set", basic_set,
+			"__index", basic_index_wrap,
 			"__gc", basic_gc
 		);
 		c.global["basic_new"] = basic_new;
@@ -150,7 +153,7 @@ namespace lb {
 	}
 
 	void lua_api_pp_member_function_call(nonius::chronometer& meter) {
-		// Unsupported -- only allows for metatable functions, not regular functions??
+		// this framework is dumb as bricks
 		lua::State l;
 		l.call(lua::mkcf<setup>);
 		l.runString("b = basic_new()");

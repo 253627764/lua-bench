@@ -42,4 +42,4 @@ url=https://github.com/ThePhD/lua-api-pp.git
 	url = https://github.com/ThePhD/Selene.git
 [submodule "vendor/luwra"]
 	path = vendor/luwra
-	url = https://github.com/ThePhD/luwra
+url=https://github.com/vapourismo/luwra.git

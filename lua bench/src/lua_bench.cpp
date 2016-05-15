@@ -6,11 +6,11 @@ int main(int argc, char* argv[]) {
 	nonius::configuration rootcfg;
 	rootcfg.output_file = "lua bench tests";
 	rootcfg.title = "lua bench tests";
-	rootcfg.samples = 100;
+	rootcfg.samples = 250;
 	rootcfg.list_benchmarks = true;
 	rootcfg.list_reporters = true;
 	rootcfg.verbose = true;
-#if 0
+
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("plain C - global get", lb::plain_global_string_get_measure),
@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("selene - c function through lua", lb::selene_c_through_lua_function_measure),
 			nonius::benchmark("selene - lua function", lb::selene_lua_function_measure),
 			nonius::benchmark("selene - member function calls", lb::selene_member_function_call),
-//			nonius::benchmark("selene - member variable", lb::selene_member_variable),
+			//nonius::benchmark("selene - member variable", lb::selene_member_variable),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " selene";
@@ -81,7 +81,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("kaguya - c function through lua", lb::kaguya_c_through_lua_function_measure),
 			nonius::benchmark("kaguya - lua function", lb::kaguya_lua_function_measure),
 			nonius::benchmark("kaguya - member function calls", lb::kaguya_member_function_call),
-//			nonius::benchmark("kaguya - member variable", lb::kaguya_member_variable),
+			//nonius::benchmark("kaguya - member variable", lb::kaguya_member_variable),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " kaguya";
@@ -92,15 +92,15 @@ int main(int argc, char* argv[]) {
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("slb3 - global get", lb::slb3_global_string_get_measure),
 			nonius::benchmark("slb3 - global set", lb::slb3_global_string_set_measure),
-//			nonius::benchmark("slb3 - table get", lb::slb3_table_get_measure),
-//			nonius::benchmark("slb3 - table set", lb::slb3_table_set_measure),
-//			nonius::benchmark("slb3 - table chained get", lb::slb3_chained_get_measure),
-//			nonius::benchmark("slb3 - table chained set", lb::slb3_chained_set_measure),
+			//nonius::benchmark("slb3 - table get", lb::slb3_table_get_measure),
+			//nonius::benchmark("slb3 - table set", lb::slb3_table_set_measure),
+			//nonius::benchmark("slb3 - table chained get", lb::slb3_chained_get_measure),
+			//nonius::benchmark("slb3 - table chained set", lb::slb3_chained_set_measure),
 			nonius::benchmark("slb3 - c function", lb::slb3_c_function_measure),
-//			nonius::benchmark("slb3 - c function through lua", lb::slb3_c_through_lua_function_measure),
-//			nonius::benchmark("slb3 - lua function", lb::slb3_lua_function_measure),
+			//nonius::benchmark("slb3 - c function through lua", lb::slb3_c_through_lua_function_measure),
+			//nonius::benchmark("slb3 - lua function", lb::slb3_lua_function_measure),
 			nonius::benchmark("slb3 - member function calls", lb::slb3_member_function_call),
-//			nonius::benchmark("slb3 - member variable", lb::slb3_member_variable),
+			//nonius::benchmark("slb3 - member variable", lb::slb3_member_variable),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " slb3";
@@ -129,12 +129,12 @@ int main(int argc, char* argv[]) {
 	}
 	{
 		nonius::benchmark benchmarks[] = {
-//			nonius::benchmark("swig - global get", lb::swig_global_string_get_measure),
-//			nonius::benchmark("swig - global set", lb::swig_global_string_set_measure),
-//			nonius::benchmark("swig - table get", lb::swig_table_get_measure),
-//			nonius::benchmark("swig - table set", lb::swig_table_set_measure),
-//			nonius::benchmark("swig - table chained get", lb::swig_chained_get_measure),
-//			nonius::benchmark("swig - table chained set", lb::swig_chained_set_measure),
+			//nonius::benchmark("swig - global get", lb::swig_global_string_get_measure),
+			//nonius::benchmark("swig - global set", lb::swig_global_string_set_measure),
+			//nonius::benchmark("swig - table get", lb::swig_table_get_measure),
+			//nonius::benchmark("swig - table set", lb::swig_table_set_measure),
+			//nonius::benchmark("swig - table chained get", lb::swig_chained_get_measure),
+			//nonius::benchmark("swig - table chained set", lb::swig_chained_set_measure),
 			nonius::benchmark("swig - c function", lb::swig_c_function_measure),
 			nonius::benchmark("swig - c function through lua", lb::swig_c_through_lua_function_measure),
 			nonius::benchmark("swig - lua function", lb::swig_lua_function_measure),
@@ -185,7 +185,6 @@ int main(int argc, char* argv[]) {
 		cfg.output_file += " luacppinterface";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
-#endif
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("luwra - global get", lb::luwra_global_string_get_measure),
@@ -198,13 +197,14 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("luwra - c function through lua", lb::luwra_c_through_lua_function_measure),
 			nonius::benchmark("luwra - lua function", lb::luwra_lua_function_measure),
 			nonius::benchmark("luwra - member function calls", lb::luwra_member_function_call),
-			//			nonius::benchmark("lua_api_pp - member variable", lb::lua_api_pp_member_variable),
+			//nonius::benchmark("lua_api_pp - member variable", lb::lua_api_pp_member_variable),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luwra";
 		cfg.output_file += " luwra";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::multi_report(nonius::csv_reporter(), nonius::html_reporter()));
 	}
+
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("lua_api_pp - global get", lb::lua_api_pp_global_string_get_measure),
@@ -217,7 +217,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("lua_api_pp - c function through lua", lb::lua_api_pp_c_through_lua_function_measure),
 			nonius::benchmark("lua_api_pp - lua function", lb::lua_api_pp_lua_function_measure),
 			nonius::benchmark("lua_api_pp - member function calls", lb::lua_api_pp_member_function_call),
-//			nonius::benchmark("lua_api_pp - member variable", lb::lua_api_pp_member_variable),
+			//nonius::benchmark("lua_api_pp - member variable", lb::lua_api_pp_member_variable),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " lua-api-pp";

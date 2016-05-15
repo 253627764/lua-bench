@@ -74,7 +74,7 @@ namespace lb {
 
 	void luwra_c_function_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
-		lua.set("f", &basic_call);
+		lua["f"] = LUWRA_WRAP(basic_call);
 		auto code = repeated_code("f(i)");
 		meter.measure([&]() {
 			lua.runString(code);
@@ -86,7 +86,8 @@ namespace lb {
 		lua.runString(R"(function f (i)
 			return i;
 		end)");
-		auto f = lua.get<std::function<int(int)>>("f");
+		lua_getglobal(lua, "f");
+		luwra::NativeFunction<int> f(lua, -1);
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -95,12 +96,18 @@ namespace lb {
 			}
 			return x;
 		});
+		lua_pop(lua, 1);
 	}
 
 	void luwra_c_through_lua_function_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
-		lua.set("f", &basic_call);
-		auto f = lua.get<std::function<int(int)>>("f");
+		lua["f"] = LUWRA_WRAP(basic_call);
+		
+		// Since Luwra expects the referenced function to exist on a Lua stack before execution,
+		// we have to push it manually. Luwra is way too minimal to work with Lua-native functions
+		// outside the scope of a wrapped function.
+		lua_getglobal(lua, "f");
+		luwra::NativeFunction<int> f(lua , -1);
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -109,15 +116,16 @@ namespace lb {
 			}
 			return x;
 		});
+		lua_pop(lua, 1);
 	}
 
 	void luwra_member_function_call(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
-		lua.registerUserType<basic>(
+		lua.registerUserType<basic()>(
 			"basic",
 			{
-				LUWRA_MEMBER(basic::get, get),
-				LUWRA_MEMBER(basic::set, set)
+				LUWRA_MEMBER(basic, get),
+				LUWRA_MEMBER(basic, set)
 			}
 		);
 		lua.runString("b = basic()");
