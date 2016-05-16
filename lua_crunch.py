@@ -1,7 +1,9 @@
 import matplotlib.pyplot as plt
 import csv
 
-bench_targets = [
+# The various targets we're going to crunch data for
+# ( Name, file, Data )
+crunch_targets = [
 	( "lua-intf", "lua - results/lua bench tests lua-intf.csv", "#000000" ),
 	( "luabind", "lua - results/lua bench tests luabind.csv", "#000000" ),
 	( "lua-api-pp", "lua - results/lua bench tests lua-api-pp.csv", "#000000" ),
@@ -17,7 +19,7 @@ bench_targets = [
 ]
 
 class benchmark_result:
-	bench_categories = [
+	known_crunch_categories = [
 		"global get",
 		"global set",
 		"table chained get",
@@ -35,21 +37,37 @@ class benchmark_result:
 		self.name = name
 		self.file = file
 		self.color = color
-		self.categories = []
+		self.results = {}
 		self.process()
 
 	def process(self):
-		filehandle = open(self.file)
-		rows = csv.DictReader(filehandle)
-		for row in rows:
-			k = row[0]
-			v = row[1]
-			k = str(k)
-			k = k.split(' - ')[1]
-			
-results = []
+		with open(self.file) as filehandle:
+			rows = csv.DictReader(filehandle)
+			for row in rows:
+				for fieldname in rows.fieldnames:
+					# massage key data to have similar names
+					# TODO: Could just change the C++ source to name it as desired... ?
+					k = fieldname
+					v = row[fieldname]
+					k = str(k)
+					splits = k.split(' - ', 1)
+					if len(splits) > 1:
+						k = splits[1]
+					v = float(v)
+					# append into right place
+					target = None
+					if fieldname in self.results:
+					    target = self.results[fieldname]
+					else:
+						target = []
+						self.results[fieldname] = target
+					target.append(v)
 
-for t in bench_targets:
+		self.color
+			
+crunch_categories = []
+results = []
+for t in crunch_targets:
 	results.append(benchmark_result(t[0], t[1], t[2]))
 
 
