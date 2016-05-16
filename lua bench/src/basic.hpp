@@ -1,5 +1,8 @@
 #pragma once
 
+#include <tuple>
+#include <string>
+
 struct basic {
 	int var;
 
@@ -14,8 +17,19 @@ struct basic {
 	void set(int x) {
 		var = x;
 	}
+
+	std::tuple<int, std::string> multi_return(int a, std::string b) {
+		return{ a, b };
+	}
 };
 
 inline int basic_call(int x) {
 	return x;
+}
+
+inline std::string basic_multi_param(std::string a, bool x) {
+	if (x) {
+		return a;
+	}
+	return a + " (not true)";
 }
