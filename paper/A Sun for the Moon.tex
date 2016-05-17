@@ -142,6 +142,7 @@
 	emph={
 		basic,
 		SLB, Script, Manager,
+		sel, Selector,
 		sol, luwra, function, protected_function, table, usertype, coroutine, userdata, lightuserdata, thread, reference, state, state_view, variadic_args, this_state,
 		kaguya, State, Function, Thread, Table,
 		std, string, tuple, map, experimental, optional,
@@ -149,6 +150,7 @@
 		luwra,
 		luabind, class_, constructor,
 		lua_State,
+		LUAPP_USERDATA,
 		OOLUA, OOLUA_PROXY, OOLUA_PROXY_END, OOLUA_MGET_MSET, OOLUA_MGET_MSET, OOLUA_MFUNC, OOLUA_MFUNC_CONST, OOLUA_EXPORT_FUNCTIONS_CONST, OOLUA_EXPORT_FUNCTIONS, OOLUA_FUNC, OOLUA_CFUNC,
 	},
 	emphstyle={\color{NavyBlue}},
@@ -509,7 +511,7 @@ I present a novel header-only C++ library \soltwo{} that achieves an easy to use
 
 \subsection{Lua's Problems}
 
-As a C++ or C developer, the Lua C API is the offered interface. It is low-level, stack-based, and primitive in its operations. This makes it prone to off-by-one, copy-paste errors like most low-level code tends toward\cite{copy-paste-errors}. Many have attempted to wrap up the API, but have often invoked pain with their abstractions and caused many angry blogs and confused questions \cite{glue-rant}\cite{fun-lua-bindings}. Even experienced Lua users tend to diverge from the original C API when wrapping things up, because C is verbose at its best, and a kludgy soup at its worst\cite{conman-binding}.
+As a C++ or C developer, the Lua C API is the offered interface. It is low-level, stack-based, and primitive in its operations. This makes it prone to off-by-one, copy-paste errors like most low-level code tends toward\cite{copy-paste-errors}\cite{gcc-in-cxx-slides}\cite{gcc-in-cxx}. Many have attempted to wrap up the API, but have often invoked pain with their abstractions and caused many angry blogs and confused questions \cite{glue-rant}\cite{fun-lua-bindings}. Even experienced Lua users tend to diverge from the original C API when wrapping things up, because C is verbose at its best, and a kludgy soup at its worst\cite{conman-binding}.
 
 Lua's developers have introduced many breaking changes between the Lua 5.1 implementation that became ubiquitous in many places and its later iterations, such as LuaJIT, Lua 5.2, 5.3. Dealing with source-level incompatibility is a problem for many developers\cite{api-evolution}. Developing large systems on top of the Lua 5.1 API has left large codebases where refactors of all of the C code would be exceptionally painful and is thus avoided at all costs.
 
@@ -771,7 +773,7 @@ if (luaL_dostring(L, "b = basic()\n"
 
 Luabind has a few quirks in its API, like setting up a keyword to easily define "classes" in Lua script and using "." for nested table queries, requiring the user compose a full lookup string before passing it to Luabind to process and traverse down a table. It also seems to lack a dedicated table abstraction, but has several kinds of indexers on some of its types. This ultimately makes it easy to use, but certainly not as easy as Kaguya, Selene or \soltwo{}.
 
-One unmentioned caveat is that Luabind \emph{\textbf{requires}} the "require" Lua package when users call \lstinline|luabind::open| to get started with the framework. This is why the call to \lstinline|luaL_openibs(L)| is present. This was an undocumented caveat and it caused quite the crash for a while before figuring it out. Somebody somewhere should document it, but the docs are not hosted on a place where pull requests can be sent.
+One unmentioned caveat is that Luabind \emph{\textbf{requires}} the "require" Lua package when users call \lstinline|luabind::open| to get started with the framework. This is why the call to \lstinline|luaL_openlibs(L)| is present. This was an undocumented caveat and it caused quite the crash for a while before figuring it out. Somebody somewhere should document it, but the docs are not hosted on a place where pull requests can be sent.
 
 \textbf{Recommendation}: This code base is good and individual open-source contributors have improved parts of it and remade forks over time, but best left to handle cases of legacy where transition or use of something better is entirely out of the question.
 
@@ -957,7 +959,7 @@ Libraries that have started 2-4 years before \soltwo{} have less stars and less 
 
 \subsection{Performance Comparisons}
 
-Aside from satoren's benchmarks (see \cref{fig:early-benchmark}), there is only raw data available at the moment concerning performance of \emph{all} thirteen APIs. The data and benchmarks are available online\footnote{Additional benchmark data that has not yet been massaged into graphs and covers greater detail than the benchmarks shown in this paper are at \url{https://github.com/ThePhD/lua-bench/tree/master/lua - results}. The overall benchmarking code and projects can be found at \url{https://github.com/ThePhD/lua-bench}.}. The additional data needs to be massaged into a clean representation using python's matplotlib from the "lua crunch" project in that repository (pull requests welcome). From both satoren's benchmarks and lua-bench's initial CSV numbers, Kaguya, luwra, and \soltwo{} seem to be the most highly performing across all areas, with Selene quite demonstrably being the worst optimized of the group.
+Aside from satoren's benchmarks (see \cref{fig:early-benchmark}), there is only raw data available at the moment concerning performance of \emph{all} thirteen APIs. The data and benchmarks are available online\footnote{Additional benchmark data that has not yet been massaged into graphs and covers greater detail than the benchmarks shown in this paper are at \url{https://github.com/ThePhD/lua-bench/tree/master/lua - results}. The overall benchmarking code and projects can be found at \url{https://github.com/ThePhD/lua-bench}.}. The additional data needs to be massaged into a clean representation using python's matplotlib from the "lua crunch" project in that repository (pull requests welcome). From both satoren's benchmarks and lua-bench's initial CSV numbers generated from statistical microbenchmarking framework nonius\cite{nonius}, Kaguya, luwra, and \soltwo{} seem to be the most highly performing across all areas, with Selene quite demonstrably being the worst optimized of the group.
 
 
 \section{Conclusion}
