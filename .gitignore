@@ -9,3 +9,10 @@ __pycache__/
 build.ninja
 .dropbox
 desktop.ini
+*.aux
+*.bbl
+*.blg
+paper/A Sun for the Moon.log
+paper/A Sun for the Moon.out
+paper/references/texput.log
+*.synctex.gz

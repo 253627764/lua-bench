@@ -96,6 +96,23 @@
 % have to be run twice to clear warning/error messages.
 \usepackage{listings}
 
+% *** IN-PAPER REFERENCES ***
+\usepackage{hyperref}
+\usepackage{cleveref}
+\hypersetup{
+	colorlinks=true, 
+	linkcolor=Violet,
+	citecolor=Periwinkle,
+	filecolor=magenta,
+	urlcolor=ForestGreen
+}
+\crefname{section}{§}{§§}
+\Crefname{Section}{§}{§§}
+\crefname{listing}{snippet}{snippet}
+\Crefname{listing}{Snippet}{Snippet}
+% clever references
+
+
 % *** LISTING STYLES ***
 
 \definecolor{cxxlistingbackground}{rgb}{0.97,0.97,0.97}
@@ -126,12 +143,13 @@
 		basic,
 		SLB, Script, Manager,
 		sol, luwra, function, protected_function, table, usertype, coroutine, userdata, lightuserdata, thread, reference, state, state_view, variadic_args, this_state,
-		kaguya, State, Function, Thread,
+		kaguya, State, Function, Thread, Table,
 		std, string, tuple, map, experimental, optional,
 		LuaIntf, LuaTable, LuaContext, LuaBinding
 		luwra,
 		luabind, class_, constructor,
 		lua_State,
+		OOLUA, OOLUA_PROXY, OOLUA_PROXY_END, OOLUA_MGET_MSET, OOLUA_MGET_MSET, OOLUA_MFUNC, OOLUA_MFUNC_CONST, OOLUA_EXPORT_FUNCTIONS_CONST, OOLUA_EXPORT_FUNCTIONS, OOLUA_FUNC, OOLUA_CFUNC,
 	},
 	emphstyle={\color{NavyBlue}},
 	ndkeywords={
@@ -145,6 +163,8 @@
 	},
 	ndkeywordstyle=\color{WildStrawberry},
 }
+\renewcommand{\lstlistingname}{Snippet}
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}
 
 \newcommand\digitstyle{\color{WildStrawberry}}
 \makeatletter
@@ -390,13 +410,12 @@
 
 % *** PDF, URL AND HYPERLINK PACKAGES ***
 %
-\usepackage{url}
+% \usepackage{url}
 % url.sty was written by Donald Arseneau. It provides better support for
 % handling and breaking URLs. url.sty is already installed on most LaTeX
 % systems. The latest version and documentation can be obtained at:
 % http://www.ctan.org/pkg/url
 % Basically, \url{my_url_here}.
-
 
 % *** Do not adjust lengths that control margins, column widths, etc. ***
 % *** Do not use packages that alter fonts (such as pslatex).         ***
@@ -486,7 +505,7 @@ I present a novel header-only C++ library \soltwo{} that achieves an easy to use
 
 \section{Introduction}
 
-\soltwo{}\cite{sol2} was implementing as a binding between the Lua language\cite{lua} and C++. Lua's canonical implementation have seen widespread use throughout several different industries. Due to its incredibly small binary size but relative power, it has found use in games \cite{lua-game}, robotics \cite{lua-robot}, servers \cite{lua-light} and many more applications. Of particular note is that it is ubiquitous for scripting in the video game industry, with titles such as World of Warcraft, AngryBirds, and several others\cite{lua-about} lending it practical credence. It builds into a tiny library or executable, making it suitable for even the most demanding of environments, and has a lean runtime with library features and sandboxing that can be easily enforced at the user's request.
+\soltwo{}\cite{sol2} is a binding between the Lua language\cite{lua} and C++. Lua's canonical implementation have seen widespread use throughout several different industries. Due to its incredibly small binary size but relative power, it has found use in games \cite{lua-game}, robotics \cite{lua-robot}, servers \cite{lua-light} and many more applications. Of particular note is that it is ubiquitous for scripting in the video game industry, with titles such as World of Warcraft, AngryBirds, and several others\cite{lua-about} lending it practical credence. It builds into a tiny library or executable, making it suitable for even the most demanding of environments, and has a lean runtime with library features and sandboxing that can be easily enforced at the user's request.
 
 \subsection{Lua's Problems}
 
@@ -498,7 +517,7 @@ Many libraries were created by hobbyist programmers and corporations alike over 
 
 \subsection{\soltwo{}'s History}
 
-\soltwo{} was originally just Sol, started by Dr. Danny Y. (Rapptz)\cite{sol}. It grew out of the \loungecxx{} shortly after a similar library Lundi\cite{lundi} had been abandoned. Sol came mostly from Rapptz's need to create a tiny metabuild system around "ninja" for his academic assistance endeavors. During Sol's development, I joined the project and saw its potential, desiring to not only strengthen its implementation but heavily upgrade its feature set. Rapptz no longer had the time to maintain Sol, so after almost two years of repository and feature stagnation, alongside keeping my own personal fork alive, I officially endeavored to heavily improve and optimize Sol from January 2016 onward. The rest of this paper discusses design choices for, implementation trials of, and comparisons to \soltwo{}.
+\soltwo{} was originally just Sol, started by Dr. Danny Y. (Rapptz)\cite{sol}. It grew out of the \loungecxx{} shortly after a similar library Lundi\cite{lundi} had been abandoned. Sol came mostly from Rapptz's need to create a tiny metabuild system around "ninja"\cite{ninja} for his academic assistance endeavors. During Sol's development, I joined the project and saw its potential, desiring to not only strengthen its implementation but heavily upgrade its feature set. Rapptz no longer had the time to maintain Sol, so after almost two years of repository and feature stagnation, alongside keeping my own personal fork alive, I officially endeavored to heavily improve and optimize Sol from January 2016 onward. The rest of this paper discusses design choices for, implementation trials of, and comparisons to \soltwo{}.
 
 \begin{figure*}[ht!]
 	\begin{lstlisting}[caption={Lua C API to call a function with 3 arguments and a single return value.}, 
@@ -511,7 +530,7 @@ Many libraries were created by hobbyist programmers and corporations alike over 
 	int value = (int)lua_tonumber( L, -1 );
 	lua_pop( L, 1 );
 	\end{lstlisting}
-	\begin{lstlisting}[caption={Use of \soltwo{} to do exactly the same as Listing \ref{lst:function-call-lua}.}, 
+	\begin{lstlisting}[caption={Use of \soltwo{} to do exactly the same as \cref{lst:function-call-lua}.}, 
 	label={lst:function-call-sol2}]
 	sol::function cruncher = lua["my_number_cruncher"];
 	cruncher("test 40", 56. 280);
@@ -520,16 +539,16 @@ Many libraries were created by hobbyist programmers and corporations alike over 
 
 \section{Design and Methods}
 
-There were two tasks necessary to conduct this comparison and study. The first was figuring out what a good API for \soltwo{} would be, and iterating on it to improve it. The second was taking that API and comparing to the vast majority of APIs currently present, their feature set, and user desires (through issue/bug trackers and feature requests).
+There were two tasks necessary to conduct this design study and comparison. The first was figuring out what a good API for \soltwo{} is, and iterating to improve it. The second was taking that API and comparing it to the vast majority of APIs currently present, their feature set, and user desires (through issue/bug trackers and feature requests).
 
 
 \subsection{Designing \soltwo{}}
 
 Designing an API is both important and difficult. Much research, inquiry and study has been done on the subject and a good API has clear, tangible benefits\cite{api-design}\cite{good-api}. Since \soltwo{} came from its predecessor Sol, the API was mostly complete. Rapptz's original design for Sol is well-segmented and separated, abstracting away stack operations like \lstinline|push(...)|, \lstinline|get|, \lstinline|check|, and \lstinline|pop|. The next part was realizing that Lua was a language built on garbage collection and reference counting, so the next logical primitive structure became \lstinline|reference|. These then served as the building blocks for higher level primitives such as \lstinline|function|, \lstinline|table|, and \lstinline|usertype|. These three types sum up almost exactly what Lua has to offer, and are essentially core to any higher-level wrapper that abstracts up Lua.
 
-Next, features had to be chosen. Of importance in feature determination was using the work done by \soltwo{}'s predecessors, Lundi and Sol, and their various issues and pull requests on their Github repositories. This made it clear what would be required to hit the \soltwo{} milestone, and what features should be implemented for user desires beyond the typical abstractions over tables, functions, and getters/setters. Easy user-defined type support became a core feature that drove much of the innovation. LuaJIT support also became extremely important in the effort to make \soltwo{} truly Lua-version-agnostic and to attract a large swath of users from becoming locked into other libraries that did not support it, such as Selene\cite{selene} and luacppinterface\cite{luacppinterface}.
+Next, features had to be chosen. Of importance in feature determination was using the work done by \soltwo{}'s predecessors, Lundi and Rapptz's Sol, and their various issues and pull requests on their Github repositories. This made it clear what would be required to hit the \soltwo{} milestone, and what features should be implemented for user desires beyond the typical abstractions over tables, functions, and getters/setters. Easy user-defined type support became a core feature that drove much of the innovation. LuaJIT support also became extremely important in the effort to make \soltwo{} truly Lua-version-agnostic and to attract a large swath of users from becoming locked into other libraries that did not support it, such as Selene\cite{selene} and luacppinterface\cite{luacppinterface}.
 
-Finally, tantamount to \soltwo{}'s design was the realization that we could replace the chatty, verbose plain C API with just-as-efficient wrappers. Consider the code in Listing \ref{lst:function-call-lua}.
+Finally, tantamount to \soltwo{}'s design was the realization that we could replace the chatty, verbose plain C API with just-as-efficient wrappers. Consider the code in \cref{lst:function-call-lua}.
 
 Notice that both getting and calling the function is less lines of code. The compression ratio between cognitive overhead and stack management becomes even bigger when users want to start calling Lua functions with variables that are inside of the Lua runtime and not present in C++. "Spaghetti code" does not even begin to describe when users have to start nesting into tables even just 2 levels deep to get the things users want. This became a very important goal of \soltwo{}: how would \soltwo{} reduce this cognitive overhead to an absolute minimum, so that a function feels like a function, a table can be accessed like a table, and a userdata behaves more like a class type?
 
@@ -537,7 +556,7 @@ To do this, evaluation of several different libraries, browsing dozens of code r
 
 \subsection{Evaluation of Libraries}
 
-13 different libraries, including \soltwo{} and the plain Lua C API were used and check for some of the most common features users expect out of a Lua Library. Feature comparisons and API comparisons for both were done by attempting to use the code to write benchmarks and by examining the library's documentation and examples for additional cases. A feature table was composed for many of the desired API functionality demonstrated by looking at personal use, example code in books \cite{lua-game-cryengine}, issue trackers \footnote{For example, \url{https://github.com/jeremyong/Selene/issues} has many opened issues of users looking to get a better idea of how use the library}, game( engine)s \cite{amulet}, and reading \emph{Programming in Lua}\cite{lua-programming}. The following features were examined.
+13 different libraries, including \soltwo{} and the plain Lua C API, were used and check for some of the most common features users expect out of a Lua wrapper/binding library. Feature and API comparisons for both were done by attempting to use the code to write benchmarks and by examining the library's documentation and examples for additional cases. A feature table was composed for many of the desired API functionality demonstrated by looking at personal use, example code in books \cite{lua-game-cryengine}, issue trackers \footnote{For example, \url{https://github.com/jeremyong/Selene/issues} has many opened issues of users looking to get a better idea of how use the library}, game( engine)s\cite{amulet}, and reading \emph{Programming in Lua}\cite{lua-programming}. The following features were examined.
 
 \begin{itemize}
 	\item[1] optional: Support for getting an element, or potentially not (and not forcing the default construction of what amounts to a bogus/dead object). Usually comes with \lstinline|std(::experimental)::optional|. It's a fairly new class, so a hand-rolled class internal to the library with similar semantics is also acceptable
@@ -557,7 +576,7 @@ To do this, evaluation of several different libraries, browsing dozens of code r
 	\item[15] coroutines: allowing a function to be called multiple times, resuming the execution of a Lua coroutine each time
 \end{itemize}
 
-We used a very simple structure and functions to examine these benefits plus several defined features. The basic structure and functions used to extract these benefits are equivalent to Listing \ref{lst:basic-code}, with a myriad of additional code being tested and applied to see if the target library could perform as desired.
+We used a very simple structure and functions to examine these benefits plus several defined features. The basic structure and functions used to extract these benefits are equivalent to \cref{lst:basic-code}, with a myriad of additional code being tested and applied to see if the target library could perform as desired.
 
 \begin{figure*}
 \begin{lstlisting}[caption={Basic classes and functions that were attempted to be bound and integrated into various libraries.},
@@ -587,7 +606,7 @@ std::string basic_multi_param(std::string a, bool x) {
 
 \section{Results}
 
-Sol was the most fully-featured library present, because as the paper author I had the ability to use the well-designed API of Sol to quickly and swiftly implement several features that the others had, and more. The following are the lessons and caveats of the various Lua bindings we uncovered, and their design merits.
+\soltwo{} was the most fully-featured library present, because as the paper author I had the ability to use the well-designed API of \soltwo{} to quickly and swiftly implement several features that the others had, and more. The following are the lessons and caveats of the various Lua bindings we uncovered, and their design merits.
 
 \begin{table*}[ht!]
 	\centering
@@ -697,7 +716,8 @@ Sol was the most fully-featured library present, because as the paper author I h
 		\\ \hline \\
 	\end{tabular}
 	\\
-	\caption{Features for 12 different Lua libraries: ✔ - completely supported | ✗ - not supported | 〜 - partially supported} Partial support often means that it allows access in some obscure way or only supports parts of a feature, e.g. not allowing function objects (lambdas) but working with free functions.
+	\caption{Features for 12 different Lua libraries: ✔ - completely supported | ✗ - not supported | 〜 - partially supported}
+	Partial support often means that it allows access in some obscure way or only supports parts of a feature, e.g. not allowing function objects (lambdas) but working with free functions. Support was determined by using the frameworks, reading issue lists, contacting developers and checking documentation.
 	\label{table:feature-table}
 \end{table*}
 
@@ -765,9 +785,9 @@ SWIG's abstractions for userdata and types in C++ are feature-rich and incredibl
 
 \subsubsection{luacppinterface - Easy}\label{sssec:luacppinterface}
 
-Started a number of years ago and advertised on reddit, luacppinterface\cite{luacppinterface} is a fairly good inter-operation library that supports the concept of a \lstinline|LuaTable|, \lstinline|LuaFunction|, and several other useful primitives. It's only flaw is that the primitives have their constructors hidden from the user, making it hard to have even a small amount of customization to the library's functionality.
+Started a number of years ago and advertised on reddit, luacppinterface\cite{luacppinterface} is a fairly good inter-operation library that supports the concept of a \lstinline|LuaTable|, \lstinline|LuaFunction|, and several other useful primitives. It's only flaw is that the primitives have their constructors hidden from the user, meaning that manual operations done by utilizing and combining the basic primitives becomes annoying.
 
-The library's more updated branches also suffer from the same problems as \ref{sssec:luwra}'s tables: the initial type checkers do not accommodate the fact that metatables can make tables and userdata behave like functions. Therefore, luacppinterface's own implementation of functions (a userdata with a \lstinline|"__call"| metatable key overriden) crashes the code on that branch. Reverting back to the \lstinline|master| branch allowed benchmarking and test functionality to continue, but that has filled the build with yet more warnings.
+The library's more updated branches also suffer from the same problems as \cref{sssec:luwra} luwra's tables: the initial type checkers do not accommodate the fact that metatables can make tables and userdata behave like functions. Therefore, luacppinterface's own implementation of functions (a userdata with a \lstinline|"__call"| metatable key overriden) crashes the code on that branch. Reverting back to the \lstinline|master| branch allowed benchmarking and test functionality to continue, but that has filled the build with yet more warnings.
 
 While it struggles with performance in some areas, in others the library is surprisingly fast, particularly regarding its implementation of metatables for its userdata. It uses a self-referencing table trick to keep the current lookup table in the cache for when the table looks for the key of the value: this leads to an incredibly fast lookup for member variables. Unfortunately, the price of this implementation is that member variable support becomes impossible. The library also has not updated itself to handle LuaJIT, cutting it out of a fairly large portion of user's desires.
 
@@ -775,7 +795,7 @@ While it struggles with performance in some areas, in others the library is surp
 
 \subsubsection{luawrapper - Easy}
 
-luawrapper\cite{luawrapper} is the most minimal implementation here, even compared to \ref{sssec:luwra} luwra. It has a more functional API, relying on function calls and constructors of \lstinline|std::| types to create and manipulate tables. The primary functions are \lstinline|LuaContext::readVariable| and \lstinline|LuaContext::writeVariable|. It's approach to standard types means that, because there is no "object" abstraction, it suffers from a heavy dose of verbosity that can only be changed by \lstinline|typedef|s (see Listing \ref{lst:luawrapper-code}).
+luawrapper\cite{luawrapper} is the most minimal implementation here, even compared to \cref{sssec:luwra} luwra. It has a more functional API, relying on function calls and constructors of \lstinline|std::| types to create and manipulate tables. The primary functions are \lstinline|LuaContext::readVariable| and \lstinline|LuaContext::writeVariable|. It's approach to standard types means that, because there is no "object" abstraction, it suffers from a heavy dose of verbosity that can only be changed by \lstinline|typedef|s (see \cref{lst:luawrapper-code}).
 
 Nevertheless, it tends to be simple for basic use cases, and supports a wide variety of features, including variant arguments and variant return types (with \lstinline|boost::variant|).  The code is handled by PowerDNS since the company took a dependency on it long ago before the original maintainer dropped the project entirely. \soltwo{}'s developer fixed an internal compiler error when using luawrapper with Visual Studio and shipped the fix to them in a pull request. Hopefully, it will be integrated back into the original code.
 
@@ -801,7 +821,7 @@ Previously, luwra\cite{luwra} was too lightweight to be considered a wrapper. It
 
 For example, C++ function objects (e.g., Lambdas, or anything that overrides operator()) that have state are not usable unless they're made \lstinline|constexpr|. Multiple argument push and pop are still in flux. And, it is impossible to get out a \lstinline|std::function| without first getting an intermediate, making it hard to interop with functions that take \lstinline|std::function| as a parameter. Variant returns are missing and multiple returns do not compile.
 
-Still, the library has potential to be good. A good core design is there, even if there are several corner cases and caveats the library doesn't consider. As an example mistake made by more than just luwra, when creating a \lstinline|luwra::Table| type, the internal check only asks if it is a table. However, due to metatables in Lua, those same abstractions and Lua C API functions called by luwra work on userdata as well. If someone wanted to treat a userdata as a table and index into it, luwra would not let them do it. This is a mistake many more libraries that implement type checking encounter, such as \ref{lst:basic-code}. It has basic documentation as well with usage examples, which make utilizing the library simple. Nevertheless, it's speed is still within a fraction of \soltwo{} and Kaguya. 
+Still, the library has potential to be good. A good core design is there, even if there are several corner cases and caveats the library doesn't consider. As an example mistake made by more than just luwra, when creating a \lstinline|luwra::Table| type, the internal check only asks if it is a table. However, due to metatables in Lua, those same abstractions and Lua C API functions called by luwra work on userdata as well. If someone wanted to treat a userdata as a table and index into it, luwra would not let them do it. This is a mistake many more libraries that implement type checking encounter (such as \cref{lst:basic-code}). It has basic documentation as well with usage examples, which make utilizing the library simple. Nevertheless, it's speed is still within a fraction of \soltwo{} and Kaguya. 
 
 \textbf{Recommendation}: The developer is active (as recent as May 15th, 2016) and is adding features. Its performance is good (except for nested table keys and values), but that seems due to the fact that it is ignoring some of the harder parts of creating a Lua wrapper (such as not supporting arbitrary functors and lambdas). It requires C++11, but not having support for the most notable feature of C++11 (lambdas) dissuades from usage.
 
@@ -811,7 +831,7 @@ OOLua\cite{oolua} is a well-meaning library that suffers from trying to use a Do
 
 This DSL must be registered in the top-level namespace and is macro-based. Thankfully, for all of the trouble it puts the user through, the framework and DSL are powerful enough to accommodate member variables, which is a bonus for it unlike many other frameworks. However, even the DSL requires a degree of repetition that is not fully justifiable when there are other frameworks that do it in less code and with less weird oddly specific macros. For example:
 
-\begin{lstlisting}[caption={Code to bind a usertype and a function in OOLua}, label={lst:oolua-dsl}]
+\begin{lstlisting}[caption={Macros to setup usertype bindings and a function binding in OOLua}, label={lst:oolua-dsl}]
 OOLUA_PROXY(basic)
 	OOLUA_MGET_MSET(var)
 	OOLUA_MFUNC_CONST(get)
@@ -824,9 +844,9 @@ OOLUA_EXPORT_FUNCTIONS(basic, set)
 OOLUA_CFUNC(basic_call, oo_basic_call)
 \end{lstlisting}
 
-Even then, one must deliberately call \lstinline|OOLua::set_global(oolua_script, "my_func", oo_basic_call)| to have the function you just declared further up as a type. luwra may have macros, but those macros understand their purpose: less typing, less cognitive overhead, more efficiency. OOLua demands you create elaborate setups to set up your functions and userdata, but does not provide performance more competitive than either luwra, Kaguya, or \soltwo{}. It is the worst of both worlds, and while it is \emph{technically} less written work than specifying the metatable by yourself in lua and it does support member variable syntax in Lua scripts, it is doing so in a manner most convoluted.
+Even then, one must deliberately call \lstinline|OOLua::set_global(oolua_script, "my_func", oo_basic_call)| to have the function you just declared further up as a type. luwra may have macros, but those macros understand their purpose: less typing, less cognitive overhead, more efficiency. OOLua demands you create elaborate setups to set up your functions and userdata, but does not provide performance more competitive than either luwra, Kaguya, or \soltwo{}. It is the worst of both worlds. While it is \emph{technically} less written work than specifying the metatable by yourself in Lua script or the Lua C API, the convoluted DSL is not helpful. Consider that the "const-ness" of a member function can be determined at compile-time VIA the templates used underneath in OOLua, and yet the export macros and member function macros still require that you specify it manually.
 
-It has a table abstraction, but its API is so poor it may as well not have one at all. Not only does it demand that any variable it gets is default-initialized first, but it retrieves it as an out-parameter:
+It has a table abstraction, but its API is so poor it may as well not have one at all. Not only does OOLUA demand that any variable it gets is default-initialized first, the library also retrieves it as an out-parameter:
 
 \begin{lstlisting}
 using namespace OOLUA;
@@ -843,13 +863,13 @@ tu.at("warble", two_deep);
 tw.at("value", v);
 \end{lstlisting}
 
-This verbosity is entirely unnecessary and also incredibly error-prone. There's no way to compose the function calls together with out parameters, and if someone accidentally reuses a table they could very well corrupt memory. I can imagine the developer of OOLua thought that this would help provide performance, but its been proven time and time again that compilers are very good at optimizing simple types that are passed by-value\cite{efficient-c++}. This library quickly looks dated, despite the it bragging on its main website that it uses C++11 and "[covers] the problem with clever template metaprogramming and macros"\footnote{url{https://oolua.org}}. OOLua's approach is quite demonstrably too clever, and this library only manages to justify the gripes of the article he links to using those very same words.
+This verbosity is entirely unnecessary and also incredibly error-prone. There's no way to compose the function calls together with out parameters, and if someone accidentally reuses a table they could very well corrupt memory. I can imagine the developer of OOLua thought that this would help provide performance, but its been proven several times now that compilers are very good at optimizing simple types that are passed by-value\cite{efficient-c++}. This library quickly looks dated, despite the it bragging on its main website that it uses C++11 and "[covers] the problem with clever template metaprogramming and macros"\footnote{url{https://oolua.org}}. OOLua's approach is quite demonstrably too clever, and this library only manages to justify the gripes of the article the website links to that uses those very same words.
 
-\textbf{Recommendation}: Avoid using the library. While it is functional and has a few features, it is not so overly efficient or novel that it deserves the learning time required to get used to its heavily quirky DSL that goes a lot deeper and becomes quite verbose with its tags and syntax. It can be considered an example of how not to use C++ to abstract an lower level API.
+\textbf{Recommendation}: Avoid using the library. While it is functional and has a few features, it is not so overly efficient or novel that it deserves the learning time required to get used to its heavily quirky DSL that goes a lot deeper and becomes quite verbose with its tags and syntax. It can be considered an example of how \textbf{\emph{not}} to use C++ to abstract an lower level API.
 
 \subsubsection{Selene - Normal}
 
-Selene\cite{selene} is by far the most popular of the wrapping and binding libraries to date. Started by Riot Games Employee Jeremy Ong, it's been around for quite some time and has achieved quite a high number of followers and more than half the number of forks of Luabind. Its interface is easy to understand, and there is a noticeable improvement in the way it handles class bindings over Lua-Intf (see Listing \ref{lst:lua-intf-binding}): in fact, Selene's class bindings are nearly identical to Kaguya.
+Selene\cite{selene} is by far the most popular of the wrapping and binding libraries to date. Started by Riot Games Employee Jeremy Ong, it's been around for quite some time and has achieved quite a high number of followers and more than half the number of forks of Luabind. Its interface is easy to understand, and there is a noticeable improvement in the way it handles class bindings over Lua-Intf (see \cref{lst:lua-intf-binding}): in fact, Selene's class bindings are nearly identical to Kaguya.
 
 Selene takes the interesting approach of making everything based on \lstinline|operator[]| with a \lstinline|selector| class that the author wrote many blogposts about. This makes everything feel and index like a table.. even if there is \emph{absolutely no table type}. So, Selene can still claim that it supports tables even if it has no dedicated table class, because nearly everything that's set and got from Selene is something that users can begin to index. Selen would be a perfectly fine framework, but its performance is dismal.
 
@@ -857,13 +877,13 @@ This is one of those frameworks that looks very nice but has truly heaped so muc
 
 Thusly, because of this gross degree of over-engineering without thought to the actual performance of the system, Selene is ranked as Normal, if only to dissuade individuals from using it. It does not even support LuaJIT, which means the only library that could redeem the overengineering by JITing Lua script code is effectively blocked from helping the library.
 
-\textbf{Recommendation}: Use something else. While a nice idea, the implementation suffers from over-engineering and ridiculous code bloat that other C++ frameworks like Kaguya, luwra and \soltwo{} solve, much more efficiently and much more practically. The library is popular and serves a niche and has the clout of a RiotGames employee behind it, but it does not deliver on engineering merit.
+\textbf{Recommendation}: Use something else. While a nice idea, the implementation suffers from over-engineering and ridiculous handcrafted overhead that other C++ libraries like Kaguya, luwra and \soltwo{} solve, much more efficiently and much more practically. The library is popular, serves a niche, and has the clout of a RiotGames employee behind it, but Selene does not deliver on engineering merit.
 
-\subsubsection{Lua-Intf - Easy} \label{subsubsec:lua-intf}
+\subsubsection{Lua-Intf - Easy}\label{sssec:lua-intf}
 
 Created by Steve K. Chiu, Lua-Intf\cite{lua-intf} is a rather functional library that can be seen as the API design bridge between older libraries like Luabind and newer libraries like Selene or Kaguya. It features a module userdata binding syntax that's easy enough to use, even if the syntax is not as terse as it could possibly be due to the usage of a builder-style "begin module / end module" syntax.
 
-\begin{lstlisting}[caption={Binding the basic example from Listing \ref{lst:basic-code}} in Lua-Intf,
+\begin{lstlisting}[caption={Binding the basic example from \cref{lst:basic-code}} in Lua-Intf,
 label={lst:lua-intf-binding}]
 using LuaIntf;
 LuaContext lua;
@@ -875,7 +895,7 @@ LuaBinding(lua).beginClass<basic>("basic")
 .endClass();
 \end{lstlisting}
 
-While these bindings are verbose, they do enable the user to cover a lot of use cases, even if there's a few features missing from the Feature Table (see Table \ref{table:feature-table}). The framework stumbles over itself in the case of getting variables, requiring a \lstinline|LuaContext.getGlobal( ... )| call before a user can begin to use \lstinline|operator[]|. This incongruence is strange, but certainly not impossible to deal with. It is also lacking in abstractions for Lua's threads and coroutines, with issues stating that another abstraction can be used to obtain the necessary features. Nevertheless, in the code, there are functions for checking if a \lstinline|LuaRef| that may be pointing at a thread is yieldable, and a resume call as well, so there is still some low-level support.
+While these bindings are verbose, they do enable the user to cover a lot of use cases, even if there's a few features missing from the Feature Table (see \cref{table:feature-table}). The framework stumbles over itself in the case of getting variables, requiring a \lstinline|LuaContext.getGlobal( ... )| call before a user can begin to use \lstinline|operator[]|. This incongruence is strange, but certainly not impossible to deal with. It is also lacking in abstractions for Lua's threads and coroutines, with issues stating that another abstraction can be used to obtain the necessary features. Nevertheless, in the code, there are functions for checking if a \lstinline|LuaRef| that may be pointing at a thread is yieldable, and a resume call as well, so there is still some low-level support.
 
 \textbf{Recommendation}: A good framework, but Kaguya and \soltwo{} still offer more features with better performance. It is not the worst choice one can make, but it is certainly not the best and those class type bindings can get quite heavy.
 
@@ -896,7 +916,7 @@ SLB3 is also incredibly ashamed of Lua itself: it attempts to hide Lua's primiti
 \begin{figure*}[ht!]
 	\includegraphics[width=\textwidth]{early-benchmark}
 	\centering
-	\caption[\soltwo{} Documentation]{\textsc{Early benchmarks} created by satoren, developer of Kaguya. We are doing incredibly well compared to many other libraries and wrappers: \url{http://satoren.github.io/lua_binding_benchmark/}.}
+	\caption{\textsc{Early benchmarks} created by satoren, developer of Kaguya. Here, various libraries for a given color-coded task are shown, giving the total execution time for 5,000,000 (5 million) iterations. We are doing incredibly well compared to many other libraries and wrappers: \url{http://satoren.github.io/lua_binding_benchmark/}.}
 	\label{fig:early-benchmark}
 \end{figure*}
 
@@ -904,13 +924,13 @@ SLB3 is also incredibly ashamed of Lua itself: it attempts to hide Lua's primiti
 
 As this paper is authored by the developer of \soltwo{}, this section will obviously be contain bias. However, it must be said that \soltwo{} provides a number of benefits in API design and efficiency that other libraries do not, and remains one of the most efficient libraries among all categories for the group. 
 
-With fully-featured abstractions such \lstinline|sol::table|; \lstinline|sol::function| and \lstinline|sol::protected_function|; \lstinline|sol::coroutine|; \lstinline|sol::thread|; \lstinline|sol::userdata|; and \lstinline|sol::lightuserdata|, it is fairly clear \soltwo{} covers every single specific type that Lua offers with a higher-level covering. Its simplicity is proven by the praise that Lua veteran Sean Conner on the Lua mailing list gave \soltwo{} when he was given an example\cite{conman-impressed}. Jason Turner, creator of ChaiScript\cite{chaiscript} (a new C++ scripting language) commented during a C++ Now 2016 scripting talk that he was "super impressed" \footnote{\url{http://chat.stackoverflow.com/transcript/message/30509197#30509197}}:\\
+With fully-featured abstractions such \lstinline|sol::table|; \lstinline|sol::function| and \lstinline|sol::protected_function|; \lstinline|sol::coroutine|; \lstinline|sol::thread|; \lstinline|sol::userdata|; and \lstinline|sol::lightuserdata|, it is fairly clear \soltwo{} covers every single specific type that Lua offers with a higher-level covering. Its simplicity is proven by the praise that Lua veteran Sean Conner on the Lua mailing list gave \soltwo{} when he was given an example\cite{conman-impressed}. Jason Turner, creator of ChaiScript\cite{chaiscript} (a new C++ scripting language) commented during a C++ Now 2016 scripting talk that he was \href{http://chat.stackoverflow.com/transcript/message/30509197\#30509197}{"super impressed"}.\\
 
 \hfill "For ease of use and performance it's really quite good. I'd say it's the second best scripting option for C++ :wink:" -- Jason "Lefticus" Turner, creator of ChaiScript
 
 \hfill May 16, 2016 \\
 
-Reception on reddit was also overwhelmingly positive\cite{sol2-reddit}. \soltwo{} even attracted users away from other libraries once enough documentation and tutorials existed to demonstrate just how fully featured \soltwo{} is \footnote{\url{https://github.com/ThePhD/sol2/issues/36#issuecomment-199290974}}. Our usertype abstraction is also one of the most terse, going with a key-value style of additions with various wrappers to provide functionality akin to Luabind's properties, Luabind's factory/constructor calls, and read/write only memory from SWIG.
+Reception on reddit was also overwhelmingly positive\cite{sol2-reddit}. \soltwo{} even attracted users away from other libraries once enough documentation and tutorials existed to demonstrate just how fully featured \href{https://github.com/ThePhD/sol2/issues/36\#issuecomment-199290974}{\soltwo{} is}. Our usertype abstraction is also one of the most terse, going with a key-value style of additions with various wrappers to provide functionality akin to Luabind's properties, Luabind's factory/constructor calls, and read/write only memory from SWIG.
 
 \begin{lstlisting}[caption={\soltwo{} usertype example, performing the same binding for the \lstinline|basic| class as shown with many of the other libraries. Noticeably more terse.}, label={lst:sol-usertype}]
 sol::state lua;
@@ -925,26 +945,28 @@ Libraries that have started 2-4 years before \soltwo{} have less stars and less 
 
 \soltwo{} is Lua-version-agnostic. So long as some form of LuaJIT or Lua 5.1 or above are in place, \soltwo{} will work without problem. This is ensured by tests written under the Catch\cite{catch} framework.
 
-\textbf{Recommendation}: Use \soltwo{}. Issues are gladly accepted at the repository. Turnaround time for responses is less than 24 hours, sometimes with fixes and implementations coming around that fast as well. Development is active and additional performance enhancements are already planned\footnote{Additional benchmark data that has not yet been massaged into graphs and covers greater detail than the benchmarks shown in this paper are at \url{https://github.com/ThePhD/lua-bench}}.
+\textbf{Recommendation}: Use \soltwo{}. Issues are gladly accepted at the repository. Turnaround time for responses is less than 24 hours, sometimes with fixes and implementations coming around that fast as well. Development is active and additional performance enhancements are already planned.
 
 \begin{figure*}[ht]
 \includegraphics[width=\textwidth]{docs}
 \centering
-\caption[\soltwo{} Documentation]{\textsc{The documentation} of \soltwo{} hosted by ReadTheDocs: \url{http://sol2.readthedocs.io/en/latest/}.}
+\caption{\textsc{The documentation} of \soltwo{} hosted by ReadTheDocs: \url{http://sol2.readthedocs.io/en/latest/}.}
 \label{fig:docs}
 \end{figure*}
 
 
 \subsection{Performance Comparisons}
 
-Aside from satoren's benchmarks (see Figure \ref{fig:early-benchmark}), there is only raw data available at the moment for the performance of \emph{all} thirteen APIs. The data can be viewed here: \url{https://github.com/ThePhD/lua-bench/tree/master/lua - results}, while waiting for additional data is massaged into a clean representation using python's matplotlib from the "lua crunch" project in that repository (pull requests welcome). From both satoren's benchmarks and lua-bench's initial CSV numbers, Kaguya, luwra, and \soltwo{} seem to be the most highly performing across all areas, with Selene quite demonstrably being the worst optimized of the group.
+Aside from satoren's benchmarks (see \cref{fig:early-benchmark}), there is only raw data available at the moment concerning performance of \emph{all} thirteen APIs. The data and benchmarks are available online\footnote{Additional benchmark data that has not yet been massaged into graphs and covers greater detail than the benchmarks shown in this paper are at \url{https://github.com/ThePhD/lua-bench/tree/master/lua - results}. The overall benchmarking code and projects can be found at \url{https://github.com/ThePhD/lua-bench}.}. The additional data needs to be massaged into a clean representation using python's matplotlib from the "lua crunch" project in that repository (pull requests welcome). From both satoren's benchmarks and lua-bench's initial CSV numbers, Kaguya, luwra, and \soltwo{} seem to be the most highly performing across all areas, with Selene quite demonstrably being the worst optimized of the group.
 
 
 \section{Conclusion}
 
 From our analysis of over a dozen wrapper APIs, it is clear that there are really only 3 choices to use when developing in C++ and one needs to reach out for Lua wrapper to help them embed the language in their application/system. Kaguya, luwra, and \soltwo{} provide the most features, abstractions, and speed to date, with Kaguya filling the niche of compatibility and \soltwo{} filling the niche of heavily featured. Both are efficient and performant enough, even if there is some evidence for \soltwo{} being faster.
 
-The most important part of this project has been learning that \emph{\textbf{\underline{Documentation is Paramount}}}. The reason SLB3 is a pain to use was because the documentation is outdated and sparse, along with the developer dropped off the face of the earth. luacppinterface was equally difficult to grok until looking at its tests to understand how it was used, as well as other individuals who used it. Selene and Kaguya had readme-style, shamelessly quick, code-snippet-examples style documentation that had users up and running in minutes, resulting in a confidence that kept users coming to both wrappers and wanting to continue to use them. Creating those docs three months ago from the time of writing (May 2016) was a massive boon. This user friendliness was further compounded by Iris Zheng's help, alongside several Github user's input that truly shaped up a decent tutorial. At one point some of our potential users \emph{thought} that \soltwo{} had more features, but they were not sure because they could not get to our documentation. This proved an important lesson on making sure people got to our documentation, and hosting it on ReadTheDocs helped that happen swiftly. \soltwo{} is ready to change how people look at scripting language APIs in C++ for a long time to come, and I sincerely hope it becomes the golden standard for Lua inter-operation in C++.
+The most important part of this project has been learning that \emph{\textbf{documentation is key}}. The reason SLB3 is a pain to use is because the documentation is outdated and sparse, along with the developer dropped off the face of the earth. luacppinterface was equally difficult to grok until looking at its tests to understand how it was used, as well as other individuals who used it. Selene and Kaguya had readme-style, shamelessly quick, code-snippet-examples style documentation that had users up and running in minutes, resulting in a confidence that kept users coming to both wrappers and continuing to use them. Usable, helpful documentation is a premium in the software development world, far more than unit tests or continuous integration build badges.
+
+Creating those docs three months ago from the time of writing (May 2016) was a massive boon. This user friendliness was further compounded by Iris Zheng's help, alongside several Github user's input that truly shaped up a decent tutorial. At one point some of our potential users \emph{thought} that \soltwo{} had more features, but they were not sure because they could not get to our documentation. This proved an important lesson on making sure users got to our documentation, and hosting it on ReadTheDocs helped that happen swiftly. \soltwo{} is ready to change how developers look at scripting language APIs in C++ for a long time to come, and I sincerely hope it becomes the golden standard for Lua inter-operation in C++.
 
 % use section* for acknowledgment
 \ifCLASSOPTIONcompsoc
@@ -955,7 +977,7 @@ The most important part of this project has been learning that \emph{\textbf{\un
   \section*{Acknowledgment}
 \fi
 
-A humongous Thank You to: Professor Gail Kaiser to letting the focus of COMS E6156's Topics in Software Engineering be about the use and improvement of Sol\textsuperscript{2}; Ms. Iris Zhang for using, improving, and vetting the documentation; Kevin Brightwell (Nava2\footnote{\url{https://github.com/Nava2}}) for Travis CI build improvements; Sean Conner for his help on the Lua Mailing List; the various Github issue openers and contributors for improving documentation, suggesting features, and catching bugs in Sol; Danny Y. (Rapptz \footnote{\url{https://github.com/Rapptz}}) for starting and implementing Sol; and, the \loungecxx{}\footnote{\url{http://loungecpp.net/}}.
+A humongous Thank You to: Professor Gail Kaiser to letting the focus of COMS E6156's Topics in Software Engineering be about the use and improvement of \soltwo{}; Ms. Iris Zhang for using, improving, and vetting the documentation; Kevin Brightwell (\href{https://github.com/Nava2}{Nava2}) for Travis CI build improvements; Sean Conner for his help on the Lua Mailing List; the various Github issue openers and contributors for improving documentation, suggesting features, and catching bugs in \soltwo{}; Danny Y. (\href{https://github.com/Rapptz}{Rapptz}) for starting and implementing Sol; and, the \href{http://loungecpp.net/}{\loungecxx{}}.
 
 
 % trigger a \newpage just before the given reference
