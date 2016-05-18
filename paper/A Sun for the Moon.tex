@@ -829,9 +829,9 @@ Still, the library has potential to be good. A good core design is there, even i
 
 \subsubsection{OOLua - Hard}
 
-OOLua\cite{oolua} is a well-meaning library that suffers from trying to use a Domain-Specific Language to control much of the functionality of the framework. Despite the framework internally embracing C++11, the author willingly chose to invent a domain-specific language (DSL) that requires a significant amount of cognitive overhead to learn and use.
+OOLua\cite{oolua} is a well-meaning library that suffers from trying to use a Domain-Specific Language to control much of the functionality of the framework. The framework has configuration flags for turning off C++11 features, and in doing so must be able to compile with C++98. Therefore, the author willingly chose to invent a domain-specific language (DSL) that requires a significant amount of cognitive overhead to learn and use.
 
-This DSL must be registered in the top-level namespace and is macro-based. Thankfully, for all of the trouble it puts the user through, the framework and DSL are powerful enough to accommodate member variables, which is a bonus for it unlike many other frameworks. However, even the DSL requires a degree of repetition that is not fully justifiable when there are other frameworks that do it in less code and with less weird oddly specific macros. For example:
+This DSL must be registered in the top-level namespace and is macro-based. Thankfully, for all of the trouble it puts the user through, the framework and DSL are powerful enough to accommodate member variables, which means already it supports more than several other libraries. However, even the DSL requires a degree of repetition that is not fully justifiable when there are other frameworks that do it in less code and with less weird oddly specific macros. For example:
 
 \begin{lstlisting}[caption={Macros to setup usertype bindings and a function binding in OOLua}, label={lst:oolua-dsl}]
 OOLUA_PROXY(basic)
@@ -846,9 +846,9 @@ OOLUA_EXPORT_FUNCTIONS(basic, set)
 OOLUA_CFUNC(basic_call, oo_basic_call)
 \end{lstlisting}
 
-Even then, one must deliberately call \lstinline|OOLua::set_global(oolua_script, "my_func", oo_basic_call)| to have the function you just declared further up as a type. luwra may have macros, but those macros understand their purpose: less typing, less cognitive overhead, more efficiency. OOLua demands you create elaborate setups to set up your functions and userdata, but does not provide performance more competitive than either luwra, Kaguya, or \soltwo{}. It is the worst of both worlds. While it is \emph{technically} less written work than specifying the metatable by yourself in Lua script or the Lua C API, the convoluted DSL is not helpful. Consider that the "const-ness" of a member function can be determined at compile-time VIA the templates used underneath in OOLua, and yet the export macros and member function macros still require that you specify it manually.
+Even then, one must deliberately call \lstinline|OOLua::set_global(oolua_script, "my_func", oo_basic_call)| to have the function you just declared further up as a type. luwra may have macros, but those macros understand their purpose: less typing, less cognitive overhead, more efficiency. OOLua demands you create elaborate setups to set up your functions and userdata, but does not provide performance more competitive than either luwra, Kaguya, or \soltwo{}. It is efficient, yes. While it is \emph{technically} less written work than specifying the metatable by yourself in Lua script or the Lua C API, the convoluted DSL is not helpful. Consider that the "const-ness" of a member function can be determined at compile-time VIA the templates used underneath in OOLua, and yet the export macros and member function macros still require that you specify it manually.
 
-It has a table abstraction, but its API is so poor it may as well not have one at all. Not only does OOLUA demand that any variable it gets is default-initialized first, the library also retrieves it as an out-parameter:
+It has a table abstraction, but its API is so poor it may as well not have one at all. Not only does OOLua demand that any variable it gets is default-initialized first, the library also retrieves it as an out-parameter:
 
 \begin{lstlisting}
 using namespace OOLUA;
@@ -865,9 +865,9 @@ tu.at("warble", two_deep);
 tw.at("value", v);
 \end{lstlisting}
 
-This verbosity is entirely unnecessary and also incredibly error-prone. There's no way to compose the function calls together with out parameters, and if someone accidentally reuses a table they could very well corrupt memory. I can imagine the developer of OOLua thought that this would help provide performance, but its been proven several times now that compilers are very good at optimizing simple types that are passed by-value\cite{efficient-c++}. This library quickly looks dated, despite the it bragging on its main website that it uses C++11 and "[covers] the problem with clever template metaprogramming and macros"\footnote{url{https://oolua.org}}. OOLua's approach is quite demonstrably too clever, and this library only manages to justify the gripes of the article the website links to that uses those very same words.
+This verbosity is entirely unnecessary and also incredibly error-prone. There's no way to compose the function calls together with output parameters, and if someone accidentally reuses a table they could very well corrupt memory. Contacting the OOLua developer, he has explained me that he advises individuals do not use the Table abstraction at all; this is fine advice since the \lstinline|OOLUA::Table| class is neither efficient and operates in a dated fashion. The library asserts that it efficiently "[covers] the problem with clever template metaprogramming and macros"\footnote{url{https://oolua.org}, May 17th, 2016}. OOLua's approach is quite demonstrably too clever, and this library only manages to justify the gripes of the article the website links to that uses those very same words.
 
-\textbf{Recommendation}: Avoid using the library. While it is functional and has a few features, it is not so overly efficient or novel that it deserves the learning time required to get used to its heavily quirky DSL that goes a lot deeper and becomes quite verbose with its tags and syntax. It can be considered an example of how \textbf{\emph{not}} to use C++ to abstract an lower level API.
+\textbf{Recommendation}: Avoid using the library. While it is functional and has a few features, it is not so overly efficient or novel that it deserves the learning time required to get used to its heavily quirky DSL that goes a lot deeper and becomes quite verbose with its tags and syntax. It can be considered an example of how \textbf{\emph{not}} to use C++ in abstracting a lower level API.
 
 \subsubsection{Selene - Normal}
 
