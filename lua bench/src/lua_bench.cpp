@@ -6,8 +6,11 @@ int main(int argc, char* argv[]) {
 	nonius::configuration rootcfg;
 	rootcfg.output_file = "lua bench tests";
 	rootcfg.title = "lua bench tests";
+#ifdef _DEBUG
+	rootcfg.samples = 1;
+#else
 	rootcfg.samples = 250;
-	
+#endif
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("global get", lb::plain_global_string_get_measure),
@@ -182,6 +185,7 @@ int main(int argc, char* argv[]) {
 		cfg.output_file += " luacppinterface.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
+
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("global get", lb::luwra_global_string_get_measure),

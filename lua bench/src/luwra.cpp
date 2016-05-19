@@ -77,7 +77,7 @@ namespace lb {
 		lua["f"] = LUWRA_WRAP(basic_call);
 		auto code = repeated_code("f(i)");
 		meter.measure([&]() {
-			lua.runString(code);
+			lua.runString(code.c_str());
 		});
 	}
 

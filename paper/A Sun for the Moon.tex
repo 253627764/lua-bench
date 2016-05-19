@@ -143,7 +143,7 @@
 		basic,
 		SLB, Script, Manager,
 		sel, Selector,
-		sol, luwra, function, protected_function, table, usertype, coroutine, userdata, lightuserdata, thread, reference, state, state_view, variadic_args, this_state,
+		sol, luwra, function, protected_function, table, usertype, coroutine, userdata, lightuserdata, thread, reference, state, state_view, variadic_args, this_state, nil,
 		kaguya, State, Function, Thread, Table,
 		std, string, tuple, map, experimental, optional,
 		LuaIntf, LuaTable, LuaContext, LuaBinding
@@ -614,7 +614,7 @@ std::string basic_multi_param(std::string a, bool x) {
 	\begin{tabular}{l c c c c c c c }
 		Library                  &   plain C   & luawrapper & lua-intf & luabind &  Selene  &    Sol2   &   oolua   
 		\\ \hline
-		optional                  &      〜      &     ✗      &     ✗    &    ✗    &     ✗    &     ✔     &     ✗     
+		optional                  &      〜      &     ✗      &     ✔    &    ✗    &     ✗    &     ✔     &     ✗     
 		\\ \hline
 		tables                    &      〜      &     〜      &     〜    &    ✔    &     ✔    &     ✔     &     〜     
 		\\ \hline
@@ -638,7 +638,7 @@ std::string basic_multi_param(std::string a, bool x) {
 		\\ \hline
 		multi-return              &      〜      &     ✗      &     ✔    &    ✔    &     ✔    &     ✔     &     〜     
 		\\ \hline
-		variadic/variant argument &      〜      &     ✔      &     ~    &    ✔    &     ✔    &     ✔     &     〜     
+		variadic/variant argument &      〜      &     ✔      &     ✔    &    ✔    &     ✔    &     ✔     &     〜     
 		\\ \hline
 		inheritance               &      〜      &     ✔      &     ~    &    ✔    &     ✔    &     ✔     &     〜     
 		\\ \hline
@@ -701,24 +701,24 @@ std::string basic_multi_param(std::string a, bool x) {
 		\\ \hline
 		coroutines                &        ✗       &     ✔    &     ✗    &     ✗     &        ✔        &    ✗
 		\\ \hline
-		no-rtti support           &        ✗       &     ✔    &     ✔    &     〜     &        ✔        &    〜
+		no-rtti support           &        ✗       &     ✔    &     ✔    &     〜     &        ✔        &    ✔
 		\\ \hline
-		no-exception support      &        ✗       &     ✔    &     ✔    &     〜     &        ✔        &    ✗
+		no-exception support      &        ✗       &     ✔    &     ✔    &     〜     &        ✔        &    ✔
 		\\ \hline
-		Lua 5.1                   &        ✔       &     ✔    &     ✔    &     ✔     &        ✗        &    〜
+		Lua 5.1                   &        ✔       &     ✔    &     ✔    &     ✔     &        ✗        &    ✔
 		\\ \hline
 		Lua 5.2                   &        ✔       &     ✔    &     ✔    &     ✔     &        ✔        &    ✔
 		\\ \hline
 		Lua 5.3                   &        ✔       &     ✔    &     ✔    &     ✗     &        ✔        &    ✔
 		\\ \hline
-		luajit                    &        ✔       &     ✔    &     ✔    &     ✔     &        ✗        &    〜
+		luajit                    &        ✔       &     ✔    &     ✔    &     ✔     &        ✗        &    ✔
 		\\ \hline
 		distribution              &     compile    &  header  &  compile & generated &     compile     & header
 		\\ \hline \\
 	\end{tabular}
 	\\
 	\caption{Features for 12 different Lua libraries: ✔ - completely supported | ✗ - not supported | 〜 - partially supported}
-	Partial support often means that it allows access in some obscure way or only supports parts of a feature, e.g. not allowing function objects (lambdas) but working with free functions. Support was determined by using the frameworks, reading issue lists, contacting developers and checking documentation.
+	Partial support often means that it allows access in some obscure way or only supports parts of a feature, e.g. not allowing function objects (lambdas) but working with free functions. Support was determined by using the frameworks, reading issue lists, contacting developers and checking documentation. An updated version is kept it \soltwo{}'s documentation: \url{http://sol2.readthedocs.io/en/latest/features.html\#category-explanations}
 	\label{table:feature-table}
 \end{table*}
 
@@ -798,11 +798,11 @@ While it struggles with performance in some areas, in others the library is surp
 
 luawrapper\cite{luawrapper} is the most minimal implementation here, even compared to \cref{sssec:luwra} luwra. It has a more functional API, relying on function calls and constructors of \lstinline|std::| types to create and manipulate tables. The primary functions are \lstinline|LuaContext::readVariable| and \lstinline|LuaContext::writeVariable|. It's approach to standard types means that, because there is no "object" abstraction, it suffers from a heavy dose of verbosity that can only be changed by \lstinline|typedef|s (see \cref{lst:luawrapper-code}).
 
-Nevertheless, it tends to be simple for basic use cases, and supports a wide variety of features, including variant arguments and variant return types (with \lstinline|boost::variant|).  The code is handled by PowerDNS since the company took a dependency on it long ago before the original maintainer dropped the project entirely. \soltwo{}'s developer fixed an internal compiler error when using luawrapper with Visual Studio and shipped the fix to them in a pull request. Hopefully, it will be integrated back into the original code.
+Nevertheless, it tends to be simple for basic use cases, and supports a wide variety of features, including variant arguments and variant return types (with \lstinline|boost::variant|).  The code is handled by PowerDNS since the company took a dependency on it long ago before the original author dropped the project entirely. \soltwo{}'s developer fixed an internal compiler error when using luawrapper with Visual Studio and shipped the fix to them in a pull request. Hopefully, it will be integrated back into the original code.
 
-\textbf{Recommendation}: It is a nice library, but with it being held onto by a company that puts its needs over that of the general userbase and has deadlines and goals not related to making it the best it could be, it is best to just leave this one as support for the unfortunate developers who used it before its abandonment.
+\textbf{Recommendation}: It is a nice library, but with it being held onto by a company that puts its needs over that of the general userbase and has deadlines and goals not related to making it the best it could be, it is best to just leave this one as support for the developers who used it before its abandonment. It is effectively in "maintenance mode" at time of writing.
 
-\begin{lstlisting}[caption={luawrapper code to write a nested table. It is not the prettiest.},
+\begin{lstlisting}[caption={luawrapper code to write a nested table. This does not compose well or scale up.},
 label={lst:luawrapper-code}]
 LuaContext lua;
 lua.writeVariable("ulahibe", 
@@ -896,7 +896,9 @@ LuaBinding(lua).beginClass<basic>("basic")
 .endClass();
 \end{lstlisting}
 
-While these bindings are verbose, they do enable the user to cover a lot of use cases, even if there's a few features missing from the Feature Table (see \cref{table:feature-table}). The framework stumbles over itself in the case of getting variables, requiring a \lstinline|LuaContext.getGlobal( ... )| call before a user can begin to use \lstinline|operator[]|. This incongruence is strange, but certainly not impossible to deal with. It is also lacking in abstractions for Lua's threads and coroutines, with issues stating that another abstraction can be used to obtain the necessary features. Nevertheless, in the code, there are functions for checking if a \lstinline|LuaRef| that may be pointing at a thread is yieldable, and a resume call as well, so there is still some low-level support.
+While these bindings are verbose, they do enable the user to cover a lot of use cases, even if there's a few features missing from the Feature Table (see \cref{table:feature-table}). The framework stumbles over itself in the case of getting variables, requiring a \lstinline|LuaContext.getGlobal( ... )| call before a user can begin to use \lstinline|operator[]|. This incongruence is strange, but certainly not impossible to deal with. It also supports getting variables using the "." syntax within a string, giving it the same string-processing overhead luabind suffers as it has to read the string. This implementation does build optional support into LuaRef: traversal down a chained query and returns a \lstinline|nil| reference object.
+
+It is also lacking in abstractions for Lua's threads and coroutines, with issues stating that another abstraction can be used to obtain the necessary features. Nevertheless, in the code, there are functions for checking if a \lstinline|LuaRef| that may be pointing at a thread is yieldable, and a resume call as well, so there is still some low-level support.
 
 \textbf{Recommendation}: A good framework, but Kaguya and \soltwo{} still offer more features with better performance. It is not the worst choice one can make, but it is certainly not the best and those class type bindings can get quite heavy.
 
