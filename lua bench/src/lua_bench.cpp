@@ -8,9 +8,12 @@ int main(int argc, char* argv[]) {
 	rootcfg.title = "lua bench tests";
 #ifdef _DEBUG
 	rootcfg.samples = 1;
+	rootcfg.resamples = 1;
 #else
 	rootcfg.samples = 250;
+	rootcfg.resamples = 250;
 #endif
+
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("global get", lb::plain_global_string_get_measure),

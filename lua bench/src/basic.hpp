@@ -33,3 +33,7 @@ inline std::string basic_multi_param(std::string a, bool x) {
 	}
 	return a + " (not true)";
 }
+
+inline std::tuple<std::string, std::string> basic_multi_return(std::string a) {
+	return { a, " (not true)" };
+}

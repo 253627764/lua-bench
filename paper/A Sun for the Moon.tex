@@ -612,7 +612,7 @@ std::string basic_multi_param(std::string a, bool x) {
 \begin{table*}[ht!]
 	\centering
 	\begin{tabular}{l c c c c c c c }
-		Library                  &   plain C   & luawrapper & lua-intf & luabind &  Selene  &    Sol2   &   oolua   
+		Library                   &   plain C   & luawrapper & lua-intf & luabind &  Selene  &    Sol2   &   oolua   
 		\\ \hline
 		optional                  &      〜      &     ✗      &     ✔    &    ✗    &     ✗    &     ✔     &     ✗     
 		\\ \hline
@@ -673,7 +673,7 @@ std::string basic_multi_param(std::string a, bool x) {
 		\\ \hline
 		table chaining            &        ✔       &     ✔    &     ✗    &     ✗     &        〜        &    ✔
 		\\ \hline
-		arbitrary keys            &        〜       &     ✔    &     ✗    &     ✗     &        ✗        &    ✗
+		arbitrary keys            &        〜       &     ✔    &     ✗    &     ✗     &        ✗        &    〜
 		\\ \hline
 		user-defined types (udts) &        ✔       &     ✔    &     ✔    &     ✔     &        ✔        &    ✔
 		\\ \hline
@@ -683,13 +683,13 @@ std::string basic_multi_param(std::string a, bool x) {
 		\\ \hline
 		stack abstractions        &        ✔       &     ✔    &     〜    &     ✗     &        〜        &    ✔
 		\\ \hline
-		lua function from C(++)   &        ✔       &     ✔    &     ✔    &     ✔     &        ✔        &    〜
+		lua callables from C(++)  &        ✔       &     ✔    &     ✔    &     ✔     &        〜        &    〜
 		\\ \hline
-		function binding          &        ✔       &     ✔    &     ✔    &     ✔     &        ✔        &    ✔
+		function binding          &        ✔       &     ✔    &     ✔    &     ✔     &        ✔        &    〜
 		\\ \hline
 		protected function        &        ✔       &     〜    &     〜    &     〜     &        〜        &    〜
 		\\ \hline
-		multi-return              &        ✔       &     ✔    &     〜    &     ✔     &        〜        &    〜
+		multi-return              &        ✔       &     ✔    &     〜    &     ✔     &        〜        &    ✗
 		\\ \hline
 		variadic/variant argument &        ✔       &     ✔    &     〜    &     〜     &        〜        &    ✗
 		\\ \hline
