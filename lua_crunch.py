@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import csv
+import numpy
+import math
 
 # The various targets we're going to crunch data for
 # ( Name, file, Data )
@@ -19,25 +21,14 @@ crunch_targets = [
 ]
 
 class benchmark_result:
-	known_crunch_categories = [
-		"global get",
-		"global set",
-		"table chained get",
-		"table get",
-		"table chained set",
-		"table set",
-		"c function",
-		"c function through lua",
-		"lua function",
-		"member function calls",
-		"member variable"
-	]
-	
 	def __init__(self, name, file, color):
 		self.name = name
 		self.file = file
 		self.color = color
-		self.results = {}
+		self.means = {}
+		self.stddevs = {}
+		self.meanerrors = {}
+		self.samples = {}
 		self.process()
 
 	def process(self):
@@ -49,29 +40,58 @@ class benchmark_result:
 					# TODO: Could just change the C++ source to name it as desired... ?
 					k = fieldname
 					v = row[fieldname]
-					k = str(k)
+					k = str(k).strip()
 					splits = k.split(' - ', 1)
 					if len(splits) > 1:
 						k = splits[1]
 					v = float(v)
 					# append into right place
 					target = None
-					if fieldname in self.results:
-					    target = self.results[fieldname]
+					if fieldname in self.samples:
+					    target = self.samples[fieldname]
 					else:
 						target = []
-						self.results[fieldname] = target
+						self.samples[fieldname] = target
 					target.append(v)
 
-		self.color
+			for result in self.samples:
+				self.means[result] = numpy.average(self.samples[result])
+				self.stddevs[result] = numpy.std(self.samples[result], ddof = 1)
+				self.meanerrors[result] = self.means[result] / math.sqrt(len(self.samples))
+
 			
 crunch_categories = []
 results = []
 for t in crunch_targets:
-	results.append(benchmark_result(t[0], t[1], t[2]))
+	b = benchmark_result(t[0], t[1], t[2])
+	results.append(b)
+	for category in b.samples:
+		if category not in crunch_categories:
+			crunch_categories.append(category)
 
+# Create a blank figure
+graph = plt.figure()
 
-plt.plot([1,2,3,4])
-plt.ylabel('some numbers')
+# We need one set of bars / graphs / charts for each result, right?
+for result in results:
+	# subplot that represents this result type
+	axes = graph.add_subplot(111)
+	axes.set_title(result.name)
+
+	# each category gets its own X spot
+	for category in result.samples:
+		category_index = crunch_categories.index(category)
+		samples = result.samples[category]
+		mean = result.means[category]
+		stddev = result.stddevs[category]
+		meanerror = result.meanerrors[category]
+		xvalues = [ ( ( i % 20 ) / 20 ) + category_index * 2 for i in range(0, len(samples))]
+		color = result.color
+
+		# Add a point to every axis
+		axes.scatter(xvalues, samples, color=color, edgecolor='none')
+		# TODO: histogram from the mean of the scatter values
+		# meanbar = axes.hist([mean], [1], color='green')
+	break
+
 plt.show()
-
