@@ -105,7 +105,7 @@ namespace lb {
 
 	void sol_c_through_lua_function_measure(nonius::chronometer& meter) {
 		sol::state lua(atpanic);
-		lua.set_function("f", basic_call);
+		lua.set_function("f", sol::c_call<decltype(&basic_call), &basic_call>);
 		sol::function f = lua["f"];
 		meter.measure([&]() {
 			int x = 0;
@@ -120,8 +120,9 @@ namespace lb {
 	void sol_member_function_call(nonius::chronometer& meter) {
 		sol::state lua(atpanic);
 		lua.new_usertype<basic>("basic",
-			"get", &basic::get,
-			"set", &basic::set);
+			"get", sol::c_call<decltype(&basic::get), &basic::get>,
+			"set", sol::c_call<decltype(&basic::set), &basic::set>
+		);
 		lua.script("b = basic:new()");
 		std::string code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
@@ -132,9 +133,8 @@ namespace lb {
 	void sol_member_variable(nonius::chronometer& meter) {
 		sol::state lua(atpanic);
 		lua.new_usertype<basic>("basic",
-			"var", &basic::var,
-			"get", &basic::get,
-			"set", &basic::set);
+			"var", &basic::var
+		);
 		lua.script("b = basic:new()");
 		std::string code = repeated_code("b.var = i\nx = b.var");
 		meter.measure([&]() {
