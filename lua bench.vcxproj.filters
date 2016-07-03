@@ -65,12 +65,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="platform.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="system_info.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lua bench\src\lua_bench.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>

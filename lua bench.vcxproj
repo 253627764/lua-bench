@@ -141,8 +141,6 @@
     <ClInclude Include="lua bench\src\basic.hpp" />
     <ClInclude Include="lua bench\src\lua_bench.hpp" />
     <ClInclude Include="lua bench\src\lua_bench_wrap.hpp" />
-    <ClInclude Include="platform.hpp" />
-    <ClInclude Include="system_info.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="src\strings.txt" />
