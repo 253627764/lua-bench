@@ -25,13 +25,14 @@ namespace lb {
 	}
 
 	lua::Retval setup(lua::Context& c) {
-		c.mt<basic>() = lua::Table::records(c,
-			"get", basic_get,
-			"set", basic_set,
-			"__index", basic_index_wrap,
-			"__gc", basic_gc
+		c.mt<basic>() = lua::Table::records(c, 
+			"__index", lua::Table::records(c, 
+				"var", &basic::var,
+				"get", &basic::get,
+				"set", &basic::set
+			)
 		);
-		c.global["basic_new"] = basic_new;
+		c.global["basic_new"] = static_cast<basic(*)()>([]() {return basic(); });
 		return c.ret();
 	}
 	
@@ -164,8 +165,13 @@ namespace lb {
 	}
 
 	void lua_api_pp_member_variable(nonius::chronometer& meter) {
-		//meter.measure([]() {
-		//});
+		lua::State l;
+		l.call(lua::mkcf<setup>);
+		l.runString("b = basic_new()");
+		std::string code = repeated_code("b.var = i\nx = b.var");
+		meter.measure([&]() {
+			l.runString(code);
+		});
 	}
 
 }

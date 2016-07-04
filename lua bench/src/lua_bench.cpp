@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
 	rootcfg.samples = 250;
 	rootcfg.resamples = 250;
 #endif
-
+#if 0
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("global get", lb::plain_global_string_get_measure),
@@ -208,7 +208,7 @@ int main(int argc, char* argv[]) {
 		cfg.output_file += " luwra.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-
+#endif
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("global get", lb::lua_api_pp_global_string_get_measure),
