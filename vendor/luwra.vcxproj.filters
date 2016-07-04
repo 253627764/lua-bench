@@ -54,5 +54,11 @@
     <ClInclude Include="luwra\lib\luwra\tables.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\wrappers.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\internal.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

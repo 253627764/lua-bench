@@ -233,4 +233,30 @@ namespace lb {
 		});
 	}
 
+	void plain_c_stateful_function_object_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void plain_c_multi_return_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void plain_c_virtual_cxx_function_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void plain_c_multi_get_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void plain_c_return_userdata(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+
 }

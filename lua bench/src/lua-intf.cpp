@@ -149,4 +149,30 @@ namespace lb {
 		});
 	}
 
+	void lua_intf_stateful_function_object_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void lua_intf_multi_return_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void lua_intf_virtual_cxx_function_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void lua_intf_multi_get_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void lua_intf_return_userdata(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+
 }

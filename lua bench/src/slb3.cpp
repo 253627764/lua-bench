@@ -129,4 +129,30 @@ namespace lb {
 		//meter.measure([]() {});
 	}
 
+	void slb3_stateful_function_object_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void slb3_multi_return_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void slb3_virtual_cxx_function_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void slb3_multi_get_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void slb3_return_userdata(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+
 }

@@ -4,11 +4,7 @@
 #include <string>
 
 struct basic {
-	int var;
-
-	basic() : var() {
-
-	}
+	int var = 500;
 
 	int get() const {
 		return var;
@@ -21,6 +17,18 @@ struct basic {
 	std::tuple<int, std::string> multi_return(int a, std::string b) {
 		return{ a, b };
 	}
+};
+
+struct complex_base_a {
+	int a = 250;
+};
+
+struct complex_base_b {
+	int b = 500;
+};
+
+struct complex_ab : complex_base_a, complex_base_b {
+	int ab = 2500;
 };
 
 inline int basic_call(int x) {

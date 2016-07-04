@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib.patches as mpatches
 import csv
 import numpy
 import math
@@ -99,24 +100,31 @@ for category_index, category in enumerate(sorted(crunch_categories)):
 	#axes = category_axes[category_index]
 	axes = category_axes
 	bars = []
+	barlabels = []
 
 	for resultindex, result in enumerate(results):
+		color = result.color
+		name = result.name
 		if category not in result.samples:
+			bars.append(mpatches.Patch(color=color))
+			barlabels.append(name)
 			continue
+		
 		samples = result.samples[category]
 		mean = result.means[category]
 		stddev = result.stddevs[category]
 		meanerror = result.meanerrors[category]
 		yvalues = [resultindex + random.uniform(0.0, 0.50) - 0.25 for y in samples ] 
 
-		color = result.color
-
 		absolutemax = max(absolutemax, result.samplemax[category])
 		absolutemin = min(absolutemin, result.samplemin[category])
 
 		bars.append(axes.barh(resultindex, mean, xerr=meanerror, linewidth=0.2, ecolor='black', height=0.50, color=color, align='center', edgecolor='black', alpha=0.85))
+		barlabels.append(name)
 		axes.scatter(samples, yvalues, color=color, edgecolor='black', alpha=0.25)
 	
+	bars = list(reversed(bars))
+	barlabels = list(reversed(barlabels))
 	axes.set_title(category)
 
 	absoluterange = absolutemax - absolutemin
@@ -128,8 +136,8 @@ for category_index, category in enumerate(sorted(crunch_categories)):
 	axes.set_yticks(yticks)
 	axes.set_yticklabels([])
 	axes.set_ylim([0 - 1, len(ylabels)])
-	axes.legend(bars, ylabels, fontsize=10, fancybox=True, loc='best', framealpha=0.5)
-	plt.savefig(category + '.png', format='png')
+	axes.legend(bars, barlabels, fontsize=10, fancybox=True, loc='best', framealpha=0.5)
+	plt.savefig('lua bench graph - ' + category + '.png', format='png')
 
 
 plt.show()

@@ -133,6 +133,31 @@ namespace lb {
 		});
 	}
 
+	void kaguya_stateful_function_object_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void kaguya_multi_return_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void kaguya_virtual_cxx_function_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void kaguya_multi_get_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void kaguya_return_userdata(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
 	void kaguya_member_variable(nonius::chronometer& meter) {
 		// Does not support member variable syntax:
 		// turns it into a function, unfortunately

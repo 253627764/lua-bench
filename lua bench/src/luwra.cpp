@@ -146,4 +146,29 @@ namespace lb {
 		// Unsupported
 	}
 
+	void luwra_stateful_function_object_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void luwra_multi_return_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void luwra_virtual_cxx_function_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void luwra_multi_get_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void luwra_return_userdata(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
 }

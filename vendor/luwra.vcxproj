@@ -116,12 +116,14 @@
     <ClInclude Include="luwra\lib\luwra\fields.hpp" />
     <ClInclude Include="luwra\lib\luwra\functions.hpp" />
     <ClInclude Include="luwra\lib\luwra\generic.hpp" />
+    <ClInclude Include="luwra\lib\luwra\internal.hpp" />
     <ClInclude Include="luwra\lib\luwra\methods.hpp" />
     <ClInclude Include="luwra\lib\luwra\stack.hpp" />
     <ClInclude Include="luwra\lib\luwra\state.hpp" />
     <ClInclude Include="luwra\lib\luwra\tables.hpp" />
     <ClInclude Include="luwra\lib\luwra\types.hpp" />
     <ClInclude Include="luwra\lib\luwra\usertypes.hpp" />
+    <ClInclude Include="luwra\lib\luwra\wrappers.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

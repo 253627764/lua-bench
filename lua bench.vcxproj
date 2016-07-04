@@ -129,7 +129,7 @@
     <ClCompile Include="lua bench\src\lua_bench.cpp" />
     <ClCompile Include="lua bench\src\luwra.cpp" />
     <ClCompile Include="lua bench\src\oolua.cpp" />
-    <ClCompile Include="lua bench\src\plain.cpp" />
+    <ClCompile Include="lua bench\src\plain_c.cpp" />
     <ClCompile Include="lua bench\src\selene.cpp" />
     <ClCompile Include="lua bench\src\slb3.cpp" />
     <ClCompile Include="lua bench\src\sol.cpp" />

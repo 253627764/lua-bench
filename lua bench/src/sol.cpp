@@ -142,4 +142,30 @@ namespace lb {
 		});
 	}
 
+	void sol_stateful_function_object_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void sol_multi_return_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void sol_virtual_cxx_function_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void sol_multi_get_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void sol_return_userdata(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+
 }

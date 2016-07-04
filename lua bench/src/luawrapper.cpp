@@ -156,4 +156,30 @@ namespace lb {
 		});
 	}
 
+
+	void luawrapper_stateful_function_object_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void luawrapper_multi_return_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void luawrapper_virtual_cxx_function_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void luawrapper_multi_get_measure(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
+	void luawrapper_return_userdata(nonius::chronometer& meter) {
+		meter.measure([&]() {
+		});
+	}
+
 }
