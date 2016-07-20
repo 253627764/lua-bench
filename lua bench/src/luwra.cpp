@@ -1,5 +1,6 @@
 #include "luwra.hpp"
 #include "basic.hpp"
+#include "basic_lua.hpp"
 #include "lua_bench.hpp"
 
 namespace lb {
@@ -87,7 +88,7 @@ namespace lb {
 			return i;
 		end)");
 		lua_getglobal(lua, "f");
-		luwra::NativeFunction<int> f(lua, -1);
+		luwra::Function<int> f(lua, -1);
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -107,7 +108,7 @@ namespace lb {
 		// we have to push it manually. Luwra is way too minimal to work with Lua-native functions
 		// outside the scope of a wrapped function.
 		lua_getglobal(lua, "f");
-		luwra::NativeFunction<int> f(lua , -1);
+		luwra::Function<int> f(lua , -1);
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -147,27 +148,62 @@ namespace lb {
 	}
 
 	void luwra_stateful_function_object_measure(nonius::chronometer& meter) {
+		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+		lua.set("f", basic_stateful());
+		luwra::Function<int> f = lua["f"];
 		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f(i);
+				x += v;
+			}
+			return x;
 		});
 	}
 
 	void luwra_multi_return_measure(nonius::chronometer& meter) {
+		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+		lua.set("f", LUWRA_WRAP( basic_multi_return ));
+		luwra::Function<std::tuple<int, int>> f = lua["f"];
 		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				std::tuple<int, int> v = f(i);
+				x += static_cast<int>(std::get<0>(v));
+				x += static_cast<int>(std::get<1>(v));
+			}
+			return x;
 		});
 	}
 
-	void luwra_virtual_cxx_function_measure(nonius::chronometer& meter) {
+	void luwra_base_derived_measure(nonius::chronometer& meter) {
+		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+		lua.registerUserType<complex_ab>();
+		complex_ab ab;
+		// Set and verify correctness
+		lua.set("b", &ab);
+		{
+			complex_base_a& va = lua["b"].read<complex_base_a>();
+			complex_base_b& vb = lua["b"].read<complex_base_b>();
+			if (va.a_func() != ab.a_func() || va.a != ab.a) {
+				throw std::logic_error("proper base class casting not provided: failing test");
+			}
+			if (vb.b_func() != ab.b_func() || vb.b != ab.b) {
+				throw std::logic_error("proper base class casting not provided: failing test");
+			}
+		}
 		meter.measure([&]() {
-		});
-	}
-
-	void luwra_multi_get_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void luwra_return_userdata(nonius::chronometer& meter) {
-		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				complex_base_a& va = lua["b"].read<complex_base_a>();
+				complex_base_b& vb = lua["b"].read<complex_base_b>();
+				x += va.a_func();
+				x += vb.b_func();
+			}
+			return x;
 		});
 	}
 

@@ -109,12 +109,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="kaguya\include\kaguya\delegate_to_luaref.inl" />
     <None Include="kaguya\include\kaguya\gen\push_tuple.inl" />
     <None Include="kaguya\include\kaguya\gen\ref_tuple.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="kaguya\include\kaguya\compatibility.hpp" />
     <ClInclude Include="kaguya\include\kaguya\config.hpp" />
+    <ClInclude Include="kaguya\include\kaguya\deprecated_metatable.hpp" />
+    <ClInclude Include="kaguya\include\kaguya\deprecated_native_function.hpp" />
     <ClInclude Include="kaguya\include\kaguya\error_handler.hpp" />
     <ClInclude Include="kaguya\include\kaguya\exception.hpp" />
     <ClInclude Include="kaguya\include\kaguya\kaguya.hpp" />
@@ -126,7 +128,10 @@
     <ClInclude Include="kaguya\include\kaguya\native_function_cxx03.hpp" />
     <ClInclude Include="kaguya\include\kaguya\native_function_cxx11.hpp" />
     <ClInclude Include="kaguya\include\kaguya\object.hpp" />
+    <ClInclude Include="kaguya\include\kaguya\optional.hpp" />
     <ClInclude Include="kaguya\include\kaguya\preprocess.hpp" />
+    <ClInclude Include="kaguya\include\kaguya\push_any.hpp" />
+    <ClInclude Include="kaguya\include\kaguya\push_tuple.hpp" />
     <ClInclude Include="kaguya\include\kaguya\ref_tuple.hpp" />
     <ClInclude Include="kaguya\include\kaguya\state.hpp" />
     <ClInclude Include="kaguya\include\kaguya\traits.hpp" />

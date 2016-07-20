@@ -140,27 +140,54 @@ namespace lb {
 	}
 
 	void luacppinterface_stateful_function_object_measure(nonius::chronometer& meter) {
+		Lua l;
+		auto lua = l.GetGlobalEnvironment();
+		lua.Set("f", l.CreateFunction<int(int)>(basic_stateful()));
+
+		auto f = lua.Get<LuaFunction<int(int)>>("f");
 		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i)
+				x += f.Invoke(i);
+			return x;
 		});
 	}
 
 	void luacppinterface_multi_return_measure(nonius::chronometer& meter) {
+		// Unsupported
 		meter.measure([&]() {
 		});
 	}
 
-	void luacppinterface_virtual_cxx_function_measure(nonius::chronometer& meter) {
+	void luacppinterface_base_derived_measure(nonius::chronometer& meter) {
+		Lua l;
+		auto lua = l.GetGlobalEnvironment();
+		auto lud = l.CreateUserdata<complex_ab>(new complex_ab());
+		lua.Set("b", lud);
+		{
+			LuaUserdata<complex_ab> lab = lua.Get<LuaUserdata<complex_ab>>("b");
+			LuaUserdata<complex_base_a> la = lua.Get<LuaUserdata<complex_base_a>>("b");
+			LuaUserdata<complex_base_b> lb = lua.Get<LuaUserdata<complex_base_b>>("b");
+			complex_ab& ab = *lab.GetPointer();
+			complex_base_a& va = *la.GetPointer();
+			complex_base_b& vb = *lb.GetPointer();
+			if (va.a_func() != ab.a_func() || va.a != ab.a) {
+				throw std::logic_error("proper base class casting not provided: failing test");
+			}
+			if (vb.b_func() != ab.b_func() || vb.b != ab.b) {
+				throw std::logic_error("proper base class casting not provided: failing test");
+			}
+		}
 		meter.measure([&]() {
-		});
-	}
-
-	void luacppinterface_multi_get_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void luacppinterface_return_userdata(nonius::chronometer& meter) {
-		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				LuaUserdata<complex_base_a> la = lua.Get<LuaUserdata<complex_base_a>>("b");
+				LuaUserdata<complex_base_b> lb = lua.Get<LuaUserdata<complex_base_b>>("b");
+				complex_base_a& va = *la.GetPointer();
+				complex_base_b& vb = *lb.GetPointer();
+				x += va.a_func();
+				x += vb.b_func();
+			}
 		});
 	}
 

@@ -21,9 +21,6 @@
     <None Include="kaguya\include\kaguya\gen\ref_tuple.inl">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="kaguya\include\kaguya\delegate_to_luaref.inl">
-      <Filter>Header Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="kaguya\include\kaguya\config.hpp">
@@ -78,6 +75,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="kaguya\include\kaguya\utility.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kaguya\include\kaguya\deprecated_native_function.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kaguya\include\kaguya\deprecated_metatable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kaguya\include\kaguya\compatibility.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kaguya\include\kaguya\optional.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kaguya\include\kaguya\push_tuple.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="kaguya\include\kaguya\push_any.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,15 +4,25 @@
 #include <oolua.h>
 
 OOLUA_PROXY(basic)
-	OOLUA_MGET_MSET(var)
-	OOLUA_MFUNC_CONST(get)
-	OOLUA_MFUNC(set)
+OOLUA_MGET_MSET(var)
+OOLUA_MFUNC_CONST(get)
+OOLUA_MFUNC(set)
+OOLUA_PROXY_END
+
+OOLUA_PROXY(complex_base_a)
+OOLUA_PROXY_END
+
+OOLUA_PROXY(complex_base_b)
+OOLUA_PROXY_END
+
+OOLUA_PROXY(complex_ab, complex_base_a, complex_base_b)
 OOLUA_PROXY_END
 
 OOLUA_EXPORT_FUNCTIONS_CONST(basic, get)
 OOLUA_EXPORT_FUNCTIONS(basic, set)
 
 OOLUA_CFUNC(basic_call, oo_basic_call)
+//OOLUA_CFUNC(basic_multi_return, oo_basic_multi_return)
 
 namespace lb {
 
@@ -192,26 +202,28 @@ namespace lb {
 	}
 
 	void oolua_stateful_function_object_measure(nonius::chronometer& meter) {
+		// Unsupported
 		meter.measure([&]() {
 		});
 	}
 
 	void oolua_multi_return_measure(nonius::chronometer& meter) {
+		using namespace OOLUA;
+		Script vm;
+		//set_global(vm, "f", oo_basic_multi_return);
+		Lua_function f(vm);
 		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f("f", i);
+				x += v;
+			}
+			return x;
 		});
 	}
 
-	void oolua_virtual_cxx_function_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void oolua_multi_get_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void oolua_return_userdata(nonius::chronometer& meter) {
+	void oolua_base_derived_measure(nonius::chronometer& meter) {
+		// Unsupported?
 		meter.measure([&]() {
 		});
 	}

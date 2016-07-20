@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua bench", "lua bench.vcxproj", "{B7920C33-C11F-4760-9AC7-7A799992E224}"
 EndProject
@@ -37,9 +37,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "swig", "vendor\swig.vcxproj
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "luawrapper.deps", "vendor\luawrapper.deps.vcxproj", "{4A6D7902-2134-4AB2-8444-1248BF22A030}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "lua crunch", "lua crunch.pyproj", "{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "luwra", "vendor\luwra.vcxproj", "{1D8D24BE-4764-437D-B5AA-F1E702B005D3}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "lua crunch", "lua crunch.pyproj", "{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -211,13 +211,6 @@ Global
 		{4A6D7902-2134-4AB2-8444-1248BF22A030}.Release|x64.Build.0 = Release|x64
 		{4A6D7902-2134-4AB2-8444-1248BF22A030}.Release|x86.ActiveCfg = Release|Win32
 		{4A6D7902-2134-4AB2-8444-1248BF22A030}.Release|x86.Build.0 = Release|Win32
-		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Debug|x64.Build.0 = Debug|Any CPU
-		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Release|x64.ActiveCfg = Release|Any CPU
-		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Release|x86.ActiveCfg = Release|Any CPU
 		{1D8D24BE-4764-437D-B5AA-F1E702B005D3}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{1D8D24BE-4764-437D-B5AA-F1E702B005D3}.Debug|x64.ActiveCfg = Debug|x64
 		{1D8D24BE-4764-437D-B5AA-F1E702B005D3}.Debug|x64.Build.0 = Debug|x64
@@ -228,6 +221,12 @@ Global
 		{1D8D24BE-4764-437D-B5AA-F1E702B005D3}.Release|x64.Build.0 = Release|x64
 		{1D8D24BE-4764-437D-B5AA-F1E702B005D3}.Release|x86.ActiveCfg = Release|Win32
 		{1D8D24BE-4764-437D-B5AA-F1E702B005D3}.Release|x86.Build.0 = Release|Win32
+		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Release|x64.ActiveCfg = Release|Any CPU
+		{7E83F1E4-69EB-4DD3-84C4-06834C1028C2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

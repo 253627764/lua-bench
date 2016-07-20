@@ -151,20 +151,9 @@ namespace lb {
 		});
 	}
 
-	void selene_virtual_cxx_function_measure(nonius::chronometer& meter) {
+	void selene_base_derived_measure(nonius::chronometer& meter) {
 		meter.measure([&]() {
 		});
 	}
-
-	void selene_multi_get_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void selene_return_userdata(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
 
 }

@@ -112,17 +112,22 @@
     <ClInclude Include="luwra\lib\luwra.hpp" />
     <ClInclude Include="luwra\lib\luwra\auxiliary.hpp" />
     <ClInclude Include="luwra\lib\luwra\common.hpp" />
-    <ClInclude Include="luwra\lib\luwra\compat.hpp" />
     <ClInclude Include="luwra\lib\luwra\fields.hpp" />
-    <ClInclude Include="luwra\lib\luwra\functions.hpp" />
     <ClInclude Include="luwra\lib\luwra\generic.hpp" />
-    <ClInclude Include="luwra\lib\luwra\internal.hpp" />
+    <ClInclude Include="luwra\lib\luwra\internal\common.hpp" />
+    <ClInclude Include="luwra\lib\luwra\internal\indexsequence.hpp" />
+    <ClInclude Include="luwra\lib\luwra\internal\typelist.hpp" />
+    <ClInclude Include="luwra\lib\luwra\internal\types.hpp" />
     <ClInclude Include="luwra\lib\luwra\methods.hpp" />
     <ClInclude Include="luwra\lib\luwra\stack.hpp" />
     <ClInclude Include="luwra\lib\luwra\state.hpp" />
-    <ClInclude Include="luwra\lib\luwra\tables.hpp" />
-    <ClInclude Include="luwra\lib\luwra\types.hpp" />
+    <ClInclude Include="luwra\lib\luwra\types\function.hpp" />
+    <ClInclude Include="luwra\lib\luwra\types\pushable.hpp" />
+    <ClInclude Include="luwra\lib\luwra\types\reference.hpp" />
+    <ClInclude Include="luwra\lib\luwra\types\stl.hpp" />
+    <ClInclude Include="luwra\lib\luwra\types\table.hpp" />
     <ClInclude Include="luwra\lib\luwra\usertypes.hpp" />
+    <ClInclude Include="luwra\lib\luwra\values.hpp" />
     <ClInclude Include="luwra\lib\luwra\wrappers.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

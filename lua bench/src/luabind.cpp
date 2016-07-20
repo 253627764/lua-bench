@@ -1,5 +1,6 @@
 #include "lua_bench.hpp"
 #include "basic.hpp"
+#include "basic_lua.hpp"
 #include <lua.hpp>
 #include <luabind/luabind.hpp>
 
@@ -9,8 +10,7 @@ namespace lb {
 		lua_State* L = luaL_newstate();
 		luaL_openlibs(L);
 		luabind::open(L);
-		if (luaL_dostring(L, "value = 24"))
-			lua_error(L);
+		lua_do_or_die(L, "value = 24");
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -28,8 +28,7 @@ namespace lb {
 		lua_State* L = luaL_newstate();
 		luaL_openlibs(L);
 		luabind::open(L);
-		if (luaL_dostring(L, "value = 0"))
-			lua_error(L);
+		lua_do_or_die(L, "value = 0");
 		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i) {
 				luabind::globals(L)["value"] = 24;
@@ -41,8 +40,7 @@ namespace lb {
 		lua_State* L = luaL_newstate();
 		luaL_openlibs(L);
 		luabind::open(L);
-		if (luaL_dostring(L, "ulahibe = { warble = { value = 24 } }"))
-			lua_error(L);
+		lua_do_or_die(L, "ulahibe = { warble = { value = 24 } }");
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -60,8 +58,7 @@ namespace lb {
 		lua_State* L = luaL_newstate();
 		luaL_openlibs(L);
 		luabind::open(L);
-		if (luaL_dostring(L, "ulahibe = { warble = { value = 0 } }"))
-			lua_error(L);
+		lua_do_or_die(L, "ulahibe = { warble = { value = 0 } }");
 		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i) {
 				luabind::globals(L)["ulahibe"]["warble"]["value"] = 24;
@@ -73,8 +70,8 @@ namespace lb {
 		lua_State* L = luaL_newstate();
 		luaL_openlibs(L);
 		luabind::open(L);
-		if (luaL_dostring(L, "warble = { value = 24 }"))
-			lua_error(L);
+		lua_do_or_die(L, "warble = { value = 24 }");
+
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -92,8 +89,7 @@ namespace lb {
 		lua_State* L = luaL_newstate();
 		luaL_openlibs(L);
 		luabind::open(L);
-		if (luaL_dostring(L, "warble = { value = 24 }"))
-			lua_error(L);
+		lua_do_or_die(L, "warble = { value = 24 }");
 		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i) {
 				luabind::globals(L)["warble"]["value"] = 24;
@@ -110,8 +106,7 @@ namespace lb {
 		];
 		auto code = repeated_code("f(i)");
 		meter.measure([&L, &code]() {
-			if (luaL_dostring(L, code.c_str()))
-				lua_error(L);
+			lua_do_or_die(L, code.c_str());
 		});
 	}
 
@@ -119,8 +114,8 @@ namespace lb {
 		lua_State* L = luaL_newstate();
 		luaL_openlibs(L);
 		luabind::open(L);
-		if (luaL_dostring(L, "function f (i) return i end"))
-			lua_error(L);
+		lua_do_or_die(L, "function f (i) return i end");
+
 		luabind::object func = luabind::globals(L)["f"];
 		meter.measure([&func]() {
 			int x = 0;
@@ -161,12 +156,10 @@ namespace lb {
 				.def_const("get", &basic::get)
 				.def_readwrite("var", &basic::var)
 		];
-		if (luaL_dostring(L, "b = basic()"))
-			lua_error(L);
+		lua_do_or_die(L, "b = basic()");
 		std::string code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
-			if (luaL_dostring(L, code.c_str()))
-				lua_error(L);
+			lua_do_or_die(L, code.c_str());
 		});
 	}
 
@@ -181,36 +174,29 @@ namespace lb {
 				.def_const("get", &basic::get)
 				.def_readwrite("var", &basic::var)
 		];
-		if (luaL_dostring(L, "b = basic()"))
-			lua_error(L);
+		lua_do_or_die(L, "b = basic()");
 		std::string code = repeated_code("b.var = i\nx = b.var");
 		meter.measure([&]() {
-			if (luaL_dostring(L, code.c_str()))
-				lua_error(L);
+			lua_do_or_die(L, code.c_str());
 		});
 	}
 
 	void luabind_stateful_function_object_measure(nonius::chronometer& meter) {
+		// Unsupported
 		meter.measure([&]() {
 		});
 	}
 
 	void luabind_multi_return_measure(nonius::chronometer& meter) {
+		// Unsupported
+		// Luabind doesn't seem to provide access to the stack after performing a call
+		// and does not convert tuples
+		// would have to basically drop down
 		meter.measure([&]() {
 		});
 	}
 
-	void luabind_virtual_cxx_function_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void luabind_multi_get_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void luabind_return_userdata(nonius::chronometer& meter) {
+	void luabind_base_derived_measure(nonius::chronometer& meter) {
 		meter.measure([&]() {
 		});
 	}

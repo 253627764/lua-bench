@@ -21,13 +21,7 @@
     <ClInclude Include="luwra\lib\luwra\common.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="luwra\lib\luwra\compat.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="luwra\lib\luwra\fields.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="luwra\lib\luwra\functions.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="luwra\lib\luwra\generic.hpp">
@@ -42,22 +36,43 @@
     <ClInclude Include="luwra\lib\luwra\state.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="luwra\lib\luwra\types.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="luwra\lib\luwra\usertypes.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="luwra\lib\luwra.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="luwra\lib\luwra\tables.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="luwra\lib\luwra\wrappers.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="luwra\lib\luwra\internal.hpp">
+    <ClInclude Include="luwra\lib\luwra\values.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\internal\common.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\internal\indexsequence.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\internal\typelist.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\internal\types.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\types\function.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\types\pushable.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\types\reference.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\types\stl.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="luwra\lib\luwra\types\table.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

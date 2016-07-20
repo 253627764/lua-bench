@@ -133,36 +133,74 @@ namespace lb {
 		});
 	}
 
-	void kaguya_stateful_function_object_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void kaguya_multi_return_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void kaguya_virtual_cxx_function_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void kaguya_multi_get_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void kaguya_return_userdata(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
 	void kaguya_member_variable(nonius::chronometer& meter) {
 		// Does not support member variable syntax:
 		// turns it into a function, unfortunately
 		//meter.measure([&]() {
 		//});
+	}
+
+	void kaguya_stateful_function_object_measure(nonius::chronometer& meter) {
+		kaguya::State lua;
+		lua["f"] = kaguya::function(basic_stateful());
+		kaguya::LuaFunction f = lua["f"];
+		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f(i);
+				x += v;
+			}
+			return x;
+		});
+	}
+
+	void kaguya_multi_return_measure(nonius::chronometer& meter) {
+		kaguya::State lua;
+		lua["f"].setFunction(basic_multi_return);
+		kaguya::LuaFunction f = lua["f"];
+		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int a, b;
+				kaguya::tie(a, b) = f(i);
+				x += a;
+				x += b;
+			}
+			return x;
+		});
+	}
+
+	void kaguya_base_derived_measure(nonius::chronometer& meter) {
+		kaguya::State lua;
+		lua["complex_ab"].setClass(
+			kaguya::ClassMetatable<complex_ab, kaguya::MultipleBase<complex_base_a, complex_base_b>>()
+			.addMemberFunction("a_func", &complex_ab::a_func)
+			.addMemberFunction("b_func", &complex_ab::b_func)
+			.addMemberFunction("ab_func", &complex_ab::ab_func)
+		);
+		complex_ab ab;
+		// Set and verify correctness
+		lua["b"] = std::ref( ab );
+		{
+			complex_base_a* va = lua["b"];
+			complex_base_b* vb = lua["b"];
+			if (va->a_func() != ab.a_func() || va->a != ab.a) {
+				throw std::logic_error("proper base class casting not provided: failing benchmark");
+			}
+			if (vb->b_func() != ab.b_func() || vb->b != ab.b) {
+				throw std::logic_error("proper base class casting not provided: failing benchmark");
+			}
+		}
+		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				complex_base_a* va = lua["b"];
+				complex_base_b* vb = lua["b"];
+				x += va->a_func();
+				x += vb->b_func();
+			}
+			return x;
+		});
 	}
 
 }

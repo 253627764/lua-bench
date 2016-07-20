@@ -1,32 +1,19 @@
-#include "lua_bench.hpp"
-#include "basic.hpp"
-#include "lua_bench_wrap.hpp"
 #include <luapp/lua.hpp>
 #include <lua.hpp>
+#include "lua_bench.hpp"
+#include "basic.hpp"
+#include "basic_lua.hpp"
 
 LUAPP_USERDATA(basic, "basic");
+LUAPP_USERDATA(complex_base_a, "complex_base_a");
+LUAPP_USERDATA(complex_base_b, "complex_base_b");
+LUAPP_USERDATA(complex_ab, "complex_ab");
 
 namespace lb {
 	
-	basic basic_new() {
-		return basic(); 
-	}
-	
-	void basic_gc(basic& self) {
-		self.~basic();
-	}
-	
-	int basic_get(basic& self) {
-		return self.get();
-	}
-
-	void basic_set(basic& self, int x) {
-		self.set(x);
-	}
-
 	lua::Retval setup(lua::Context& c) {
-		c.mt<basic>() = lua::Table::records(c, 
-			"__index", lua::Table::records(c, 
+		c.mt<basic>() = lua::Table::records(c,
+			"__index", lua::Table::records(c,
 				"var", &basic::var,
 				"get", &basic::get,
 				"set", &basic::set
@@ -34,6 +21,11 @@ namespace lb {
 		);
 		c.global["basic_new"] = static_cast<basic(*)()>([]() {return basic(); });
 		return c.ret();
+	}
+
+	lua::Retval basic_multi_return_setup(lua::Context& c) {
+		auto r = basic_multi_return(c.args[1].to<int>());
+		return c.ret(std::get<0>(r), std::get<1>(r));
 	}
 	
 	void lua_api_pp_global_string_get_measure(nonius::chronometer& meter) {
@@ -154,7 +146,6 @@ namespace lb {
 	}
 
 	void lua_api_pp_member_function_call(nonius::chronometer& meter) {
-		// this framework is dumb as bricks
 		lua::State l;
 		l.call(lua::mkcf<setup>);
 		l.runString("b = basic_new()");
@@ -175,26 +166,27 @@ namespace lb {
 	}
 
 	void lua_api_pp_stateful_function_object_measure(nonius::chronometer& meter) {
+		// Unsupported
 		meter.measure([&]() {
 		});
 	}
 
 	void lua_api_pp_multi_return_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
+		lua::State l;
+		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
+		L.global.set("f", lua::mkcf<basic_multi_return_setup>);
+		meter.measure([&L]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = L.global["f"](i);
+				x += v;
+			}
+			return x;
 		});
 	}
 
-	void lua_api_pp_virtual_cxx_function_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void lua_api_pp_multi_get_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void lua_api_pp_return_userdata(nonius::chronometer& meter) {
+	void lua_api_pp_base_derived_measure(nonius::chronometer& meter) {
+		// Unsupported
 		meter.measure([&]() {
 		});
 	}

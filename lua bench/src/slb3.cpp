@@ -4,9 +4,9 @@
 
 namespace lb {
 
-	inline int atpanic(lua_State* L) {
+	inline int panic_throw(lua_State* L) {
 		const char* message = lua_tostring(L, -1);
-		std::string err = message ? message : "An unexpected error occurred and forced the lua state to call atpanic";
+		std::string err = message ? message : "An unexpected error occurred and forced the lua state to call panic_throw";
 		throw std::runtime_error(err);
 	}
 
@@ -77,7 +77,7 @@ namespace lb {
 		SLB::Manager m;
 		ShitScript lua(&m);
 		
-		lua_atpanic(lua.lua_state(), atpanic);
+		lua_atpanic(lua.lua_state(), panic_throw);
 
 		lua.doString(R"(function f (i)
 			return i;
@@ -139,17 +139,7 @@ namespace lb {
 		});
 	}
 
-	void slb3_virtual_cxx_function_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void slb3_multi_get_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void slb3_return_userdata(nonius::chronometer& meter) {
+	void slb3_base_derived_measure(nonius::chronometer& meter) {
 		meter.measure([&]() {
 		});
 	}

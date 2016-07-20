@@ -1,6 +1,6 @@
 #include "lua_bench.hpp"
 #include "basic.hpp"
-#include "lua_bench_wrap.hpp"
+#include "basic_lua.hpp"
 
 extern "C" {
 	int luaopen_lb(lua_State* L);
@@ -8,12 +8,6 @@ extern "C" {
 
 namespace lb {
 	
-	inline int atpanic(lua_State* L) {
-		const char* message = lua_tostring(L, -1);
-		std::string err = message ? message : "An unexpected error occurred and forced the lua state to call atpanic";
-		throw std::runtime_error(err);
-	}
-
 	void swig_global_string_get_measure(nonius::chronometer& meter) {
 		// Unsupported
 		// meter.measure([](){});
@@ -46,25 +40,22 @@ namespace lb {
 
 	void swig_c_function_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
-		lua_atpanic(L, atpanic);
+		lua_atpanic(L, panic_throw);
 
 		luaopen_lb(L);
-		if (luaL_dostring(L, "f = lb.basic_call"))
-			lua_error(L);
+		lua_do_or_die(L, "f = lb.basic_call");
 
 		auto code = repeated_code("f(i)");
 		meter.measure([&]() {
-			if (luaL_dostring(L, code.c_str()))
-				lua_error(L);
+			lua_do_or_die(L, code.c_str());
 		});
 	}
 
 	void swig_lua_function_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
-		lua_atpanic(L, atpanic);
-		if (luaL_dostring(L, "function f (i) return i end"))
-			lua_error(L);
-
+		lua_atpanic(L, panic_throw);
+		lua_do_or_die(L, "function f (i) return i end");
+		
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -81,11 +72,10 @@ namespace lb {
 
 	void swig_c_through_lua_function_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
-		lua_atpanic(L, atpanic);
+		lua_atpanic(L, panic_throw);
 
 		luaopen_lb(L);
-		if (luaL_dostring(L, "f = lb.basic_call"))
-			lua_error(L);
+		lua_do_or_die(L, "f = lb.basic_call");
 
 		meter.measure([&]() {
 			int x = 0;
@@ -103,31 +93,27 @@ namespace lb {
 
 	void swig_member_function_call(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
-		lua_atpanic(L, atpanic);
+		lua_atpanic(L, panic_throw);
 
 		luaopen_lb(L);
-		if (luaL_dostring(L, "b = lb.basic()"))
-			lua_error(L);
+		lua_do_or_die(L, "b = lb.basic()");
 
 		auto code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
-			if (luaL_dostring(L, code.c_str()))
-				lua_error(L);
+			lua_do_or_die(L, code.c_str());
 		});
 	}
 
 	void swig_member_variable(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
-		lua_atpanic(L, atpanic);
+		lua_atpanic(L, panic_throw);
 
 		luaopen_lb(L);
-		if(luaL_dostring(L, "b = lb.basic()"))
-			lua_error(L);
+		lua_do_or_die(L, "b = lb.basic()");
 		
 		auto code = repeated_code("b.var = i\nx = b.var");
 		meter.measure([&]() {
-			if (luaL_dostring(L, code.c_str()))
-				lua_error(L);
+			lua_do_or_die(L, code.c_str());
 		});
 	}
 
@@ -141,20 +127,9 @@ namespace lb {
 		});
 	}
 
-	void swig_virtual_cxx_function_measure(nonius::chronometer& meter) {
+	void swig_base_derived_measure(nonius::chronometer& meter) {
 		meter.measure([&]() {
 		});
 	}
-
-	void swig_multi_get_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
-	void swig_return_userdata(nonius::chronometer& meter) {
-		meter.measure([&]() {
-		});
-	}
-
 
 }

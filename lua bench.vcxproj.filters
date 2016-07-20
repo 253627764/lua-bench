@@ -68,10 +68,10 @@
     <ClInclude Include="lua bench\src\lua_bench.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lua bench\src\lua_bench_wrap.hpp">
+    <ClInclude Include="lua bench\src\basic.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lua bench\src\basic.hpp">
+    <ClInclude Include="lua bench\src\basic_lua.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
