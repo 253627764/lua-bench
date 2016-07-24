@@ -1,5 +1,5 @@
-#include "lua_bench.hpp"
-#include "basic.hpp"
+#include "lua bench.hpp"
+#include "basic_lua.hpp"
 #define LUAINTF_LINK_LUA_COMPILED_IN_CXX 0
 #include <LuaIntf/LuaIntf.h>
 
@@ -7,6 +7,8 @@ namespace lb {
 
 	void lua_intf_global_string_get_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.doString("value = 24");
 		meter.measure([&lua]() {
 			int x = 0;
@@ -20,6 +22,8 @@ namespace lb {
 
 	void lua_intf_global_string_set_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.doString("value = 24");
 		meter.measure([&lua]() {
 			for (int i = 0; i < repetition; ++i) {
@@ -30,6 +34,8 @@ namespace lb {
 
 	void lua_intf_chained_get_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.doString("ulahibe = {warble = {value = 24}}");
 		meter.measure([&lua]() {
 			int x = 0;
@@ -43,6 +49,8 @@ namespace lb {
 
 	void lua_intf_chained_set_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.doString("ulahibe = {warble = {value = 24}}");
 		meter.measure([&lua]() {
 			for (int i = 0; i < repetition; ++i) {
@@ -54,6 +62,8 @@ namespace lb {
 
 	void lua_intf_table_get_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.doString("warble = {value = 24}");
 		LuaIntf::LuaRef t = lua.getGlobal("warble");
 		meter.measure([&t]() {
@@ -68,6 +78,8 @@ namespace lb {
 
 	void lua_intf_table_set_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.doString("warble = {value = 24}");
 		LuaIntf::LuaRef t = lua.getGlobal("warble");
 		meter.measure([&t]() {
@@ -79,6 +91,8 @@ namespace lb {
 
 	void lua_intf_c_function_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.doString("function f(i) return i end");
 		lua.setGlobal("f", basic_call);
 		LuaIntf::LuaRef f = lua.getGlobal("f");
@@ -90,6 +104,8 @@ namespace lb {
 
 	void lua_intf_lua_function_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.doString("function f(i) return i end");
 		LuaIntf::LuaRef f = lua.getGlobal("f");
 		meter.measure([&f]() {
@@ -104,6 +120,8 @@ namespace lb {
 
 	void lua_intf_c_through_lua_function_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.setGlobal("f", basic_call);
 		LuaIntf::LuaRef f = lua.getGlobal("f");
 		meter.measure([&f]() {
@@ -118,6 +136,8 @@ namespace lb {
 
 	void lua_intf_member_function_call(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		LuaIntf::LuaBinding(lua)
 			.beginClass<basic>("basic")
 			.addConstructor(LUA_ARGS())
@@ -134,6 +154,8 @@ namespace lb {
 
 	void lua_intf_member_variable(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
 		LuaIntf::LuaBinding(lua)
 			.beginClass<basic>("basic")
 			.addConstructor(LUA_ARGS())

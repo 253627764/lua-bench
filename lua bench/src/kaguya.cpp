@@ -1,11 +1,13 @@
-#include "lua_bench.hpp"
-#include "basic.hpp"
+#include "lua bench.hpp"
+#include "basic_lua.hpp"
 #include <kaguya/kaguya.hpp>
 
 namespace lb {
 
 	void kaguya_global_string_get_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["value"] = 24;
 		meter.measure([&]() {
 			int x = 0;
@@ -19,6 +21,8 @@ namespace lb {
 
 	void kaguya_global_string_set_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i) {
 				lua["value"] = i;
@@ -28,6 +32,8 @@ namespace lb {
 
 	void kaguya_table_get_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["warble"] = kaguya::NewTable();
 		lua["warble"]["value"] = 24;
 		kaguya::LuaTable t = lua["warble"];
@@ -43,6 +49,8 @@ namespace lb {
 
 	void kaguya_table_set_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["warble"] = kaguya::NewTable();
 		kaguya::LuaTable t = lua["warble"];
 		meter.measure([&]() {
@@ -54,6 +62,8 @@ namespace lb {
 
 	void kaguya_chained_get_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["ulahibe"] = kaguya::NewTable();
 		lua["ulahibe"]["warble"] = kaguya::NewTable();
 		lua["ulahibe"]["warble"]["value"] = 24;
@@ -69,6 +79,8 @@ namespace lb {
 
 	void kaguya_chained_set_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["ulahibe"] = kaguya::NewTable();
 		lua["ulahibe"]["warble"] = kaguya::NewTable();
 		lua["ulahibe"]["warble"]["value"] = 24;
@@ -81,15 +93,21 @@ namespace lb {
 
 	void kaguya_c_function_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["f"].setFunction(basic_call);
 		auto code = repeated_code("f(i)");
 		meter.measure([&]() {
-			lua(code);
+			if (!lua(code)) {
+				lua_error(lua.state());
+			}
 		});
 	}
 
 	void kaguya_lua_function_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua(R"(function f (i)
 			return i;
 		end)");
@@ -106,6 +124,8 @@ namespace lb {
 
 	void kaguya_c_through_lua_function_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["f"].setFunction(basic_call);
 		kaguya::LuaFunction f = lua["f"];
 		meter.measure([&]() {
@@ -120,6 +140,8 @@ namespace lb {
 
 	void kaguya_member_function_call(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["basic"].setClass<basic>(kaguya::ClassMetatable<basic>()
 			.addConstructor()
 			.addMember("var", &basic::var)
@@ -129,7 +151,9 @@ namespace lb {
 		lua("b = basic.new()");
 		auto code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
-			lua(code);
+			if (!lua(code)) {
+				lua_error(lua.state());
+			}
 		});
 	}
 
@@ -142,6 +166,8 @@ namespace lb {
 
 	void kaguya_stateful_function_object_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["f"] = kaguya::function(basic_stateful());
 		kaguya::LuaFunction f = lua["f"];
 		meter.measure([&]() {
@@ -156,6 +182,8 @@ namespace lb {
 
 	void kaguya_multi_return_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["f"].setFunction(basic_multi_return);
 		kaguya::LuaFunction f = lua["f"];
 		meter.measure([&]() {
@@ -172,6 +200,8 @@ namespace lb {
 
 	void kaguya_base_derived_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
 		lua["complex_ab"].setClass(
 			kaguya::ClassMetatable<complex_ab, kaguya::MultipleBase<complex_base_a, complex_base_b>>()
 			.addMemberFunction("a_func", &complex_ab::a_func)

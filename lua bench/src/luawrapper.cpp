@@ -1,11 +1,12 @@
-#include "lua_bench.hpp"
-#include "basic.hpp"
+#include "lua bench.hpp"
+#include "basic_lua.hpp"
 #include <LuaContext.hpp>
 
 namespace lb {
 
 	void luawrapper_global_string_get_measure(nonius::chronometer& meter) {
 		LuaContext lua;
+
 		lua.writeVariable("value", 24);
 		meter.measure([&lua]() {
 			int x = 0;

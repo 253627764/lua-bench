@@ -1,12 +1,14 @@
 #include "luwra.hpp"
 #include "basic.hpp"
 #include "basic_lua.hpp"
-#include "lua_bench.hpp"
+#include "lua bench.hpp"
 
 namespace lb {
 
 	void luwra_global_string_get_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua["value"] = 24;
 		meter.measure([&lua]() {
 			int x = 0;
@@ -20,6 +22,8 @@ namespace lb {
 
 	void luwra_global_string_set_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		meter.measure([&lua]() {
 			for (int i = 0; i < repetition; ++i) {
 				lua["value"] = 24;
@@ -29,6 +33,8 @@ namespace lb {
 
 	void luwra_chained_get_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.runString("ulahibe={warble={value = 24}}");
 		meter.measure([&lua]() {
 			int x = 0;
@@ -42,6 +48,8 @@ namespace lb {
 
 	void luwra_chained_set_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.runString("ulahibe={warble={value = 24}}");
 		meter.measure([&lua]() {
 			for (int i = 0; i < repetition; ++i) {
@@ -52,6 +60,8 @@ namespace lb {
 
 	void luwra_table_get_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.runString("warble={value = 24}");
 		meter.measure([&lua]() {
 			int x = 0;
@@ -65,6 +75,8 @@ namespace lb {
 
 	void luwra_table_set_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.runString("warble={value = 24}");
 		meter.measure([&lua]() {
 			for (int i = 0; i < repetition; ++i) {
@@ -75,6 +87,8 @@ namespace lb {
 
 	void luwra_c_function_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua["f"] = LUWRA_WRAP(basic_call);
 		auto code = repeated_code("f(i)");
 		meter.measure([&]() {
@@ -84,6 +98,8 @@ namespace lb {
 
 	void luwra_lua_function_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.runString(R"(function f (i)
 			return i;
 		end)");
@@ -102,6 +118,8 @@ namespace lb {
 
 	void luwra_c_through_lua_function_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua["f"] = LUWRA_WRAP(basic_call);
 		
 		// Since Luwra expects the referenced function to exist on a Lua stack before execution,
@@ -122,6 +140,8 @@ namespace lb {
 
 	void luwra_member_function_call(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.registerUserType<basic()>(
 			"basic",
 			{
@@ -138,6 +158,8 @@ namespace lb {
 
 	void luwra_member_variable(nonius::chronometer& meter) {
 		/*luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
 		lua.registerMember("var", &basic::var);
 		lua.writeVariable("b", basic());
 		auto code = repeated_code("b.var = i\nx = b.var");
@@ -150,6 +172,7 @@ namespace lb {
 	void luwra_stateful_function_object_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
 		lua_atpanic(lua, panic_throw);
+		
 		lua.set("f", basic_stateful());
 		luwra::Function<int> f = lua["f"];
 		meter.measure([&]() {
@@ -163,8 +186,11 @@ namespace lb {
 	}
 
 	void luwra_multi_return_measure(nonius::chronometer& meter) {
+		// std::tuple returns still not supported...
+		// G R E A T
 		luwra::StateWrapper lua;
 		lua_atpanic(lua, panic_throw);
+		
 		lua.set("f", LUWRA_WRAP( basic_multi_return ));
 		luwra::Function<std::tuple<int, int>> f = lua["f"];
 		meter.measure([&]() {
@@ -181,6 +207,7 @@ namespace lb {
 	void luwra_base_derived_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
 		lua_atpanic(lua, panic_throw);
+
 		lua.registerUserType<complex_ab>();
 		complex_ab ab;
 		// Set and verify correctness

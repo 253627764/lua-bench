@@ -1,4 +1,4 @@
-#include "lua_bench.hpp"
+#include "lua bench.hpp"
 #include "basic.hpp"
 #include "basic_lua.hpp"
 #include <lua.hpp>
@@ -8,6 +8,8 @@ namespace lb {
 
 	void luabind_global_string_get_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		lua_do_or_die(L, "value = 24");
@@ -26,6 +28,8 @@ namespace lb {
 
 	void luabind_global_string_set_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		lua_do_or_die(L, "value = 0");
@@ -38,6 +42,8 @@ namespace lb {
 
 	void luabind_chained_get_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		lua_do_or_die(L, "ulahibe = { warble = { value = 24 } }");
@@ -56,6 +62,8 @@ namespace lb {
 
 	void luabind_chained_set_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		lua_do_or_die(L, "ulahibe = { warble = { value = 0 } }");
@@ -68,6 +76,8 @@ namespace lb {
 
 	void luabind_table_get_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		lua_do_or_die(L, "warble = { value = 24 }");
@@ -87,6 +97,8 @@ namespace lb {
 
 	void luabind_table_set_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		lua_do_or_die(L, "warble = { value = 24 }");
@@ -99,6 +111,8 @@ namespace lb {
 
 	void luabind_c_function_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		luabind::module(L) [
@@ -112,6 +126,8 @@ namespace lb {
 
 	void luabind_lua_function_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		lua_do_or_die(L, "function f (i) return i end");
@@ -129,6 +145,8 @@ namespace lb {
 
 	void luabind_c_through_lua_function_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		luabind::module(L)[
@@ -147,6 +165,8 @@ namespace lb {
 
 	void luabind_member_function_call(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		luabind::module(L)[
@@ -165,6 +185,8 @@ namespace lb {
 
 	void luabind_member_variable(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
 		luaL_openlibs(L);
 		luabind::open(L);
 		luabind::module(L)[
@@ -197,6 +219,9 @@ namespace lb {
 	}
 
 	void luabind_base_derived_measure(nonius::chronometer& meter) {
+		// Unsupported
+		// You'd have to figure out the casting yourself and use the Lua API,
+		// at which point it's not really an abstraction anymore, is it?
 		meter.measure([&]() {
 		});
 	}

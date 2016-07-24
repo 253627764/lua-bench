@@ -1,6 +1,6 @@
 #include <luapp/lua.hpp>
 #include <lua.hpp>
-#include "lua_bench.hpp"
+#include "lua bench.hpp"
 #include "basic.hpp"
 #include "basic_lua.hpp"
 
@@ -30,6 +30,8 @@ namespace lb {
 	
 	void lua_api_pp_global_string_get_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+		
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		L.global.set("value", 24);
 		meter.measure([&L]() {
@@ -44,6 +46,8 @@ namespace lb {
 
 	void lua_api_pp_global_string_set_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		meter.measure([&L]() {
 			for (int i = 0; i < repetition; ++i) {
@@ -54,6 +58,8 @@ namespace lb {
 
 	void lua_api_pp_chained_get_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		L.global.set("ulahibe", lua::Table::records(L, "warble", lua::Table::records(L, "value", 24)));
 		meter.measure([&L]() {
@@ -68,6 +74,8 @@ namespace lb {
 
 	void lua_api_pp_chained_set_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		L.global.set("ulahibe", lua::Table::records(L, "warble", lua::Table::records(L, "value", 24)));
 		meter.measure([&L]() {
@@ -79,6 +87,8 @@ namespace lb {
 
 	void lua_api_pp_table_get_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		L.global.set("warble", lua::Table::records(L, "value", 24));
 		lua::Table t = L.global["warble"];
@@ -94,6 +104,8 @@ namespace lb {
 
 	void lua_api_pp_table_set_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		L.global.set("warble", lua::Table::records(L, "value", 24));
 		lua::Table t = L.global["warble"];
@@ -109,6 +121,8 @@ namespace lb {
 
 	void lua_api_pp_c_function_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		L.global.set("f", basic_call);
 		std::string code = repeated_code("f(i)");
@@ -119,6 +133,8 @@ namespace lb {
 
 	void lua_api_pp_lua_function_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		l.runString("function f (i) return i end");
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		meter.measure([&L]() {
@@ -133,6 +149,8 @@ namespace lb {
 
 	void lua_api_pp_c_through_lua_function_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		L.global.set("f", basic_call);
 		meter.measure([&L]() {
@@ -147,6 +165,8 @@ namespace lb {
 
 	void lua_api_pp_member_function_call(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		l.call(lua::mkcf<setup>);
 		l.runString("b = basic_new()");
 		std::string code = repeated_code("b:set(i) b:get()");
@@ -156,13 +176,16 @@ namespace lb {
 	}
 
 	void lua_api_pp_member_variable(nonius::chronometer& meter) {
-		lua::State l;
+		// Unsupported
+		/*lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		l.call(lua::mkcf<setup>);
 		l.runString("b = basic_new()");
 		std::string code = repeated_code("b.var = i\nx = b.var");
 		meter.measure([&]() {
 			l.runString(code);
-		});
+		});*/
 	}
 
 	void lua_api_pp_stateful_function_object_measure(nonius::chronometer& meter) {
@@ -173,6 +196,8 @@ namespace lb {
 
 	void lua_api_pp_multi_return_measure(nonius::chronometer& meter) {
 		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
 		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
 		L.global.set("f", lua::mkcf<basic_multi_return_setup>);
 		meter.measure([&L]() {

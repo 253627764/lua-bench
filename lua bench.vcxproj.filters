@@ -18,9 +18,6 @@
     <ClCompile Include="vendor\lua-api-pp\luapp\impl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lua bench\src\lua_bench.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lua bench\src\sol.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -63,15 +60,18 @@
     <ClCompile Include="lua bench\src\plain_c.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lua bench\src\lua bench.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="lua bench\src\lua_bench.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="lua bench\src\basic.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="lua bench\src\basic_lua.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="lua bench\src\lua bench.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

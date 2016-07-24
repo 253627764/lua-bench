@@ -1,5 +1,5 @@
 #include <lua.hpp>
-#include "lua_bench.hpp"
+#include "lua bench.hpp"
 #include "basic.hpp"
 #include "basic_lua.hpp"
 
@@ -8,6 +8,7 @@ namespace lb {
 	void plain_global_string_get_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
+
 		lua_pushinteger(L, 24);
 		lua_setglobal(L, "value");
 		meter.measure([&]() {

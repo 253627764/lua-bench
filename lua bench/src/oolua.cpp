@@ -1,6 +1,5 @@
-#include "lua_bench.hpp"
-#include "basic.hpp"
-#include <lua.hpp>
+#include "lua bench.hpp"
+#include "basic_lua.hpp"
 #include <oolua.h>
 
 OOLUA_PROXY(basic)
@@ -31,6 +30,7 @@ namespace lb {
 	void oolua_global_string_get_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
 		set_global(vm, "value", oolua_value);
 		meter.measure([&vm]() {
 			int x = 0;
@@ -46,6 +46,8 @@ namespace lb {
 	void oolua_global_string_set_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		set_global(vm, "value", oolua_value);
 		meter.measure([&vm]() {
 			int x = 0;
@@ -61,6 +63,8 @@ namespace lb {
 	void oolua_chained_get_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		Table tu = new_table(vm);
 		set_global(vm, "ulahibe", tu);
 		Table tw = new_table(vm);
@@ -85,6 +89,8 @@ namespace lb {
 	void oolua_chained_set_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		Table tu = new_table(vm);
 		set_global(vm, "ulahibe", tu);
 		Table tw = new_table(vm);
@@ -105,6 +111,8 @@ namespace lb {
 	void oolua_table_get_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		Table tu = new_table(vm);
 		set_global(vm, "warble", tu);
 		Table tw;
@@ -125,6 +133,8 @@ namespace lb {
 	void oolua_table_set_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		Table tu = new_table(vm);
 		set_global(vm, "warble", tu);
 		Table tw;
@@ -140,16 +150,23 @@ namespace lb {
 	void oolua_c_function_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		set_global(vm, "f", oo_basic_call);
 		std::string code = repeated_code("f(i)");
 		meter.measure([&]() {
-			vm.run_chunk(code);
+			if (!vm.run_chunk(code)) {
+				auto str = OOLUA::get_last_error(vm);
+				luaL_error(vm, str.c_str());
+			}
 		});
 	}
 
 	void oolua_lua_function_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		vm.run_chunk(R"(function f (i)
 			return i;
 		end)");
@@ -167,6 +184,8 @@ namespace lb {
 	void oolua_c_through_lua_function_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		set_global(vm, "f", oo_basic_call);
 		Lua_function f(vm);
 		meter.measure([&]() {
@@ -182,22 +201,32 @@ namespace lb {
 	void oolua_member_function_call(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		vm.register_class<basic>();
-		vm.run_chunk("b = basic:new()");
+		vm.run_chunk("b = basic.new()");
 		std::string code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
-			vm.run_chunk(code);
+			if (!vm.run_chunk(code)) {
+				auto str = OOLUA::get_last_error(vm);
+				luaL_error(vm, str.c_str());
+			}
 		});
 	}
 
 	void oolua_member_variable(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		vm.register_class<basic>();
-		vm.run_chunk("b = basic:new()");
+		vm.run_chunk("b = basic.new()");
 		std::string code = repeated_code("b.var = i\nx = b.var");
 		meter.measure([&]() {
-			vm.run_chunk(code);
+			if (!vm.run_chunk(code)) {
+				auto str = OOLUA::get_last_error(vm);
+				luaL_error(vm, str.c_str());
+			}
 		});
 	}
 
@@ -210,6 +239,8 @@ namespace lb {
 	void oolua_multi_return_measure(nonius::chronometer& meter) {
 		using namespace OOLUA;
 		Script vm;
+		lua_atpanic(vm, panic_throw);
+		
 		//set_global(vm, "f", oo_basic_multi_return);
 		Lua_function f(vm);
 		meter.measure([&]() {

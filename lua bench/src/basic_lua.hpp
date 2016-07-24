@@ -74,7 +74,15 @@ inline void lua_do_or_die(lua_State* L, const std::string& code) {
 
 inline int panic_throw(lua_State* L) {
 	const char* message = lua_tostring(L, -1);
-	std::string err = message ? message : "An unexpected error occurred and forced the lua state to call atpanic";
+	std::string err = message ? message : "An unexpected error occurred and forced the Lua state to panic";
 	throw std::runtime_error(err);
 }
 
+inline void selene_panic_throw(int, std::string err, std::exception_ptr) {
+	throw std::runtime_error(err);
+}
+
+inline void kaguya_panic_throw(int, const char* msg) {
+	std::string err = msg ? msg : "An unexpected error occured and forced the Lua state to panic";
+	throw std::runtime_error(err);
+}

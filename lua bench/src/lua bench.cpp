@@ -1,4 +1,4 @@
-#include "lua_bench.hpp"
+#include "lua bench.hpp"
 #include <nonius.h++>
 
 int main(int argc, char* argv[]) {
@@ -47,6 +47,9 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("lua function", lb::sol_lua_function_measure),
 			nonius::benchmark("member function calls", lb::sol_member_function_call),
 			nonius::benchmark("member variable", lb::sol_member_variable),
+			nonius::benchmark("multi return", lb::sol_multi_return_measure),
+			nonius::benchmark("stateful c function", lb::sol_stateful_function_object_measure),
+			nonius::benchmark("base from derived", lb::sol_base_derived_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " sol";
@@ -66,6 +69,9 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("lua function", lb::selene_lua_function_measure),
 			nonius::benchmark("member function calls", lb::selene_member_function_call),
 			//nonius::benchmark("member variable", lb::selene_member_variable),
+			nonius::benchmark("multi return", lb::selene_multi_return_measure),
+			nonius::benchmark("stateful c function", lb::selene_stateful_function_object_measure),
+			//nonius::benchmark("base from derived", lb::selene_base_derived_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " selene";
@@ -85,6 +91,9 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("lua function", lb::kaguya_lua_function_measure),
 			nonius::benchmark("member function calls", lb::kaguya_member_function_call),
 			//nonius::benchmark("member variable", lb::kaguya_member_variable),
+			nonius::benchmark("multi return", lb::kaguya_multi_return_measure),
+			nonius::benchmark("stateful c function", lb::kaguya_stateful_function_object_measure),
+			nonius::benchmark("base from derived", lb::kaguya_base_derived_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " kaguya";
@@ -104,6 +113,9 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark("lua function", lb::slb3_lua_function_measure),
 			nonius::benchmark("member function calls", lb::slb3_member_function_call),
 			//nonius::benchmark("member variable", lb::slb3_member_variable),
+			//nonius::benchmark("multi return", lb::slb3_multi_return_measure),
+			//nonius::benchmark("stateful c function", lb::slb3_stateful_function_object_measure),
+			//nonius::benchmark("base from derived", lb::slb3_base_derived_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " slb3";
@@ -188,7 +200,7 @@ int main(int argc, char* argv[]) {
 		cfg.output_file += " luacppinterface.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-
+#endif
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("global get", lb::luwra_global_string_get_measure),
@@ -202,13 +214,15 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark("lua function", lb::luwra_lua_function_measure),
 			nonius::benchmark("member function calls", lb::luwra_member_function_call),
 			//nonius::benchmark("member variable", lb::lua_api_pp_member_variable),
+			//nonius::benchmark("multi return", lb::luwra_multi_return_measure),
+			//nonius::benchmark("stateful c function", lb::luwra_stateful_function_object_measure),
+			nonius::benchmark("base from derived", lb::luwra_base_derived_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luwra";
 		cfg.output_file += " luwra.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-#endif
 	{
 		nonius::benchmark benchmarks[] = {
 			nonius::benchmark("global get", lb::lua_api_pp_global_string_get_measure),

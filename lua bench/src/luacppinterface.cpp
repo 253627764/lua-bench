@@ -1,5 +1,5 @@
-#include "lua_bench.hpp"
-#include "basic.hpp"
+#include "lua bench.hpp"
+#include "basic_lua.hpp"
 #include <luacppinterface.h>
 
 namespace lb {
@@ -7,6 +7,8 @@ namespace lb {
 	void luacppinterface_global_string_get_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+		
 		lua.Set("value", 24);
 		meter.measure([&]() {
 			int x = 0;
@@ -19,6 +21,8 @@ namespace lb {
 	void luacppinterface_global_string_set_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i)
 				lua.Set("value", i);
@@ -28,6 +32,8 @@ namespace lb {
 	void luacppinterface_table_get_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		lua.Set("warble", l.CreateTable());
 		LuaTable t = lua.Get<LuaTable>("warble");
 		t.Set("value", 24);
@@ -43,6 +49,8 @@ namespace lb {
 	void luacppinterface_table_set_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		lua.Set("warble", l.CreateTable());
 		LuaTable t = lua.Get<LuaTable>("warble");
 		meter.measure([&]() {
@@ -54,6 +62,8 @@ namespace lb {
 	void luacppinterface_chained_get_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		lua.Set("ulahibe", l.CreateTable());
 		LuaTable tu = lua.Get<LuaTable>("ulahibe");
 		tu.Set("warble", l.CreateTable());
@@ -68,6 +78,8 @@ namespace lb {
 	void luacppinterface_chained_set_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		lua.Set("ulahibe", l.CreateTable());
 		LuaTable tu = lua.Get<LuaTable>("ulahibe");
 		tu.Set("warble", l.CreateTable());
@@ -82,10 +94,14 @@ namespace lb {
 	void luacppinterface_c_function_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		lua.Set("f", l.CreateFunction<int(int)>(basic_call));
 		std::string code = repeated_code("f(run)");
 		meter.measure([&]() {
-			l.RunScript(code);
+			if (l.RunScript(code) != "No errors") {
+				lua_error(lua.GetState().get());
+			}
 		});
 	}
 
@@ -93,9 +109,13 @@ namespace lb {
 		// Fucking broken
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
-		l.RunScript(R"(function f (i)
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
+		if(l.RunScript(R"(function f (i)
 			return i;
-		end)");
+		end)") != "No errors") {
+			lua_error(lua.GetState().get());
+		}
 		
 		auto f = lua.Get<LuaFunction<int(int)>>("f");
 		meter.measure([&]() {
@@ -110,6 +130,8 @@ namespace lb {
 		// Broken as shit
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		lua.Set("f", l.CreateFunction<int(int)>(basic_call));
 		
 		auto f = lua.Get<LuaFunction<int(int)>>("f");
@@ -124,13 +146,17 @@ namespace lb {
 	void luacppinterface_member_function_call(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		auto image = l.CreateUserdata<basic>(new basic());
 		lua.Set("b", image);
 		image.Bind<void>("set", &basic::set);
 		image.Bind<int>("get", &basic::get);
 		std::string code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
-			l.RunScript(code);
+			if (l.RunScript(code) != "No errors") {
+				lua_error(lua.GetState().get());
+			}
 		});
 	}
 
@@ -142,6 +168,8 @@ namespace lb {
 	void luacppinterface_stateful_function_object_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		lua.Set("f", l.CreateFunction<int(int)>(basic_stateful()));
 
 		auto f = lua.Get<LuaFunction<int(int)>>("f");
@@ -162,6 +190,8 @@ namespace lb {
 	void luacppinterface_base_derived_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
 		auto lud = l.CreateUserdata<complex_ab>(new complex_ab());
 		lua.Set("b", lud);
 		{
