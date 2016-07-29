@@ -37,10 +37,10 @@ int main(int argc, char* argv[]) {
 	static const bool do_kaguya = false;
 	static const bool do_lua_api_pp = false;
 	static const bool do_luabind = false;
-	static const bool do_luacppinterface = true;
+	static const bool do_luacppinterface = false;
 	static const bool do_lua_intf = false;
 	static const bool do_luawrapper = false;
-	static const bool do_luwra = false;
+	static const bool do_luwra = true;
 	static const bool do_oolua = false;
 	static const bool do_plain_c = false;
 	static const bool do_selene = false;
@@ -63,6 +63,7 @@ int main(int argc, char* argv[]) {
 	static const bool do_swig = true;
 #endif
 	nonius::configuration rootcfg;
+	rootcfg.summary = true;
 	rootcfg.output_file = "lua bench tests";
 	rootcfg.title = "lua bench tests";
 #ifdef _DEBUG

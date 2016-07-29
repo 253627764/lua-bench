@@ -103,7 +103,11 @@ namespace lb {
 		lua.runString(R"(function f (i)
 			return i;
 		end)");
-		luwra::Function<int> f = lua["f"];
+		// Unless we specifically get it like this,
+		// it picks the wrong overload in VC++
+		// I am too tired to fix this and honestly this bullshit shouldn't
+		// be happening, who the fuck overloads on `const &&` ????
+		luwra::Function<int> f = lua["f"].read<luwra::Function<int>>();
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -112,7 +116,6 @@ namespace lb {
 			}
 			return x;
 		});
-		lua_pop(lua, 1);
 	}
 
 	void luwra_c_through_lua_function_measure(nonius::chronometer& meter) {
@@ -121,11 +124,11 @@ namespace lb {
 
 		lua["f"] = LUWRA_WRAP(basic_call);
 		
-		// Since Luwra expects the referenced function to exist on a Lua stack before execution,
-		// we have to push it manually. Luwra is way too minimal to work with Lua-native functions
-		// outside the scope of a wrapped function.
-		lua_getglobal(lua, "f");
-		luwra::Function<int> f(lua , -1);
+		// Unless we specifically get it like this,
+		// it picks the wrong overload in VC++
+		// I am too tired to fix this and honestly this bullshit shouldn't
+		// be happening, who the fuck overloads on `const &&` ????
+		luwra::Function<int> f = lua["f"].read<luwra::Function<int>>();
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -134,7 +137,6 @@ namespace lb {
 			}
 			return x;
 		});
-		lua_pop(lua, 1);
 	}
 
 	void luwra_member_function_call_measure(nonius::chronometer& meter) {
@@ -181,7 +183,11 @@ namespace lb {
 			}
 		);
 		lua.set("f", basic_stateful());
-		luwra::Function<int> f = lua["f"];
+		// Unless we specifically get it like this,
+		// it picks the wrong overload in VC++
+		// I am too tired to fix this and honestly this bullshit shouldn't
+		// be happening, who the fuck overloads on `const &&` ????
+		luwra::Function<int> f = lua["f"].read<luwra::Function<int>>();
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -200,7 +206,11 @@ namespace lb {
 		lua_atpanic(lua, panic_throw);
 		
 		lua.set("f", LUWRA_WRAP( basic_multi_return ));
-		luwra::Function<std::tuple<int, int>> f = lua["f"];
+		// Unless we specifically get it like this,
+		// it picks the wrong overload in VC++
+		// I am too tired to fix this and honestly this bullshit shouldn't
+		// be happening, who the fuck overloads on `const &&` ????
+		luwra::Function<std::tuple<int, int>> f = lua["f"].read<luwra::Function<std::tuple<int, int>>>();
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -252,7 +262,11 @@ namespace lb {
 		lua_atpanic(lua, panic_throw);
 
 		lua.set("f", LUWRA_WRAP(basic_return));
-		luwra::Function<int> f = lua["f"];
+		// Unless we specifically get it like this,
+		// it picks the wrong overload in VC++
+		// I am too tired to fix this and honestly this bullshit shouldn't
+		// be happening, who the fuck overloads on `const &&` ????
+		luwra::Function<int> f = lua["f"].read<luwra::Function<int>>();
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
