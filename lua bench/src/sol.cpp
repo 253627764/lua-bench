@@ -1,3 +1,4 @@
+#define SOL_NO_EXCEPTIONS
 #include <sol.hpp>
 #include "lua bench.hpp"
 #include "basic.hpp"
@@ -43,11 +44,11 @@ namespace lb {
 
 	void sol_table_set_measure(nonius::chronometer& meter) {
 		sol::state lua(panic_throw);
-		lua.create_table("value", 0, 0);
-		sol::table x = lua["value"];
+		lua.create_table("warble", 0, 0);
+		sol::table x = lua["warble"];
 		meter.measure([&]() {
 			for (int i = 0; i < repetition; ++i)
-				x.set("warble", i);
+				x.set("value", i);
 		});
 	}
 

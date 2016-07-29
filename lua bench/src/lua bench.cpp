@@ -33,6 +33,21 @@ int main(int argc, char* argv[]) {
 	static const std::string sol_name = "sol";
 	static const std::string swig_name = "swig";
 
+#if _DEBUG
+	static const bool do_kaguya = false;
+	static const bool do_lua_api_pp = false;
+	static const bool do_luabind = false;
+	static const bool do_luacppinterface = true;
+	static const bool do_lua_intf = false;
+	static const bool do_luawrapper = false;
+	static const bool do_luwra = false;
+	static const bool do_oolua = false;
+	static const bool do_plain_c = false;
+	static const bool do_selene = false;
+	static const bool do_slb3 = false;
+	static const bool do_sol = false;
+	static const bool do_swig = false;
+#else
 	static const bool do_kaguya = true;
 	static const bool do_lua_api_pp = true;
 	static const bool do_luabind = true;
@@ -46,7 +61,7 @@ int main(int argc, char* argv[]) {
 	static const bool do_slb3 = true;
 	static const bool do_sol = true;
 	static const bool do_swig = true;
-
+#endif
 	nonius::configuration rootcfg;
 	rootcfg.output_file = "lua bench tests";
 	rootcfg.title = "lua bench tests";

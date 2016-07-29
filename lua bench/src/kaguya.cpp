@@ -252,7 +252,9 @@ namespace lb {
 	}
 
 	void kaguya_optional_measure(nonius::chronometer& meter) {
-		// Unsupported
+		// Almost unsupported
+		// Converting directly to `optional<T>` fails,
+		// have to use value_or on the proxy
 		kaguya::State lua;
 		lua.setErrorHandler(kaguya_panic_throw);
 

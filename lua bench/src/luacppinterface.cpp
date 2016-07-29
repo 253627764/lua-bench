@@ -70,7 +70,11 @@ namespace lb {
 		LuaTable tw = tu.Get<LuaTable>("warble");
 		tw.Set("value", 24);
 		meter.measure([&]() {
-			int x = lua.Get<LuaTable>("ulahibe").Get<LuaTable>("warble").Get<int>("value");
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = lua.Get<LuaTable>("ulahibe").Get<LuaTable>("warble").Get<int>("value");
+				x += v;
+			}
 			return x;
 		});
 	}
@@ -106,7 +110,6 @@ namespace lb {
 	}
 
 	void luacppinterface_lua_function_measure(nonius::chronometer& meter) {
-		// Fucking broken
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
 		lua_atpanic(lua.GetState().get(), panic_throw);
@@ -127,7 +130,6 @@ namespace lb {
 	}
 
 	void luacppinterface_c_through_lua_function_measure(nonius::chronometer& meter) {
-		// Broken as shit
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
 		lua_atpanic(lua.GetState().get(), panic_throw);

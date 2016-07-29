@@ -95,8 +95,7 @@ class benchmark_result:
 				self.means[result] = numpy.average(self.samples[result])
 				self.stddevs[result] = numpy.std(self.samples[result], ddof = 1)
 				self.meanerrors[result] = self.means[result] / math.sqrt(len(self.samples))
-				# include 2 stddevs of range
-				self.clippingranges[result] = (max(self.means[result] + (self.stddevs[result] * -2), 0), self.means[result] + (self.stddevs[result] * 2))
+				self.clippingranges[result] = (max(self.means[result] + (self.stddevs[result] * -1.8), 0), self.means[result] + (self.stddevs[result] * 1.8))
 				self.visiblesamples[result] = [ y for y in self.samples[result] if self.clippingranges[result][0] <= y <= self.clippingranges[result][1] ]
 				self.visiblesamplemax[result] = max(self.visiblesamples[result])
 				self.visiblesamplemin[result] = min(self.visiblesamples[result])
@@ -135,8 +134,12 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 	absoluterange = categorymax - categorymin
 	bars = []
 	barlabels = []
-	
-	for resultindex, result in enumerate(results):
+	def by_mean(x):
+		if category not in x.samples:
+			return float('inf')
+		return x.means[category]
+
+	for resultindex, result in enumerate(sorted(results, key=by_mean, reverse=True)):
 		color = result.color
 		name = result.name
 
@@ -156,7 +159,6 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 		axes.scatter(xvalues, yvalues, color=color, edgecolor='black', alpha=0.25)
 	
 	bars = list(reversed(bars))
-	barlabels = list(reversed(barlabels))
 	axes.set_title(category)
 
 	xscaleindex = bisect.bisect_left(timescalevalues, categorymax)
@@ -169,19 +171,21 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 		return '{0:.2f}'.format(value * xscale[2])
 
 	axes.set_xlim([0, categorymax + (absoluterange * 0.05)])
-	axes.set_xlabel('execution time (' + xscale[0] + ')')
+	axes.set_xlabel('execution time (' + xscale[0] + ') - lower is better')
 	axes.xaxis.set_major_formatter(mticker.FuncFormatter(fmt))
 
 	ylabels = [r.name for r in results]
 	yticks = list(range(0, len(results)))
 	axes.set_yticks(yticks)
 	axes.set_ylim([0 - 1, len(ylabels)])
-	axes.set_yticklabels(reversed(barlabels))
+	axes.set_yticklabels(barlabels)
 	# better to label the axes than have a legend
 	#axes.set_yticklabels([])
 	#axes.legend(bars, barlabels, fontsize=10, fancybox=True, loc='best', framealpha=0.5)
 	
-	axes.axvline(x = categorybaseline, linewidth=1, color='r', alpha=0.7)
+	# red line is ugly, as Puppy pointed out... I tend to agree, but still... 
+	# muh baseline qq
+	#axes.axvline(x = categorybaseline, linewidth=1, color='r', alpha=0.7)
 	
 	# Ensure tight layout
 	figure.tight_layout()

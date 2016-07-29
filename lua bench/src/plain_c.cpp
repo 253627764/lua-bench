@@ -28,8 +28,10 @@ namespace lb {
 		lua_atpanic(L, panic_throw);
 
 		meter.measure([&]() {
-			lua_pushinteger(L, 24);
-			lua_setglobal(L, "value");
+			for (int i = 0; i < repetition; ++i) {
+				lua_pushinteger(L, 24);
+				lua_setglobal(L, "value");
+			}
 		});
 	}
 
