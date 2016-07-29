@@ -45,10 +45,14 @@ class benchmark_result:
 		self.color = color
 		self.means = {}
 		self.stddevs = {}
+		self.clippingranges = {}
 		self.meanerrors = {}
 		self.samples = {}
 		self.samplemin = {}
 		self.samplemax = {}
+		self.visiblesamples = {}
+		self.visiblesamplemin = {}
+		self.visiblesamplemax = {}
 		self.absolutemin = 0xFFFFFFFF
 		self.absolutemax = 0
 		self.process()
@@ -68,7 +72,7 @@ class benchmark_result:
 					splits = k.split(' - ', 1)
 					if len(splits) > 1:
 						k = splits[1]
-					v = float(v)
+					v = float(v) / 100.0
 					# append into right place
 					target = None
 
@@ -91,6 +95,11 @@ class benchmark_result:
 				self.means[result] = numpy.average(self.samples[result])
 				self.stddevs[result] = numpy.std(self.samples[result], ddof = 1)
 				self.meanerrors[result] = self.means[result] / math.sqrt(len(self.samples))
+				# include 2 stddevs of range
+				self.clippingranges[result] = (max(self.means[result] + (self.stddevs[result] * -2), 0), self.means[result] + (self.stddevs[result] * 2))
+				self.visiblesamples[result] = [ y for y in self.samples[result] if self.clippingranges[result][0] <= y <= self.clippingranges[result][1] ]
+				self.visiblesamplemax[result] = max(self.visiblesamples[result])
+				self.visiblesamplemin[result] = min(self.visiblesamples[result])
 
 			
 crunch_categories = []
@@ -106,8 +115,8 @@ for t in crunch_targets:
 		else:
 			if b.name == 'plain C':
 				match[1] = b.means[category]
-			match[2] = max(match[2], b.samplemax[category])
-			match[3] = min(match[3], b.samplemin[category])
+			match[2] = max(match[2], b.visiblesamplemax[category])
+			match[3] = min(match[3], b.visiblesamplemin[category])
 
 
 random.seed(0)
@@ -130,20 +139,21 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 	for resultindex, result in enumerate(results):
 		color = result.color
 		name = result.name
+
 		if category not in result.samples:
 			bars.append(axes.text(absoluterange * 0.02, resultindex, 'unsupported', color=color, style='italic', horizontalalignment='left', verticalalignment='center', fontsize='small'))
 			barlabels.append(name)
 			continue
-		
-		samples = result.samples[category]
+
+		xvalues = result.samples[category]
 		mean = result.means[category]
 		stddev = result.stddevs[category]
 		meanerror = result.meanerrors[category]
-		yvalues = [resultindex + random.uniform(0.0, 0.50) - 0.25 for y in samples ] 
+		yvalues = [resultindex + random.uniform(0.0, 0.50) - 0.25 for y in xvalues] 
 
 		bars.append(axes.barh(resultindex, mean, xerr=meanerror, linewidth=0.2, ecolor='black', height=0.50, color=color, align='center', edgecolor='black', alpha=0.85))
 		barlabels.append(name)
-		axes.scatter(samples, yvalues, color=color, edgecolor='black', alpha=0.25)
+		axes.scatter(xvalues, yvalues, color=color, edgecolor='black', alpha=0.25)
 	
 	bars = list(reversed(bars))
 	barlabels = list(reversed(barlabels))
@@ -152,6 +162,10 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 	xscaleindex = bisect.bisect_left(timescalevalues, categorymax)
 	xscale = timescale[xscaleindex - 1]
 	def fmt ( value, pos ):
+		if value == 0:
+			return '0'
+		if value.is_integer():
+			return '{0:.0f}'.format(value * xscale[2])
 		return '{0:.2f}'.format(value * xscale[2])
 
 	axes.set_xlim([0, categorymax + (absoluterange * 0.05)])
@@ -175,4 +189,4 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 	plt.close(figure)
 
 
-plt.show()
+#plt.show()
