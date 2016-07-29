@@ -136,7 +136,7 @@ namespace lb {
 		});
 	}
 
-	void luawrapper_member_function_call(nonius::chronometer& meter) {
+	void luawrapper_member_function_call_measure(nonius::chronometer& meter) {
 		LuaContext lua;
 		lua.registerFunction<int (basic::*)()>("get", [](basic& b) { return b.get(); });
 		lua.registerFunction<void (basic::*)(int)>("set", [](basic& b, int num) { b.set(num); });
@@ -147,7 +147,7 @@ namespace lb {
 		});
 	}
 
-	void luawrapper_member_variable(nonius::chronometer& meter) {
+	void luawrapper_member_variable_measure(nonius::chronometer& meter) {
 		LuaContext lua;
 		lua.registerMember("var", &basic::var);
 		lua.writeVariable("b", basic());
@@ -188,6 +188,8 @@ namespace lb {
 	}
 
 	void luawrapper_base_derived_measure(nonius::chronometer& meter) {
+		// Unsupported:
+		// Errors directly on cast and there's no base/derived template plug
 		LuaContext lua;
 		complex_ab ab;
 		lua.writeVariable("b", &ab);
@@ -210,6 +212,21 @@ namespace lb {
 				x += vb.b_func();
 			}
 			return x;
+		});
+	}
+
+	void luawrapper_return_userdata_measure(nonius::chronometer& meter) {
+		LuaContext lua;
+		lua.writeFunction("f", &basic_return);
+		auto code = repeated_code("b = f(i)");
+		meter.measure([&]() {
+			lua.executeCode(code.c_str());
+		});
+	}
+
+	void luawrapper_optional_measure(nonius::chronometer& meter) {
+		// Unsupported
+		meter.measure([&]() {
 		});
 	}
 

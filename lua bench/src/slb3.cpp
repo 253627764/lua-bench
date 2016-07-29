@@ -111,7 +111,7 @@ namespace lb {
 		//meter.measure([]() {});
 	}
 
-	void slb3_member_function_call(nonius::chronometer& meter) {
+	void slb3_member_function_call_measure(nonius::chronometer& meter) {
 		SLB::Manager m;
 		ShitScript lua(&m);
 		SLB::Class<basic>("basic", &m)
@@ -124,7 +124,7 @@ namespace lb {
 		});
 	}
 
-	void slb3_member_variable(nonius::chronometer& meter) {
+	void slb3_member_variable_measure(nonius::chronometer& meter) {
 		// Unsupported
 		//meter.measure([]() {});
 	}

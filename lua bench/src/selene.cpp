@@ -127,7 +127,7 @@ namespace lb {
 		});
 	}
 
-	void selene_member_function_call(nonius::chronometer& meter) {
+	void selene_member_function_call_measure(nonius::chronometer& meter) {
 		sel::State lua;
 		lua.HandleExceptionsWith(selene_panic_throw);
 
@@ -142,7 +142,7 @@ namespace lb {
 		});
 	}
 
-	void selene_member_variable(nonius::chronometer& meter) {
+	void selene_member_variable_measure(nonius::chronometer& meter) {
 		/*sel::State lua;
 		lua["basic"].SetClass<basic>(
 			"var", &basic::var,
@@ -195,6 +195,26 @@ namespace lb {
 		// Explicitly unsupported,
 		// as stated by the Readme for inheritance
 		meter.measure([&]() {
+		});
+	}
+
+	void selene_optional_measure(nonius::chronometer& meter) {
+		// Not supported:
+		// there does not seem to be a way to check if a key exists in Selene
+		// after being set
+		meter.measure([&]() {
+		});
+	}
+
+	void selene_return_userdata_measure(nonius::chronometer& meter) {
+		sel::State lua;
+		lua.HandleExceptionsWith(selene_panic_throw);
+
+		lua["basic"].SetClass<basic>();
+		lua["f"] = basic_return;
+		auto code = repeated_code("b = f(i)");
+		meter.measure([&]() {
+			lua(code.c_str());
 		});
 	}
 

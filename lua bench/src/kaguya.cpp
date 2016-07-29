@@ -138,7 +138,7 @@ namespace lb {
 		});
 	}
 
-	void kaguya_member_function_call(nonius::chronometer& meter) {
+	void kaguya_member_function_call_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
 		lua.setErrorHandler(kaguya_panic_throw);
 
@@ -157,7 +157,7 @@ namespace lb {
 		});
 	}
 
-	void kaguya_member_variable(nonius::chronometer& meter) {
+	void kaguya_member_variable_measure(nonius::chronometer& meter) {
 		// Does not support member variable syntax:
 		// turns it into a function, unfortunately
 		//meter.measure([&]() {
@@ -230,6 +230,52 @@ namespace lb {
 				x += vb->b_func();
 			}
 			return x;
+		});
+	}
+
+	void kaguya_return_userdata(nonius::chronometer& meter) {
+		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
+		lua["f"].setFunction(basic_return);
+		kaguya::LuaFunction f = lua["f"];
+		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int a, b;
+				kaguya::tie(a, b) = f(i);
+				x += a;
+				x += b;
+			}
+			return x;
+		});
+	}
+
+	void kaguya_optional_measure(nonius::chronometer& meter) {
+		// Unsupported
+		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
+		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = lua["warble"]["value"].value_or<int>(1);
+				x += v;
+			}
+			return x;
+		});
+	}
+
+	void kaguya_return_userdata_measure(nonius::chronometer& meter) {
+		kaguya::State lua;
+		lua.setErrorHandler(kaguya_panic_throw);
+
+		lua["f"].setFunction(basic_return);
+		auto code = repeated_code("b = f(i)");
+		meter.measure([&]() {
+			if (!lua(code)) {
+				lua_error(lua.state());
+			}
 		});
 	}
 

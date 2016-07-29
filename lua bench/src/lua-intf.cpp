@@ -134,7 +134,7 @@ namespace lb {
 		});
 	}
 
-	void lua_intf_member_function_call(nonius::chronometer& meter) {
+	void lua_intf_member_function_call_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
 		lua_atpanic(lua, panic_throw);
 
@@ -152,7 +152,7 @@ namespace lb {
 		});
 	}
 
-	void lua_intf_member_variable(nonius::chronometer& meter) {
+	void lua_intf_member_variable_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
 		lua_atpanic(lua, panic_throw);
 
@@ -172,17 +172,79 @@ namespace lb {
 	}
 
 	void lua_intf_stateful_function_object_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
+		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
+		LuaIntf::LuaBinding(lua)
+			.addFunction("f", basic_stateful());
+		LuaIntf::LuaRef f = lua.getGlobal("f");
+		meter.measure([&f]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f.call<int>(i);
+				x += v;
+			}
+			return x;
 		});
 	}
 
 	void lua_intf_multi_return_measure(nonius::chronometer& meter) {
-		meter.measure([&]() {
+		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
+		lua.setGlobal("f", &basic_multi_return);
+		LuaIntf::LuaRef f = lua.getGlobal("f");
+		meter.measure([&f]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				std::tuple<int, int> v = f.call<std::tuple<int, int>>(i);
+				x += std::get<0>(v);
+				x += std::get<1>(v);
+			}
+			return x;
 		});
 	}
 
 	void lua_intf_base_derived_measure(nonius::chronometer& meter) {
+		// Unsupported?
+		// It seems like lua_intf has no facilities for base casting
+		// from a derived stored in Lua
 		meter.measure([&]() {
+		});
+	}
+
+	void lua_intf_return_userdata_measure(nonius::chronometer& meter) {
+		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
+		LuaIntf::LuaBinding(lua)
+			.beginClass<basic>("basic")
+			.endClass();
+
+		lua.setGlobal("f", &basic_return);
+		auto code = repeated_code("b = f(i)");
+		meter.measure([&lua, &code]() {
+			lua.doString(code.c_str());
+		});
+	}
+
+	void lua_intf_optional_measure(nonius::chronometer& meter) {
+		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
+		meter.measure([&lua]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				LuaIntf::LuaRef tu = lua.getGlobal("warble.value");
+				if (tu.type() == LuaIntf::LuaTypeID::NUMBER) {
+					int v = tu.toValue<int>();
+					x += v;
+				}
+				else {
+					x += 1;
+				}
+			}
+			return x;
 		});
 	}
 

@@ -36,9 +36,6 @@
     <ClCompile Include="lua bench\src\luawrapper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="lua bench\src\oolua.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="lua bench\src\selene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,6 +58,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="lua bench\src\lua bench.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lua bench\src\oolua.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

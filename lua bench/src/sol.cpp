@@ -75,7 +75,7 @@ namespace lb {
 
 	void sol_c_function_measure(nonius::chronometer& meter) {
 		sol::state lua(panic_throw);
-		lua.set_function("f", basic_call);
+		lua.set_function("f", sol::c_call<decltype(&basic_call), &basic_call>);
 		std::string code = repeated_code("f(i)");
 		meter.measure([&]() {
 			lua.script(code);
@@ -112,7 +112,7 @@ namespace lb {
 		});
 	}
 
-	void sol_member_function_call(nonius::chronometer& meter) {
+	void sol_member_function_call_measure(nonius::chronometer& meter) {
 		sol::state lua(panic_throw);
 		lua.new_usertype<basic>("basic",
 			"get", sol::c_call<decltype(&basic::get), &basic::get>,
@@ -125,7 +125,7 @@ namespace lb {
 		});
 	}
 
-	void sol_member_variable(nonius::chronometer& meter) {
+	void sol_member_variable_measure(nonius::chronometer& meter) {
 		sol::state lua(panic_throw);
 		lua.new_usertype<basic>("basic",
 			"var", &basic::var
@@ -200,5 +200,27 @@ namespace lb {
 		});
 	}
 
+	void sol_optional_measure(nonius::chronometer& meter) {
+		sol::state lua;
+		lua.set_panic(panic_throw);
+
+		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				sol::optional<int> v = lua["warble"]["value"];
+				x += v.value_or(1);
+			}
+			return x;
+		});
+	}
+
+	void sol_return_userdata_measure(nonius::chronometer& meter) {
+		sol::state lua(panic_throw);
+		lua.set_function("f", basic_return);
+		std::string code = repeated_code("b = f(i)");
+		meter.measure([&]() {
+			lua.script(code);
+		});
+	}
 
 }

@@ -6,6 +6,9 @@
 struct basic {
 	int var = 500;
 
+	basic() = default;
+	basic(int x) : var(x) {}
+
 	int get() const {
 		return var;
 	}
@@ -58,6 +61,10 @@ struct complex_ab : complex_base_a, complex_base_b {
 
 inline int basic_call(int x) {
 	return x;
+}
+
+inline basic basic_return(int x) {
+	return basic(x);
 }
 
 inline std::tuple<int, int> basic_multi_return(int i) {

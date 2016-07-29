@@ -2,6 +2,50 @@
 #include <nonius.h++>
 
 int main(int argc, char* argv[]) {
+	static const char global_string_get_measure_name[] = "global get";
+	static const char global_string_set_measure_name[] = "global set";
+	static const char table_get_measure_name[] = "table get";
+	static const char table_set_measure_name[] = "table set";
+	static const char table_chained_get_measure_name[] = "table chained get";
+	static const char table_chained_set_measure_name[] = "table chained set";
+	static const char c_function_measure_name[] = "c function";
+	static const char c_through_lua_function_measure_name[] = "c function through lua";
+	static const char lua_function_measure_name[] = "lua function";
+	static const char member_function_call_name[] = "member function calls";
+	static const char member_variable_measure_name[] = "member variable";
+	static const char multi_return_measure_name[] = "multi return";
+	static const char stateful_function_object_measure_name[] = "stateful c function";
+	static const char base_derived_measure_name[] = "base from derived";
+	static const char return_userdata_measure_name[] = "return userdata";
+	static const char optional_measure_name[] = "get optional";
+
+	static const std::string kaguya_name = "kaguya";
+	static const std::string lua_api_pp_name = "lua-api-pp";
+	static const std::string luabind_name = "luabind";
+	static const std::string luacppinterface_name = "luacppinterface";
+	static const std::string lua_intf_name = "lua intf";
+	static const std::string luawrapper_name = "luawrapper";
+	static const std::string luwra_name = "luwra";
+	static const std::string oolua_name = "oolua";
+	static const std::string plain_c_name = "plain_c";
+	static const std::string selene_name = "selene";
+	static const std::string slb3_name = "slb3";
+	static const std::string sol_name = "sol";
+	static const std::string swig_name = "swig";
+
+	static const bool do_kaguya = true;
+	static const bool do_lua_api_pp = true;
+	static const bool do_luabind = true;
+	static const bool do_luacppinterface = true;
+	static const bool do_lua_intf = true;
+	static const bool do_luawrapper = true;
+	static const bool do_luwra = true;
+	static const bool do_oolua = true;
+	static const bool do_plain_c = true;
+	static const bool do_selene = true;
+	static const bool do_slb3 = true;
+	static const bool do_sol = true;
+	static const bool do_swig = true;
 
 	nonius::configuration rootcfg;
 	rootcfg.output_file = "lua bench tests";
@@ -13,20 +57,25 @@ int main(int argc, char* argv[]) {
 	rootcfg.samples = 250;
 	rootcfg.resamples = 250;
 #endif
-#if 0
-	{
+
+	if (do_plain_c) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::plain_global_string_get_measure),
-			nonius::benchmark("global set", lb::plain_global_string_set_measure),
-			nonius::benchmark("table get", lb::plain_table_get_measure),
-			nonius::benchmark("table set", lb::plain_table_set_measure),
-			nonius::benchmark("table chained get", lb::plain_chained_get_measure),
-			nonius::benchmark("table chained set", lb::plain_chained_set_measure),
-			nonius::benchmark("c function", lb::plain_c_function_measure),
-			nonius::benchmark("c function through lua", lb::plain_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::plain_lua_function_measure),
-			nonius::benchmark("member function calls", lb::plain_member_function_call),
-			nonius::benchmark("member variable", lb::plain_member_variable),
+			nonius::benchmark(plain_c_name + " - " + global_string_get_measure_name, lb::plain_c_global_string_get_measure),
+			nonius::benchmark(plain_c_name + " - " + global_string_set_measure_name, lb::plain_c_global_string_set_measure),
+			nonius::benchmark(plain_c_name + " - " + table_get_measure_name, lb::plain_c_table_get_measure),
+			nonius::benchmark(plain_c_name + " - " + table_set_measure_name, lb::plain_c_table_set_measure),
+			nonius::benchmark(plain_c_name + " - " + table_chained_get_measure_name, lb::plain_c_chained_get_measure),
+			nonius::benchmark(plain_c_name + " - " + table_chained_set_measure_name, lb::plain_c_chained_set_measure),
+			nonius::benchmark(plain_c_name + " - " + c_function_measure_name, lb::plain_c_c_function_measure),
+			nonius::benchmark(plain_c_name + " - " + c_through_lua_function_measure_name, lb::plain_c_c_through_lua_function_measure),
+			nonius::benchmark(plain_c_name + " - " + lua_function_measure_name, lb::plain_c_lua_function_measure),
+			nonius::benchmark(plain_c_name + " - " + member_function_call_name, lb::plain_c_member_function_call_measure),
+			nonius::benchmark(plain_c_name + " - " + member_variable_measure_name, lb::plain_c_member_variable_measure),
+			nonius::benchmark(plain_c_name + " - " + multi_return_measure_name, lb::plain_c_multi_return_measure),
+			nonius::benchmark(plain_c_name + " - " + stateful_function_object_measure_name, lb::plain_c_stateful_function_object_measure),
+			nonius::benchmark(plain_c_name + " - " + base_derived_measure_name, lb::plain_c_base_derived_measure),
+			nonius::benchmark(plain_c_name + " - " + return_userdata_measure_name, lb::plain_c_return_userdata_measure),
+			nonius::benchmark(plain_c_name + " - " + optional_measure_name, lb::plain_c_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " plain C";
@@ -34,208 +83,249 @@ int main(int argc, char* argv[]) {
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
 
-	{
+	if (do_sol) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::sol_global_string_get_measure),
-			nonius::benchmark("global set", lb::sol_global_string_set_measure),
-			nonius::benchmark("table get", lb::sol_table_get_measure),
-			nonius::benchmark("table set", lb::sol_table_set_measure),
-			nonius::benchmark("table chained get", lb::sol_chained_get_measure),
-			nonius::benchmark("table chained set", lb::sol_chained_set_measure),
-			nonius::benchmark("c function", lb::sol_c_function_measure),
-			nonius::benchmark("c function through lua", lb::sol_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::sol_lua_function_measure),
-			nonius::benchmark("member function calls", lb::sol_member_function_call),
-			nonius::benchmark("member variable", lb::sol_member_variable),
-			nonius::benchmark("multi return", lb::sol_multi_return_measure),
-			nonius::benchmark("stateful c function", lb::sol_stateful_function_object_measure),
-			nonius::benchmark("base from derived", lb::sol_base_derived_measure),
+			nonius::benchmark(sol_name + " - " + global_string_get_measure_name, lb::sol_global_string_get_measure),
+			nonius::benchmark(sol_name + " - " + global_string_set_measure_name, lb::sol_global_string_set_measure),
+			nonius::benchmark(sol_name + " - " + table_get_measure_name, lb::sol_table_get_measure),
+			nonius::benchmark(sol_name + " - " + table_set_measure_name, lb::sol_table_set_measure),
+			nonius::benchmark(sol_name + " - " + table_chained_get_measure_name, lb::sol_chained_get_measure),
+			nonius::benchmark(sol_name + " - " + table_chained_set_measure_name, lb::sol_chained_set_measure),
+			nonius::benchmark(sol_name + " - " + c_function_measure_name, lb::sol_c_function_measure),
+			nonius::benchmark(sol_name + " - " + c_through_lua_function_measure_name, lb::sol_c_through_lua_function_measure),
+			nonius::benchmark(sol_name + " - " + lua_function_measure_name, lb::sol_lua_function_measure),
+			nonius::benchmark(sol_name + " - " + member_function_call_name, lb::sol_member_function_call_measure),
+			nonius::benchmark(sol_name + " - " + member_variable_measure_name, lb::sol_member_variable_measure),
+			nonius::benchmark(sol_name + " - " + multi_return_measure_name, lb::sol_multi_return_measure),
+			nonius::benchmark(sol_name + " - " + stateful_function_object_measure_name, lb::sol_stateful_function_object_measure),
+			nonius::benchmark(sol_name + " - " + base_derived_measure_name, lb::sol_base_derived_measure),
+			nonius::benchmark(sol_name + " - " + return_userdata_measure_name, lb::sol_return_userdata_measure),
+			nonius::benchmark(sol_name + " - " + optional_measure_name, lb::sol_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " sol";
 		cfg.output_file += " sol.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-	{
+
+	if (do_selene) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::selene_global_string_get_measure),
-			nonius::benchmark("global set", lb::selene_global_string_set_measure),
-			nonius::benchmark("table get", lb::selene_table_get_measure),
-			nonius::benchmark("table set", lb::selene_table_set_measure),
-			nonius::benchmark("table chained get", lb::selene_chained_get_measure),
-			nonius::benchmark("table chained set", lb::selene_chained_set_measure),
-			nonius::benchmark("c function", lb::selene_c_function_measure),
-			nonius::benchmark("c function through lua", lb::selene_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::selene_lua_function_measure),
-			nonius::benchmark("member function calls", lb::selene_member_function_call),
-			//nonius::benchmark("member variable", lb::selene_member_variable),
-			nonius::benchmark("multi return", lb::selene_multi_return_measure),
-			nonius::benchmark("stateful c function", lb::selene_stateful_function_object_measure),
-			//nonius::benchmark("base from derived", lb::selene_base_derived_measure),
+			nonius::benchmark(selene_name + " - " + global_string_get_measure_name, lb::selene_global_string_get_measure),
+			nonius::benchmark(selene_name + " - " + global_string_set_measure_name, lb::selene_global_string_set_measure),
+			nonius::benchmark(selene_name + " - " + table_get_measure_name, lb::selene_table_get_measure),
+			nonius::benchmark(selene_name + " - " + table_set_measure_name, lb::selene_table_set_measure),
+			nonius::benchmark(selene_name + " - " + table_chained_get_measure_name, lb::selene_chained_get_measure),
+			nonius::benchmark(selene_name + " - " + table_chained_set_measure_name, lb::selene_chained_set_measure),
+			nonius::benchmark(selene_name + " - " + c_function_measure_name, lb::selene_c_function_measure),
+			nonius::benchmark(selene_name + " - " + c_through_lua_function_measure_name, lb::selene_c_through_lua_function_measure),
+			nonius::benchmark(selene_name + " - " + lua_function_measure_name, lb::selene_lua_function_measure),
+			nonius::benchmark(selene_name + " - " + member_function_call_name, lb::selene_member_function_call_measure),
+			//nonius::benchmark(selene_name + " - " + member_variable_measure_name, lb::selene_member_variable_measure),
+			nonius::benchmark(selene_name + " - " + multi_return_measure_name, lb::selene_multi_return_measure),
+			nonius::benchmark(selene_name + " - " + stateful_function_object_measure_name, lb::selene_stateful_function_object_measure),
+			//nonius::benchmark(selene_name + " - " + base_derived_measure_name, lb::selene_base_derived_measure),
+			nonius::benchmark(selene_name + " - " + return_userdata_measure_name, lb::selene_return_userdata_measure),
+			//nonius::benchmark(selene_name + " - " + optional_measure_name, lb::selene_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " selene";
 		cfg.output_file += " selene.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-	{
+	
+	if (do_kaguya) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::kaguya_global_string_get_measure),
-			nonius::benchmark("global set", lb::kaguya_global_string_set_measure),
-			nonius::benchmark("table get", lb::kaguya_table_get_measure),
-			nonius::benchmark("table set", lb::kaguya_table_set_measure),
-			nonius::benchmark("table chained get", lb::kaguya_chained_get_measure),
-			nonius::benchmark("table chained set", lb::kaguya_chained_set_measure),
-			nonius::benchmark("c function", lb::kaguya_c_function_measure),
-			nonius::benchmark("c function through lua", lb::kaguya_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::kaguya_lua_function_measure),
-			nonius::benchmark("member function calls", lb::kaguya_member_function_call),
-			//nonius::benchmark("member variable", lb::kaguya_member_variable),
-			nonius::benchmark("multi return", lb::kaguya_multi_return_measure),
-			nonius::benchmark("stateful c function", lb::kaguya_stateful_function_object_measure),
-			nonius::benchmark("base from derived", lb::kaguya_base_derived_measure),
+			nonius::benchmark(global_string_get_measure_name, lb::kaguya_global_string_get_measure),
+			nonius::benchmark(global_string_set_measure_name, lb::kaguya_global_string_set_measure),
+			nonius::benchmark(table_get_measure_name, lb::kaguya_table_get_measure),
+			nonius::benchmark(table_set_measure_name, lb::kaguya_table_set_measure),
+			nonius::benchmark(table_chained_get_measure_name, lb::kaguya_chained_get_measure),
+			nonius::benchmark(table_chained_set_measure_name, lb::kaguya_chained_set_measure),
+			nonius::benchmark(c_function_measure_name, lb::kaguya_c_function_measure),
+			nonius::benchmark(c_through_lua_function_measure_name, lb::kaguya_c_through_lua_function_measure),
+			nonius::benchmark(lua_function_measure_name, lb::kaguya_lua_function_measure),
+			nonius::benchmark(member_function_call_name, lb::kaguya_member_function_call_measure),
+			//nonius::benchmark(member_variable_measure_name, lb::kaguya_member_variable_measure),
+			nonius::benchmark(multi_return_measure_name, lb::kaguya_multi_return_measure),
+			nonius::benchmark(stateful_function_object_measure_name, lb::kaguya_stateful_function_object_measure),
+			nonius::benchmark(base_derived_measure_name, lb::kaguya_base_derived_measure),
+			nonius::benchmark(optional_measure_name, lb::kaguya_optional_measure),
+			nonius::benchmark(return_userdata_measure_name, lb::kaguya_return_userdata_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " kaguya";
 		cfg.output_file += " kaguya.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-	{
+	
+	if (do_slb3) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::slb3_global_string_get_measure),
-			nonius::benchmark("global set", lb::slb3_global_string_set_measure),
-			//nonius::benchmark("table get", lb::slb3_table_get_measure),
-			//nonius::benchmark("table set", lb::slb3_table_set_measure),
-			//nonius::benchmark("table chained get", lb::slb3_chained_get_measure),
-			//nonius::benchmark("table chained set", lb::slb3_chained_set_measure),
-			nonius::benchmark("c function", lb::slb3_c_function_measure),
-			//nonius::benchmark("c function through lua", lb::slb3_c_through_lua_function_measure),
-			//nonius::benchmark("lua function", lb::slb3_lua_function_measure),
-			nonius::benchmark("member function calls", lb::slb3_member_function_call),
-			//nonius::benchmark("member variable", lb::slb3_member_variable),
-			//nonius::benchmark("multi return", lb::slb3_multi_return_measure),
-			//nonius::benchmark("stateful c function", lb::slb3_stateful_function_object_measure),
-			//nonius::benchmark("base from derived", lb::slb3_base_derived_measure),
+			nonius::benchmark(slb3_name + " - " + global_string_get_measure_name, lb::slb3_global_string_get_measure),
+			nonius::benchmark(slb3_name + " - " + global_string_set_measure_name, lb::slb3_global_string_set_measure),
+			//nonius::benchmark(slb3_name + " - " + table_get_measure_name, lb::slb3_table_get_measure),
+			//nonius::benchmark(slb3_name + " - " + table_set_measure_name, lb::slb3_table_set_measure),
+			//nonius::benchmark(slb3_name + " - " + table_chained_get_measure_name, lb::slb3_chained_get_measure),
+			//nonius::benchmark(slb3_name + " - " + table_chained_set_measure_name, lb::slb3_chained_set_measure),
+			nonius::benchmark(slb3_name + " - " + c_function_measure_name, lb::slb3_c_function_measure),
+			//nonius::benchmark(slb3_name + " - " + c_through_lua_function_measure_name, lb::slb3_c_through_lua_function_measure),
+			//nonius::benchmark(slb3_name + " - " + lua_function_measure_name, lb::slb3_lua_function_measure),
+			nonius::benchmark(slb3_name + " - " + member_function_call_name, lb::slb3_member_function_call_measure),
+			//nonius::benchmark(slb3_name + " - " + member_variable_measure_name, lb::slb3_member_variable_measure),
+			//nonius::benchmark(slb3_name + " - " + multi_return_measure_name, lb::slb3_multi_return_measure),
+			//nonius::benchmark(slb3_name + " - " + stateful_function_object_measure_name, lb::slb3_stateful_function_object_measure),
+			//nonius::benchmark(slb3_name + " - " + base_derived_measure_name, lb::slb3_base_derived_measure),
+			//nonius::benchmark(slb3_name + " - " + optional_measure_name, lb::slb3_optional_measure),
+			//nonius::benchmark(slb3_name + " - " + return_userdata_measure_name, lb::slb3_return_userdata_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " slb3";
 		cfg.output_file += " slb3.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-	{
+	
+	if (do_luawrapper) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::luawrapper_global_string_get_measure),
-			nonius::benchmark("global set", lb::luawrapper_global_string_set_measure),
-			nonius::benchmark("table get", lb::luawrapper_table_get_measure),
-			nonius::benchmark("table set", lb::luawrapper_table_set_measure),
-			nonius::benchmark("table chained get", lb::luawrapper_chained_get_measure),
-			nonius::benchmark("table chained set", lb::luawrapper_chained_set_measure),
-			nonius::benchmark("c function", lb::luawrapper_c_function_measure),
-			nonius::benchmark("c function through lua", lb::luawrapper_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::luawrapper_lua_function_measure),
-			nonius::benchmark("member function calls", lb::luawrapper_member_function_call),
-			nonius::benchmark("member variable", lb::luawrapper_member_variable),
-
+			nonius::benchmark(luawrapper_name + " - " + global_string_get_measure_name, lb::luawrapper_global_string_get_measure),
+			nonius::benchmark(luawrapper_name + " - " + global_string_set_measure_name, lb::luawrapper_global_string_set_measure),
+			nonius::benchmark(luawrapper_name + " - " + table_get_measure_name, lb::luawrapper_table_get_measure),
+			nonius::benchmark(luawrapper_name + " - " + table_set_measure_name, lb::luawrapper_table_set_measure),
+			nonius::benchmark(luawrapper_name + " - " + table_chained_get_measure_name, lb::luawrapper_chained_get_measure),
+			nonius::benchmark(luawrapper_name + " - " + table_chained_set_measure_name, lb::luawrapper_chained_set_measure),
+			nonius::benchmark(luawrapper_name + " - " + c_function_measure_name, lb::luawrapper_c_function_measure),
+			nonius::benchmark(luawrapper_name + " - " + c_through_lua_function_measure_name, lb::luawrapper_c_through_lua_function_measure),
+			nonius::benchmark(luawrapper_name + " - " + lua_function_measure_name, lb::luawrapper_lua_function_measure),
+			nonius::benchmark(luawrapper_name + " - " + member_function_call_name, lb::luawrapper_member_function_call_measure),
+			nonius::benchmark(luawrapper_name + " - " + member_variable_measure_name, lb::luawrapper_member_variable_measure),
+			nonius::benchmark(luawrapper_name + " - " + multi_return_measure_name, lb::luawrapper_multi_return_measure),
+			nonius::benchmark(luawrapper_name + " - " + stateful_function_object_measure_name, lb::luawrapper_stateful_function_object_measure),
+			//nonius::benchmark(luawrapper_name + " - " + base_derived_measure_name, lb::luawrapper_base_derived_measure),
+			nonius::benchmark(luawrapper_name + " - " + return_userdata_measure_name, lb::luawrapper_return_userdata_measure),
+			//nonius::benchmark(luawrapper_name + " - " + optional_measure_name, lb::luawrapper_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luawrapper";
 		cfg.output_file += " luawrapper.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-	{
+	
+	if (do_swig) {
 		nonius::benchmark benchmarks[] = {
-			//nonius::benchmark("global get", lb::swig_global_string_get_measure),
-			//nonius::benchmark("global set", lb::swig_global_string_set_measure),
-			//nonius::benchmark("table get", lb::swig_table_get_measure),
-			//nonius::benchmark("table set", lb::swig_table_set_measure),
-			//nonius::benchmark("table chained get", lb::swig_chained_get_measure),
-			//nonius::benchmark("table chained set", lb::swig_chained_set_measure),
-			nonius::benchmark("c function", lb::swig_c_function_measure),
-			nonius::benchmark("c function through lua", lb::swig_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::swig_lua_function_measure),
-			nonius::benchmark("member function calls", lb::swig_member_function_call),
-			nonius::benchmark("member variable", lb::swig_member_variable),
-
+			//nonius::benchmark(swig_name + " - " + global_string_get_measure_name, lb::swig_global_string_get_measure),
+			//nonius::benchmark(swig_name + " - " + global_string_set_measure_name, lb::swig_global_string_set_measure),
+			//nonius::benchmark(swig_name + " - " + table_get_measure_name, lb::swig_table_get_measure),
+			//nonius::benchmark(vtable_set_measure_name, lb::swig_table_set_measure),
+			//nonius::benchmark(vtable_chained_get_measure_name, lb::swig_chained_get_measure),
+			//nonius::benchmark(swig_name + " - " + table_chained_set_measure_name, lb::swig_chained_set_measure),
+			nonius::benchmark(swig_name + " - " + c_function_measure_name, lb::swig_c_function_measure),
+			nonius::benchmark(swig_name + " - " + c_through_lua_function_measure_name, lb::swig_c_through_lua_function_measure),
+			nonius::benchmark(swig_name + " - " + lua_function_measure_name, lb::swig_lua_function_measure),
+			nonius::benchmark(swig_name + " - " + member_function_call_name, lb::swig_member_function_call_measure),
+			nonius::benchmark(swig_name + " - " + member_variable_measure_name, lb::swig_member_variable_measure),
+			//nonius::benchmark(swig_name + " - " + multi_return_measure_name, lb::swig_multi_return_measure),
+			//nonius::benchmark(swig_name + " - " + stateful_function_object_measure_name, lb::swig_stateful_function_object_measure),
+			//nonius::benchmark(swig_name + " - " + base_derived_measure_name, lb::swig_base_derived_measure),
+			nonius::benchmark(swig_name + " - " + return_userdata_measure_name, lb::swig_return_userdata_measure),
+			//nonius::benchmark(swig_name + " - " + optional_measure_name, lb::swig_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " swig";
 		cfg.output_file += " swig.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-	{
+	
+	if (do_oolua) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::oolua_global_string_get_measure),
-			nonius::benchmark("global set", lb::oolua_global_string_set_measure),
-			nonius::benchmark("table get", lb::oolua_table_get_measure),
-			nonius::benchmark("table set", lb::oolua_table_set_measure),
-			nonius::benchmark("table chained get", lb::oolua_chained_get_measure),
-			nonius::benchmark("table chained set", lb::oolua_chained_set_measure),
-			nonius::benchmark("c function", lb::oolua_c_function_measure),
-			nonius::benchmark("c function through lua", lb::oolua_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::oolua_lua_function_measure),
-			nonius::benchmark("member function calls", lb::oolua_member_function_call),
-			nonius::benchmark("member variable", lb::oolua_member_variable),
+			nonius::benchmark(oolua_name + " - " + global_string_get_measure_name, lb::oolua_global_string_get_measure),
+			nonius::benchmark(oolua_name + " - " + global_string_set_measure_name, lb::oolua_global_string_set_measure),
+			nonius::benchmark(oolua_name + " - " + table_get_measure_name, lb::oolua_table_get_measure),
+			nonius::benchmark(oolua_name + " - " + table_set_measure_name, lb::oolua_table_set_measure),
+			nonius::benchmark(oolua_name + " - " + table_chained_get_measure_name, lb::oolua_chained_get_measure),
+			nonius::benchmark(oolua_name + " - " + table_chained_set_measure_name, lb::oolua_chained_set_measure),
+			nonius::benchmark(oolua_name + " - " + c_function_measure_name, lb::oolua_c_function_measure),
+			nonius::benchmark(oolua_name + " - " + c_through_lua_function_measure_name, lb::oolua_c_through_lua_function_measure),
+			nonius::benchmark(oolua_name + " - " + lua_function_measure_name, lb::oolua_lua_function_measure),
+			nonius::benchmark(oolua_name + " - " + member_function_call_name, lb::oolua_member_function_call_measure),
+			nonius::benchmark(oolua_name + " - " + member_variable_measure_name, lb::oolua_member_variable_measure),
+			//nonius::benchmark(oolua_name + " - " + multi_return_measure_name, lb::oolua_multi_return_measure),
+			//nonius::benchmark(oolua_name + " - " + stateful_function_object_measure_name, lb::oolua_stateful_function_object_measure),
+			//nonius::benchmark(oolua_name + " - " + base_derived_measure_name, lb::oolua_base_derived_measure),
+			nonius::benchmark(oolua_name + " - " + return_userdata_measure_name, lb::oolua_return_userdata_measure),
+			//nonius::benchmark(oolua_name + " - " + optional_measure_name, lb::oolua_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " oolua";
 		cfg.output_file += " oolua.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-	{
+	
+	if (do_luacppinterface) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::luacppinterface_global_string_get_measure),
-			nonius::benchmark("global set", lb::luacppinterface_global_string_set_measure),
-			nonius::benchmark("table get", lb::luacppinterface_table_get_measure),
-			nonius::benchmark("table set", lb::luacppinterface_table_set_measure),
-			nonius::benchmark("table chained get", lb::luacppinterface_chained_get_measure),
-			nonius::benchmark("table chained set", lb::luacppinterface_chained_set_measure),
-			nonius::benchmark("c function", lb::luacppinterface_c_function_measure),
-			nonius::benchmark("c function through lua", lb::luacppinterface_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::luacppinterface_lua_function_measure),
-			nonius::benchmark("member function calls", lb::luacppinterface_member_function_call),
-			//nonius::benchmark("member variable", lb::luacppinterface_member_variable),
+			nonius::benchmark(luacppinterface_name + " - " + global_string_get_measure_name, lb::luacppinterface_global_string_get_measure),
+			nonius::benchmark(luacppinterface_name + " - " + global_string_set_measure_name, lb::luacppinterface_global_string_set_measure),
+			nonius::benchmark(luacppinterface_name + " - " + table_get_measure_name, lb::luacppinterface_table_get_measure),
+			nonius::benchmark(luacppinterface_name + " - " + table_set_measure_name, lb::luacppinterface_table_set_measure),
+			nonius::benchmark(luacppinterface_name + " - " + table_chained_get_measure_name, lb::luacppinterface_chained_get_measure),
+			nonius::benchmark(luacppinterface_name + " - " + table_chained_set_measure_name, lb::luacppinterface_chained_set_measure),
+			nonius::benchmark(luacppinterface_name + " - " + c_function_measure_name, lb::luacppinterface_c_function_measure),
+			nonius::benchmark(luacppinterface_name + " - " + c_through_lua_function_measure_name, lb::luacppinterface_c_through_lua_function_measure),
+			nonius::benchmark(luacppinterface_name + " - " + lua_function_measure_name, lb::luacppinterface_lua_function_measure),
+			nonius::benchmark(luacppinterface_name + " - " + member_function_call_name, lb::luacppinterface_member_function_call_measure),
+			//nonius::benchmark(luacppinterface_name + " - " + member_variable_measure_name, lb::luacppinterface_member_variable_measure),
+			//nonius::benchmark(luacppinterface_name + " - " + multi_return_measure_name, lb::luacppinterface_multi_return_measure),
+			//nonius::benchmark(luacppinterface_name + " - " + stateful_function_object_measure_name, lb::luacppinterface_stateful_function_object_measure),
+			//nonius::benchmark(luacppinterface_name + " - " + base_derived_measure_name, lb::luacppinterface_base_derived_measure),
+			nonius::benchmark(luacppinterface_name + " - " + return_userdata_measure_name, lb::luacppinterface_return_userdata_measure),
+			//nonius::benchmark(luacppinterface_name + " - " + optional_measure_name, lb::luacppinterface_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luacppinterface";
 		cfg.output_file += " luacppinterface.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-#endif
-	{
+
+	if (do_luwra) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::luwra_global_string_get_measure),
-			nonius::benchmark("global set", lb::luwra_global_string_set_measure),
-			nonius::benchmark("table get", lb::luwra_table_get_measure),
-			nonius::benchmark("table set", lb::luwra_table_set_measure),
-			nonius::benchmark("table chained get", lb::luwra_chained_get_measure),
-			nonius::benchmark("table chained set", lb::luwra_chained_set_measure),
-			nonius::benchmark("c function", lb::luwra_c_function_measure),
-			nonius::benchmark("c function through lua", lb::luwra_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::luwra_lua_function_measure),
-			nonius::benchmark("member function calls", lb::luwra_member_function_call),
-			//nonius::benchmark("member variable", lb::lua_api_pp_member_variable),
-			//nonius::benchmark("multi return", lb::luwra_multi_return_measure),
-			//nonius::benchmark("stateful c function", lb::luwra_stateful_function_object_measure),
-			nonius::benchmark("base from derived", lb::luwra_base_derived_measure),
+			nonius::benchmark(luwra_name + " - " + global_string_get_measure_name, lb::luwra_global_string_get_measure),
+			nonius::benchmark(luwra_name + " - " + global_string_set_measure_name, lb::luwra_global_string_set_measure),
+			nonius::benchmark(luwra_name + " - " + table_get_measure_name, lb::luwra_table_get_measure),
+			nonius::benchmark(luwra_name + " - " + table_set_measure_name, lb::luwra_table_set_measure),
+			nonius::benchmark(luwra_name + " - " + table_chained_get_measure_name, lb::luwra_chained_get_measure),
+			nonius::benchmark(luwra_name + " - " + table_chained_set_measure_name, lb::luwra_chained_set_measure),
+			nonius::benchmark(luwra_name + " - " + c_function_measure_name, lb::luwra_c_function_measure),
+			nonius::benchmark(luwra_name + " - " + c_through_lua_function_measure_name, lb::luwra_c_through_lua_function_measure),
+			nonius::benchmark(luwra_name + " - " + lua_function_measure_name, lb::luwra_lua_function_measure),
+			nonius::benchmark(luwra_name + " - " + member_function_call_name, lb::luwra_member_function_call_measure),
+			//nonius::benchmark(luwra_name + " - " + member_variable_measure_name, lb::luwra_member_variable_measure),
+			//nonius::benchmark(luwra_name + " - " + multi_return_measure_name, lb::luwra_multi_return_measure),
+			//nonius::benchmark(luwra_name + " - " + stateful_function_object_measure_name, lb::luwra_stateful_function_object_measure),
+			//nonius::benchmark(luwra_name + " - " + base_derived_measure_name, lb::luwra_base_derived_measure),
+			//nonius::benchmark(luwra_name + " - " + return_userdata_measure_name, lb::luwra_return_userdata_measure),
+			//nonius::benchmark(luwra_name + " - " + optional_measure_name, lb::luwra_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luwra";
 		cfg.output_file += " luwra.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
-	{
+	
+	if (do_lua_api_pp) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::lua_api_pp_global_string_get_measure),
-			nonius::benchmark("global set", lb::lua_api_pp_global_string_set_measure),
-			nonius::benchmark("table get", lb::lua_api_pp_table_get_measure),
-			nonius::benchmark("table set", lb::lua_api_pp_table_set_measure),
-			nonius::benchmark("table chained get", lb::lua_api_pp_chained_get_measure),
-			nonius::benchmark("table chained set", lb::lua_api_pp_chained_set_measure),
-			nonius::benchmark("c function", lb::lua_api_pp_c_function_measure),
-			nonius::benchmark("c function through lua", lb::lua_api_pp_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::lua_api_pp_lua_function_measure),
-			nonius::benchmark("member function calls", lb::lua_api_pp_member_function_call),
-			//nonius::benchmark("member variable", lb::lua_api_pp_member_variable),
+			nonius::benchmark(lua_api_pp_name + " - " + global_string_get_measure_name, lb::lua_api_pp_global_string_get_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + global_string_set_measure_name, lb::lua_api_pp_global_string_set_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + table_get_measure_name, lb::lua_api_pp_table_get_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + table_set_measure_name, lb::lua_api_pp_table_set_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + table_chained_get_measure_name, lb::lua_api_pp_chained_get_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + table_chained_set_measure_name, lb::lua_api_pp_chained_set_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + c_function_measure_name, lb::lua_api_pp_c_function_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + c_through_lua_function_measure_name, lb::lua_api_pp_c_through_lua_function_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + lua_function_measure_name, lb::lua_api_pp_lua_function_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + member_function_call_name, lb::lua_api_pp_member_function_call_measure),
+			//nonius::benchmark(lua_api_pp_name + " - " + member_variable_measure_name, lb::lua_api_pp_member_variable_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + multi_return_measure_name, lb::lua_api_pp_multi_return_measure),
+			//nonius::benchmark(lua_api_pp_name + " - " + stateful_function_object_measure_name, lb::lua_api_pp_stateful_function_object_measure),
+			//nonius::benchmark(lua_api_pp_name + " - " + base_derived_measure_name, lb::lua_api_pp_base_derived_measure),
+			nonius::benchmark(lua_api_pp_name + " - " + return_userdata_measure_name, lb::lua_api_pp_return_userdata_measure),
+			//nonius::benchmark(lua_api_pp_name + " - " + optional_measure_name, lb::lua_api_pp_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " lua-api-pp";
@@ -243,19 +333,24 @@ int main(int argc, char* argv[]) {
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
 
-	{
+	if (do_luabind) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::luabind_global_string_get_measure),
-			nonius::benchmark("global set", lb::luabind_global_string_set_measure),
-			nonius::benchmark("table get", lb::luabind_table_get_measure),
-			nonius::benchmark("table set", lb::luabind_table_set_measure),
-			nonius::benchmark("table chained get", lb::luabind_chained_get_measure),
-			nonius::benchmark("table chained set", lb::luabind_chained_set_measure),
-			nonius::benchmark("c function", lb::luabind_c_function_measure),
-			nonius::benchmark("c function through lua", lb::luabind_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::luabind_lua_function_measure),
-			nonius::benchmark("member function calls", lb::luabind_member_function_call),
-			nonius::benchmark("member variable", lb::luabind_member_variable),
+			nonius::benchmark(luabind_name + " - " + global_string_get_measure_name, lb::luabind_global_string_get_measure),
+			nonius::benchmark(luabind_name + " - " + global_string_set_measure_name, lb::luabind_global_string_set_measure),
+			nonius::benchmark(luabind_name + " - " + table_get_measure_name, lb::luabind_table_get_measure),
+			nonius::benchmark(luabind_name + " - " + table_set_measure_name, lb::luabind_table_set_measure),
+			nonius::benchmark(luabind_name + " - " + table_chained_get_measure_name, lb::luabind_chained_get_measure),
+			nonius::benchmark(luabind_name + " - " + table_chained_set_measure_name, lb::luabind_chained_set_measure),
+			nonius::benchmark(luabind_name + " - " + c_function_measure_name, lb::luabind_c_function_measure),
+			nonius::benchmark(luabind_name + " - " + c_through_lua_function_measure_name, lb::luabind_c_through_lua_function_measure),
+			nonius::benchmark(luabind_name + " - " + lua_function_measure_name, lb::luabind_lua_function_measure),
+			nonius::benchmark(luabind_name + " - " + member_function_call_name, lb::luabind_member_function_call_measure),
+			nonius::benchmark(luabind_name + " - " + member_variable_measure_name, lb::luabind_member_variable_measure),
+			//nonius::benchmark(luabind_name + " - " + multi_return_measure_name, lb::luabind_multi_return_measure),
+			nonius::benchmark(luabind_name + " - " + stateful_function_object_measure_name, lb::luabind_stateful_function_object_measure),
+			//nonius::benchmark(luabind_name + " - " + base_derived_measure_name, lb::luabind_base_derived_measure),
+			nonius::benchmark(luabind_name + " - " + return_userdata_measure_name, lb::luabind_return_userdata_measure),
+			//nonius::benchmark(luabind_name + " - " + optional_measure_name, lb::luabind_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luabind";
@@ -263,23 +358,30 @@ int main(int argc, char* argv[]) {
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
 
-	{
+	if (do_lua_intf) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark("global get", lb::lua_intf_global_string_get_measure),
-			nonius::benchmark("global set", lb::lua_intf_global_string_set_measure),
-			nonius::benchmark("table get", lb::lua_intf_table_get_measure),
-			nonius::benchmark("table set", lb::lua_intf_table_set_measure),
-			nonius::benchmark("table chained get", lb::lua_intf_chained_get_measure),
-			nonius::benchmark("table chained set", lb::lua_intf_chained_set_measure),
-			nonius::benchmark("c function", lb::lua_intf_c_function_measure),
-			nonius::benchmark("c function through lua", lb::lua_intf_c_through_lua_function_measure),
-			nonius::benchmark("lua function", lb::lua_intf_lua_function_measure),
-			nonius::benchmark("member function calls", lb::lua_intf_member_function_call),
-			nonius::benchmark("member variable", lb::lua_intf_member_variable),
+			nonius::benchmark(lua_intf_name + " - " + global_string_get_measure_name, lb::lua_intf_global_string_get_measure),
+			nonius::benchmark(lua_intf_name + " - " + global_string_set_measure_name, lb::lua_intf_global_string_set_measure),
+			nonius::benchmark(lua_intf_name + " - " + table_get_measure_name, lb::lua_intf_table_get_measure),
+			nonius::benchmark(lua_intf_name + " - " + table_set_measure_name, lb::lua_intf_table_set_measure),
+			nonius::benchmark(lua_intf_name + " - " + table_chained_get_measure_name, lb::lua_intf_chained_get_measure),
+			nonius::benchmark(lua_intf_name + " - " + table_chained_set_measure_name, lb::lua_intf_chained_set_measure),
+			nonius::benchmark(lua_intf_name + " - " + c_function_measure_name, lb::lua_intf_c_function_measure),
+			nonius::benchmark(lua_intf_name + " - " + c_through_lua_function_measure_name, lb::lua_intf_c_through_lua_function_measure),
+			nonius::benchmark(lua_intf_name + " - " + lua_function_measure_name, lb::lua_intf_lua_function_measure),
+			nonius::benchmark(lua_intf_name + " - " + member_function_call_name, lb::lua_intf_member_function_call_measure),
+			nonius::benchmark(lua_intf_name + " - " + member_variable_measure_name, lb::lua_intf_member_variable_measure),
+			nonius::benchmark(lua_intf_name + " - " + multi_return_measure_name, lb::lua_intf_multi_return_measure),
+			nonius::benchmark(lua_intf_name + " - " + stateful_function_object_measure_name, lb::lua_intf_stateful_function_object_measure),
+			//nonius::benchmark(lua_intf_name + " - " + base_derived_measure_name, lb::lua_intf_base_derived_measure),
+			nonius::benchmark(lua_intf_name + " - " + return_userdata_measure_name, lb::lua_intf_return_userdata_measure),
+			nonius::benchmark(lua_intf_name + " - " + optional_measure_name, lb::lua_intf_optional_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " lua-intf";
 		cfg.output_file += " lua-intf.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
+
+	return 0;
 }

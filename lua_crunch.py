@@ -9,20 +9,24 @@ import bisect
 
 # The various targets we're going to crunch data for
 # ( Name, file, color )
-crunch_colors = ['#a6cee3','#1f78b4','#b2df8a','#33a02c','#fb9a99','#e31a1c','#fdbf6f','#ff7f00','#cab2d6','#6a3d9a','#ffff99','#b15928']
+crunch_colors = ['#a6cee3','#1f78b4','#00c9ab','#33a02c',
+			  '#fb9a99','#e31a1c','#fdbf6f','#ff7f00',
+			  '#cab2d6','#6a3d9a','#ffff99','#b15928',
+			  '#b2df8a']
 crunch_targets = [
 	( "lua-intf", "lua - results/lua bench tests lua-intf.csv", crunch_colors[0] ),
 	( "luabind", "lua - results/lua bench tests luabind.csv", crunch_colors[1] ),
 	( "lua-api-pp", "lua - results/lua bench tests lua-api-pp.csv", crunch_colors[2] ),
 	( "luacppinterface", "lua - results/lua bench tests luacppinterface.csv", crunch_colors[3] ),
 	( "luawrapper", "lua - results/lua bench tests luawrapper.csv", crunch_colors[4] ),
-	( "selene", "lua - results/lua bench tests selene.csv", crunch_colors[7] ),
-	( "slb3", "lua - results/lua bench tests slb3.csv", crunch_colors[8] ),
-	( "swig", "lua - results/lua bench tests swig.csv", crunch_colors[10] ),
-	( "oolua", "lua - results/lua bench tests oolua.csv", crunch_colors[5] ),
-	( "sol", "lua - results/lua bench tests sol.csv", crunch_colors[9] ),
+	( "selene", "lua - results/lua bench tests selene.csv", crunch_colors[5] ),
+	( "slb3", "lua - results/lua bench tests slb3.csv", crunch_colors[6] ),
+	( "swig", "lua - results/lua bench tests swig.csv", crunch_colors[7] ),
+	( "oolua", "lua - results/lua bench tests oolua.csv", crunch_colors[8] ),
+	( "kaguya", "lua - results/lua bench tests kaguya.csv", crunch_colors[9] ),
+	( "sol", "lua - results/lua bench tests sol.csv", crunch_colors[10] ),
 	( "luwra", "lua - results/lua bench tests luwra.csv", crunch_colors[11] ),
-	( "plain C", "lua - results/lua bench tests plain C.csv", crunch_colors[6] ),
+	( "plain C", "lua - results/lua bench tests plain C.csv", crunch_colors[12] ),
 ]
 timescale = [
 	("picoseconds",  1e-12,      1e+12),
@@ -55,7 +59,9 @@ class benchmark_result:
 			for row in rows:
 				for fieldname in rows.fieldnames:
 					# massage key data to have similar names
-					# TODO: Could just change the C++ source to name it as desired... ?
+					# Could just change the C++ source to name it as desired... ?
+					# Nah, error messages from nonius only take benchmark name,
+					# and there's no "grouping" or "header" functionality, so...
 					k = fieldname
 					v = row[fieldname]
 					k = str(k).strip()
@@ -66,18 +72,18 @@ class benchmark_result:
 					# append into right place
 					target = None
 
-					if fieldname in self.samples:
-						target = self.samples[fieldname]
+					if k in self.samples:
+						target = self.samples[k]
 					else:
 						target = []
-						self.samples[fieldname] = target
-						self.samplemin[fieldname] = 0xFFFFFFFF
-						self.samplemax[fieldname] = 0
-					mintarget = self.samplemin[fieldname];
-					maxtarget = self.samplemax[fieldname];
+						self.samples[k] = target
+						self.samplemin[k] = 0xFFFFFFFF
+						self.samplemax[k] = 0
+					mintarget = self.samplemin[k];
+					maxtarget = self.samplemax[k];
 					target.append(v)
-					self.samplemax[fieldname] = max(self.samplemax[fieldname], v)
-					self.samplemin[fieldname] = min(self.samplemin[fieldname], v)
+					self.samplemax[k] = max(self.samplemax[k], v)
+					self.samplemin[k] = min(self.samplemin[k], v)
 					self.absolutemax = max(self.absolutemax, v)
 					self.absolutemin = min(self.absolutemin, v)
 					
@@ -96,10 +102,12 @@ for t in crunch_targets:
 	for category in b.samples:
 		match = next((x for x in crunch_categories if x[0] == category), None)
 		if match is None:
-			crunch_categories.append([category, b.samplemax[category], b.samplemin[category]])
+			crunch_categories.append([category, b.means[category], b.samplemax[category], b.samplemin[category]])
 		else:
-			match[1] = max(match[1], b.samplemax[category])
-			match[2] = min(match[2], b.samplemin[category])
+			if b.name == 'plain C':
+				match[1] = b.means[category]
+			match[2] = max(match[2], b.samplemax[category])
+			match[3] = min(match[3], b.samplemin[category])
 
 
 random.seed(0)
@@ -108,28 +116,27 @@ random.seed(0)
 # Or rather, one for each category...
 for category_index, category_info in enumerate(sorted(crunch_categories, key=lambda x: x[0])):
 	category = category_info[0]
-	categorymax = category_info[1]
-	categorymin = category_info[2]
+	categorybaseline = category_info[1]
+	categorymax = category_info[2]
+	categorymin = category_info[3]
 	
 	figure, categoryaxes = plt.subplots()
 	# subplot that represents this category
 	axes = categoryaxes
+	absoluterange = categorymax - categorymin
 	bars = []
 	barlabels = []
-	basemeanline = None
-
+	
 	for resultindex, result in enumerate(results):
 		color = result.color
 		name = result.name
 		if category not in result.samples:
-			bars.append(mpatches.Patch(color=color))
+			bars.append(axes.text(absoluterange * 0.02, resultindex, 'unsupported', color=color, style='italic', horizontalalignment='left', verticalalignment='center', fontsize='small'))
 			barlabels.append(name)
 			continue
 		
 		samples = result.samples[category]
 		mean = result.means[category]
-		if name == 'plain C':
-			basemeanline = mean
 		stddev = result.stddevs[category]
 		meanerror = result.meanerrors[category]
 		yvalues = [resultindex + random.uniform(0.0, 0.50) - 0.25 for y in samples ] 
@@ -142,7 +149,6 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 	barlabels = list(reversed(barlabels))
 	axes.set_title(category)
 
-	absoluterange = categorymax - categorymin
 	xscaleindex = bisect.bisect_left(timescalevalues, categorymax)
 	xscale = timescale[xscaleindex - 1]
 	def fmt ( value, pos ):
@@ -161,8 +167,7 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 	#axes.set_yticklabels([])
 	#axes.legend(bars, barlabels, fontsize=10, fancybox=True, loc='best', framealpha=0.5)
 	
-	if basemeanline is not None:
-		axes.axvline(x = basemeanline, linewidth=1, color='r', alpha=0.7)
+	axes.axvline(x = categorybaseline, linewidth=1, color='r', alpha=0.7)
 	
 	# Ensure tight layout
 	figure.tight_layout()

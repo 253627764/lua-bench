@@ -65,7 +65,6 @@ namespace OOLUA {
 
 
 int main(int argc, char* argv[]) {
-	
 	using namespace OOLUA;
 	Script vm;
 	lua_atpanic(vm, panic_throw);

@@ -97,7 +97,7 @@ namespace lb {
 		lua_atpanic(lua.GetState().get(), panic_throw);
 
 		lua.Set("f", l.CreateFunction<int(int)>(basic_call));
-		std::string code = repeated_code("f(run)");
+		std::string code = repeated_code("f(i)");
 		meter.measure([&]() {
 			if (l.RunScript(code) != "No errors") {
 				lua_error(lua.GetState().get());
@@ -143,7 +143,7 @@ namespace lb {
 		});
 	}
 
-	void luacppinterface_member_function_call(nonius::chronometer& meter) {
+	void luacppinterface_member_function_call_measure(nonius::chronometer& meter) {
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
 		lua_atpanic(lua.GetState().get(), panic_throw);
@@ -160,7 +160,7 @@ namespace lb {
 		});
 	}
 
-	void luacppinterface_member_variable(nonius::chronometer& meter) {
+	void luacppinterface_member_variable_measure(nonius::chronometer& meter) {
 		// Unsupported
 		//meter.measure([]() {});
 	}
@@ -188,6 +188,9 @@ namespace lb {
 	}
 
 	void luacppinterface_base_derived_measure(nonius::chronometer& meter) {
+		// Unsupported
+		// The userdata pulls out the wrong base class and fails
+		// with the exceptions below
 		Lua l;
 		auto lua = l.GetGlobalEnvironment();
 		lua_atpanic(lua.GetState().get(), panic_throw);
@@ -218,6 +221,28 @@ namespace lb {
 				x += va.a_func();
 				x += vb.b_func();
 			}
+		});
+	}
+
+	void luacppinterface_return_userdata_measure(nonius::chronometer& meter) {
+		Lua l;
+		auto lua = l.GetGlobalEnvironment();
+		lua_atpanic(lua.GetState().get(), panic_throw);
+
+		lua.Set("f", l.CreateFunction<LuaUserdata<basic>(int)>([&] (int i) -> LuaUserdata<basic> {
+			return l.CreateUserdata(new basic(basic_return(i)));
+		}));
+		std::string code = repeated_code("f(i)");
+		meter.measure([&]() {
+			if (l.RunScript(code) != "No errors") {
+				lua_error(lua.GetState().get());
+			}
+		});
+	}
+
+	void luacppinterface_optional_measure(nonius::chronometer& meter) {
+		// Unsupported
+		meter.measure([&]() {
 		});
 	}
 

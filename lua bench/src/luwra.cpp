@@ -103,8 +103,7 @@ namespace lb {
 		lua.runString(R"(function f (i)
 			return i;
 		end)");
-		lua_getglobal(lua, "f");
-		luwra::Function<int> f(lua, -1);
+		luwra::Function<int> f = lua["f"];
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
@@ -138,7 +137,7 @@ namespace lb {
 		lua_pop(lua, 1);
 	}
 
-	void luwra_member_function_call(nonius::chronometer& meter) {
+	void luwra_member_function_call_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
 		lua_atpanic(lua, panic_throw);
 
@@ -156,7 +155,8 @@ namespace lb {
 		});
 	}
 
-	void luwra_member_variable(nonius::chronometer& meter) {
+	void luwra_member_variable_measure(nonius::chronometer& meter) {
+		// Unsupported
 		/*luwra::StateWrapper lua;
 		lua_atpanic(lua, panic_throw);
 
@@ -166,13 +166,20 @@ namespace lb {
 		meter.measure([&]() {
 			lua.runString(code.c_str());
 		});*/
-		// Unsupported
 	}
 
 	void luwra_stateful_function_object_measure(nonius::chronometer& meter) {
 		luwra::StateWrapper lua;
 		lua_atpanic(lua, panic_throw);
 		
+		// Have to register as a usertype to get it.
+		lua.registerUserType<basic_stateful()>(
+			"basic_stateful", 
+			{}, 
+			{ 
+				{ "__call", LUWRA_WRAP_MEMBER(basic_stateful, operator()) } 
+			}
+		);
 		lua.set("f", basic_stateful());
 		luwra::Function<int> f = lua["f"];
 		meter.measure([&]() {
@@ -186,6 +193,7 @@ namespace lb {
 	}
 
 	void luwra_multi_return_measure(nonius::chronometer& meter) {
+		// Unsupported
 		// std::tuple returns still not supported...
 		// G R E A T
 		luwra::StateWrapper lua;
@@ -205,6 +213,9 @@ namespace lb {
 	}
 
 	void luwra_base_derived_measure(nonius::chronometer& meter) {
+		// Unsupported:
+		// Luwra does not internally handle base classes
+		// have to do it yourself
 		luwra::StateWrapper lua;
 		lua_atpanic(lua, panic_throw);
 
@@ -229,6 +240,42 @@ namespace lb {
 				complex_base_b& vb = lua["b"].read<complex_base_b>();
 				x += va.a_func();
 				x += vb.b_func();
+			}
+			return x;
+		});
+	}
+
+	void luwra_return_userdata_measure(nonius::chronometer& meter) {
+		// Unsupported:
+		// random crash in the middle of iteration
+		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
+		lua.set("f", LUWRA_WRAP(basic_return));
+		luwra::Function<int> f = lua["f"];
+		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = f(i);
+				x += v;
+			}
+			return x;
+		});
+	}
+
+	void luwra_optional_measure(nonius::chronometer& meter) {
+		// UNSUPPORTED:
+		// Luwra does not let you check if something exists with its own abstractions,
+		// therefore will call panic function
+		
+		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
+		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = lua["warble"]["value"];
+				x += v;
 			}
 			return x;
 		});

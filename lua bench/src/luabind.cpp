@@ -163,7 +163,7 @@ namespace lb {
 		});
 	}
 
-	void luabind_member_function_call(nonius::chronometer& meter) {
+	void luabind_member_function_call_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -183,7 +183,7 @@ namespace lb {
 		});
 	}
 
-	void luabind_member_variable(nonius::chronometer& meter) {
+	void luabind_member_variable_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -204,21 +204,84 @@ namespace lb {
 	}
 
 	void luabind_stateful_function_object_measure(nonius::chronometer& meter) {
-		// Unsupported
-		meter.measure([&]() {
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
+		luaL_openlibs(L);
+		luabind::open(L);
+		luabind::module(L)[
+			luabind::class_<basic_stateful>("basic_stateful")
+				.def(luabind::constructor<>())
+				.def("__call", &basic_stateful::operator())
+		];
+		lua_do_or_die(L, "f = basic_stateful()");
+
+		luabind::object func = luabind::globals(L)["f"];
+		meter.measure([&func]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = luabind::call_function<int>(func, i);
+				x += v;
+			}
+			return x;
 		});
 	}
 
 	void luabind_multi_return_measure(nonius::chronometer& meter) {
-		// Unsupported
-		// Luabind doesn't seem to provide access to the stack after performing a call
-		// and does not convert tuples
-		// would have to basically drop down
-		meter.measure([&]() {
+		// Unsupported: requires you to register
+		// every kind of tuple you want individually
+		// In BetterTwitchTV terms: LUL
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
+		luaL_openlibs(L);
+		luabind::open(L);
+		luabind::module(L)[
+			luabind::def("f", basic_multi_return)
+		];
+		luabind::object func = luabind::globals(L)["f"];
+		meter.measure([&func]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				std::tuple<int, int> v = luabind::call_function<std::tuple<int, int>>(func, i);
+				x += std::get<0>(v);
+				x += std::get<1>(v);
+			}
+			return x;
 		});
 	}
 
 	void luabind_base_derived_measure(nonius::chronometer& meter) {
+		// Unsupported
+		// You'd have to figure out the casting yourself and use the Lua API,
+		// at which point it's not really an abstraction anymore, is it?
+		meter.measure([&]() {
+		});
+	}
+
+	void luabind_return_userdata_measure(nonius::chronometer& meter) {
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
+		luaL_openlibs(L);
+		luabind::open(L);
+
+		luabind::module(L)[
+			luabind::class_<basic>("basic")
+				.def(luabind::constructor<>())
+		];
+
+		luabind::module(L)[
+			luabind::def("f", basic_return)
+		];
+
+		std::string code = repeated_code("b = f(i)");
+		meter.measure([&]() {
+			lua_do_or_die(L, code.c_str());
+		});
+	}
+
+	void luabind_optional_measure(nonius::chronometer& meter) {
 		// Unsupported
 		// You'd have to figure out the casting yourself and use the Lua API,
 		// at which point it's not really an abstraction anymore, is it?

@@ -2621,8 +2621,9 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 /* -------- TYPES TABLE (BEGIN) -------- */
 
 #define SWIGTYPE_p_basic swig_types[0]
-static swig_type_info *swig_types[2];
-static swig_module_info swig_module = {swig_types, 1, 0, 0, 0, 0};
+#define SWIGTYPE_p_basic_stateful swig_types[1]
+static swig_type_info *swig_types[3];
+static swig_module_info swig_module = {swig_types, 2, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2806,6 +2807,121 @@ static swig_lua_class *swig_basic_bases[] = {0};
 static const char *swig_basic_base_names[] = {0};
 static swig_lua_class _wrap_class_basic = { "basic", "basic", &SWIGTYPE_p_basic,_proxy__wrap_new_basic, swig_delete_basic, swig_basic_methods, swig_basic_attributes, &swig_basic_Sf_SwigStatic, swig_basic_meta, swig_basic_bases, swig_basic_base_names };
 
+static int _wrap_basic_stateful_storage_set(lua_State* L) {
+  int SWIG_arg = 0;
+  struct basic_stateful *arg1 = (struct basic_stateful *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("basic_stateful::storage",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("basic_stateful::storage",1,"struct basic_stateful *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("basic_stateful::storage",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_basic_stateful,0))){
+    SWIG_fail_ptr("basic_stateful_storage_set",1,SWIGTYPE_p_basic_stateful);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  if (arg1) (arg1)->storage = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_basic_stateful_storage_get(lua_State* L) {
+  int SWIG_arg = 0;
+  struct basic_stateful *arg1 = (struct basic_stateful *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("basic_stateful::storage",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("basic_stateful::storage",1,"struct basic_stateful *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_basic_stateful,0))){
+    SWIG_fail_ptr("basic_stateful_storage_get",1,SWIGTYPE_p_basic_stateful);
+  }
+  
+  result = (int) ((arg1)->storage);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_basic_stateful(lua_State* L) {
+  int SWIG_arg = 0;
+  struct basic_stateful *result = 0 ;
+  
+  SWIG_check_num_args("basic_stateful::basic_stateful",0,0)
+  result = (struct basic_stateful *)calloc(1, sizeof(struct basic_stateful));
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_basic_stateful,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_basic_stateful(void *obj) {
+struct basic_stateful *arg1 = (struct basic_stateful *) obj;
+free((char *) arg1);
+}
+static int _proxy__wrap_new_basic_stateful(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_basic_stateful);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_basic_stateful_attributes[] = {
+    { "storage", _wrap_basic_stateful_storage_get, _wrap_basic_stateful_storage_set },
+    {0,0,0}
+};
+static swig_lua_method swig_basic_stateful_methods[]= {
+    {0,0}
+};
+static swig_lua_method swig_basic_stateful_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_basic_stateful_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_basic_stateful_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_basic_stateful_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_basic_stateful_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_basic_stateful_Sf_SwigStatic = {
+    "basic_stateful",
+    swig_basic_stateful_Sf_SwigStatic_methods,
+    swig_basic_stateful_Sf_SwigStatic_attributes,
+    swig_basic_stateful_Sf_SwigStatic_constants,
+    swig_basic_stateful_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_basic_stateful_bases[] = {0};
+static const char *swig_basic_stateful_base_names[] = {0};
+static swig_lua_class _wrap_class_basic_stateful = { "basic_stateful", "basic_stateful", &SWIGTYPE_p_basic_stateful,_proxy__wrap_new_basic_stateful, swig_delete_basic_stateful, swig_basic_stateful_methods, swig_basic_stateful_attributes, &swig_basic_stateful_Sf_SwigStatic, swig_basic_stateful_meta, swig_basic_stateful_bases, swig_basic_stateful_base_names };
+
 static int _wrap_basic_call(lua_State* L) {
   int SWIG_arg = 0;
   int arg1 ;
@@ -2826,6 +2942,31 @@ fail:
 }
 
 
+static int _wrap_basic_return(lua_State* L) {
+  int SWIG_arg = 0;
+  int arg1 ;
+  basic result;
+  
+  SWIG_check_num_args("basic_return",1,1)
+  if(!lua_isnumber(L,1)) SWIG_fail_arg("basic_return",1,"int");
+  arg1 = (int)lua_tonumber(L, 1);
+  result = basic_return(arg1);
+  {
+    basic * resultptr;
+    resultptr = (basic *) malloc(sizeof(basic));
+    memmove(resultptr, &result, sizeof(basic));
+    SWIG_NewPointerObj(L,(void *) resultptr,SWIGTYPE_p_basic,1); SWIG_arg++;
+  }
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
 static swig_lua_attribute swig_SwigModule_attributes[] = {
     {0,0,0}
 };
@@ -2834,10 +2975,12 @@ static swig_lua_const_info swig_SwigModule_constants[]= {
 };
 static swig_lua_method swig_SwigModule_methods[]= {
     { "basic_call", _wrap_basic_call},
+    { "basic_return", _wrap_basic_return},
     {0,0}
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_basic,
+&_wrap_class_basic_stateful,
     0
 };
 static swig_lua_namespace* swig_SwigModule_namespaces[] = {
@@ -2859,15 +3002,19 @@ static swig_lua_namespace swig_SwigModule = {
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
 static swig_type_info _swigt__p_basic = {"_p_basic", "struct basic *|basic *", 0, 0, (void*)&_wrap_class_basic, 0};
+static swig_type_info _swigt__p_basic_stateful = {"_p_basic_stateful", "struct basic_stateful *|basic_stateful *", 0, 0, (void*)&_wrap_class_basic_stateful, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_basic,
+  &_swigt__p_basic_stateful,
 };
 
 static swig_cast_info _swigc__p_basic[] = {  {&_swigt__p_basic, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_basic_stateful[] = {  {&_swigt__p_basic_stateful, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_basic,
+  _swigc__p_basic_stateful,
 };
 
 

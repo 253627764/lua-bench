@@ -27,6 +27,13 @@ namespace lb {
 		auto r = basic_multi_return(c.args[1].to<int>());
 		return c.ret(std::get<0>(r), std::get<1>(r));
 	}
+
+	/*lua::Retval basic_stateful_setup(lua::Context& c) {
+		auto upv = c.upvalues[2];
+		basic_stateful& bs = upv.cast<basic_stateful>();
+		auto r = bs(c.args[1].to<int>());
+		return c.ret(r);
+	}*/
 	
 	void lua_api_pp_global_string_get_measure(nonius::chronometer& meter) {
 		lua::State l;
@@ -163,7 +170,7 @@ namespace lb {
 		});
 	}
 
-	void lua_api_pp_member_function_call(nonius::chronometer& meter) {
+	void lua_api_pp_member_function_call_measure(nonius::chronometer& meter) {
 		lua::State l;
 		lua_atpanic(l.getRawState(), panic_throw);
 
@@ -175,7 +182,7 @@ namespace lb {
 		});
 	}
 
-	void lua_api_pp_member_variable(nonius::chronometer& meter) {
+	void lua_api_pp_member_variable_measure(nonius::chronometer& meter) {
 		// Unsupported
 		/*lua::State l;
 		lua_atpanic(l.getRawState(), panic_throw);
@@ -190,8 +197,19 @@ namespace lb {
 
 	void lua_api_pp_stateful_function_object_measure(nonius::chronometer& meter) {
 		// Unsupported
-		meter.measure([&]() {
-		});
+		/*lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
+		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
+		L.global["f"] = L.closure(lua::mkcf<basic_stateful_setup>, basic_stateful());
+		meter.measure([&L]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				int v = L.global["f"](i);
+				x += v;
+			}
+			return x;
+		});*/
 	}
 
 	void lua_api_pp_multi_return_measure(nonius::chronometer& meter) {
@@ -212,7 +230,39 @@ namespace lb {
 
 	void lua_api_pp_base_derived_measure(nonius::chronometer& meter) {
 		// Unsupported
+	}
+
+	void lua_api_pp_return_userdata_measure(nonius::chronometer& meter) {
+		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
+		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
+		L.global.set("f", basic_return);
+		std::string code = repeated_code("b = f(i)");
 		meter.measure([&]() {
+			l.runString(code);
+		});
+	}
+
+	void lua_api_pp_optional_measure(nonius::chronometer& meter) {
+		// Unsupported
+		// Crashes the API because it does not check all the way through
+		lua::State l;
+		lua_atpanic(l.getRawState(), panic_throw);
+
+		lua::Context L(l.getRawState(), lua::Context::initializeExplicitly);
+		meter.measure([&]() {
+			int x = 0;
+			for (int i = 0; i < repetition; ++i) {
+				if (L.global["warble"]["value"].is<int>()) {
+					int v = L.global["warble"]["value"];
+					x += v;
+				}
+				else {
+					x += 1;
+				}
+			}
+			return x;
 		});
 	}
 

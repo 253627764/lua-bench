@@ -3,9 +3,42 @@
 #include "basic.hpp"
 #include <lua.hpp>
 
+template <typename T>
+inline int gc_wrap(lua_State* L) {
+	T* b = static_cast<T*>(lua_touserdata(L, 1));
+	b->~T();
+	return 0;
+}
+
 inline int basic_call_wrap(lua_State* L) {
 	int x = basic_call(static_cast<int>(lua_tointeger(L, -1)));
 	lua_pushinteger(L, x);
+	return 1;
+}
+
+inline int basic_stateful_wrap(lua_State* L) {
+	basic_stateful& bs = *static_cast<basic_stateful*>(lua_touserdata(L, lua_upvalueindex(1)));
+	int x = bs(static_cast<int>(lua_tointeger(L, -1)));
+	lua_pushinteger(L, x);
+	return 1;
+}
+
+inline int basic_multi_return_wrap(lua_State* L) {
+	int x, y;
+	std::tie(x, y) = basic_multi_return(static_cast<int>(lua_tointeger(L, -1)));
+	lua_pushinteger(L, x);
+	lua_pushinteger(L, y);
+	return 2;
+}
+
+inline int basic_return_wrap(lua_State* L) {
+	basic* data = static_cast<basic*>(lua_newuserdata(L, sizeof(basic)));
+	new (data) basic(basic_return(static_cast<int>(lua_tointeger(L, -1))));
+	if (luaL_newmetatable(L, "basic") == 0) {
+		lua_pushcclosure(L, &gc_wrap<basic>, 0);
+		lua_setfield(L, -2, "__gc");
+	}
+	lua_setmetatable(L, -2);
 	return 1;
 }
 
@@ -72,17 +105,31 @@ inline void lua_do_or_die(lua_State* L, const std::string& code) {
 	lua_do_or_die(L, code.c_str());
 }
 
+inline int do_panic_throw(const std::string& err) {
+	throw std::runtime_error(err);
+}
+
 inline int panic_throw(lua_State* L) {
 	const char* message = lua_tostring(L, -1);
 	std::string err = message ? message : "An unexpected error occurred and forced the Lua state to panic";
-	throw std::runtime_error(err);
+	do_panic_throw(err);
+	return 0;
 }
 
-inline void selene_panic_throw(int, std::string err, std::exception_ptr) {
-	throw std::runtime_error(err);
+inline void selene_panic_throw(int, std::string e, std::exception_ptr eptr) {
+	try {
+		if (eptr) {
+			std::rethrow_exception(eptr);
+		}
+	}
+	catch (const std::exception& e) {
+		std::string err = e.what();
+		do_panic_throw(err);
+	}
+	do_panic_throw(e);
 }
 
 inline void kaguya_panic_throw(int, const char* msg) {
-	std::string err = msg ? msg : "An unexpected error occured and forced the Lua state to panic";
-	throw std::runtime_error(err);
+	std::string err = msg ? msg : "An unexpected error occurred and forced the Lua state to panic";
+	do_panic_throw(err);
 }
