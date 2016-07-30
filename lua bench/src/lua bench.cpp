@@ -313,7 +313,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(luwra_name + " - " + member_function_call_name, lb::luwra_member_function_call_measure),
 			//nonius::benchmark(luwra_name + " - " + member_variable_measure_name, lb::luwra_member_variable_measure),
 			//nonius::benchmark(luwra_name + " - " + multi_return_measure_name, lb::luwra_multi_return_measure),
-			//nonius::benchmark(luwra_name + " - " + stateful_function_object_measure_name, lb::luwra_stateful_function_object_measure),
+			nonius::benchmark(luwra_name + " - " + stateful_function_object_measure_name, lb::luwra_stateful_function_object_measure),
 			//nonius::benchmark(luwra_name + " - " + base_derived_measure_name, lb::luwra_base_derived_measure),
 			//nonius::benchmark(luwra_name + " - " + return_userdata_measure_name, lb::luwra_return_userdata_measure),
 			//nonius::benchmark(luwra_name + " - " + optional_measure_name, lb::luwra_optional_measure),
