@@ -80,5 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="lua bench\src\basic.i" />
+    <None Include="readme.md" />
   </ItemGroup>
 </Project>
