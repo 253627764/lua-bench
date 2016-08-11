@@ -304,7 +304,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(oolua_name + " - " + base_derived_measure_name, lb::oolua_base_derived_measure),
 			nonius::benchmark(oolua_name + " - " + return_userdata_measure_name, lb::oolua_return_userdata_measure),
 			//nonius::benchmark(oolua_name + " - " + optional_measure_name, lb::oolua_optional_measure),
-			//nonius::benchmark(oolua_name + " - " + implicit_inheritance_call_measure_name, lb::oolua_implicit_inheritance_call_measure),
+			nonius::benchmark(oolua_name + " - " + implicit_inheritance_call_measure_name, lb::oolua_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " oolua";

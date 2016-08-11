@@ -15,7 +15,7 @@ OOLUA_EXPORT_FUNCTIONS(basic, set)
 OOLUA_MEM_FUNC_RENAME(__call, operator())
 OOLUA_PROXY_END*/
 
-/*OOLUA_PROXY(complex_base_a)
+OOLUA_PROXY(complex_base_a)
 OOLUA_MGET_MSET(a)
 OOLUA_MFUNC_CONST(a_func)
 OOLUA_PROXY_END
@@ -30,10 +30,12 @@ OOLUA_MGET_MSET(ab)
 OOLUA_MFUNC_CONST(ab_func)
 OOLUA_PROXY_END
 
+OOLUA_EXPORT_FUNCTIONS(complex_base_a)
+OOLUA_EXPORT_FUNCTIONS(complex_base_b)
+OOLUA_EXPORT_FUNCTIONS(complex_ab)
 OOLUA_EXPORT_FUNCTIONS_CONST(complex_base_a, a_func)
 OOLUA_EXPORT_FUNCTIONS_CONST(complex_base_b, b_func)
 OOLUA_EXPORT_FUNCTIONS_CONST(complex_ab, ab_func)
-*/
 
 OOLUA_CFUNC(basic_call, oo_basic_call)
 //OOLUA_CFUNC(basic_multi_return, oo_basic_multi_return)
@@ -316,10 +318,12 @@ namespace lb {
 	void oolua_implicit_inheritance_call_measure(nonius::chronometer& meter) {
 		// Unsupported
 		// Weird linker errors, therefore unsupported
-		/*using namespace OOLUA;
+		using namespace OOLUA;
 		Script vm;
 		lua_atpanic(vm, panic_throw);
 
+		vm.register_class<complex_base_a>();
+		vm.register_class<complex_base_b>();
 		vm.register_class<complex_ab>();
 		vm.run_chunk("b = complex_ab.new()");
 		std::string code = repeated_code("b:b_func()");
@@ -328,7 +332,7 @@ namespace lb {
 				auto str = OOLUA::get_last_error(vm);
 				luaL_error(vm, str.c_str());
 			}
-		});*/
+		});
 	}
 
 }

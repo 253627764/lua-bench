@@ -1,3 +1,5 @@
+#define SOL_NO_EXCEPTIONS
+
 #include <sol.hpp>
 #include "lua bench.hpp"
 #include "basic.hpp"
@@ -91,7 +93,7 @@ namespace lb {
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
-				int v = f(i);
+				int v = f.call<int>(i);
 				x += v;
 			}
 			return x;
@@ -105,7 +107,7 @@ namespace lb {
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
-				int v = f(i);
+				int v = f.call<int>(i);
 				x += v;
 			}
 			return x;
@@ -145,7 +147,7 @@ namespace lb {
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
-				int v = f(i);
+				int v = f.call<int>(i);
 				x += v;
 			}
 			return x;
@@ -154,12 +156,12 @@ namespace lb {
 
 	void sol_multi_return_measure(nonius::chronometer& meter) {
 		sol::state lua(panic_throw);
-		lua.set_function("f", basic_multi_return);
+		lua.set_function("f", sol::c_call<decltype(&basic_multi_return), basic_multi_return>);
 		sol::function f = lua["f"];
 		meter.measure([&]() {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
-				std::tuple<int, int> v = f(i);
+				std::tuple<int, int> v = f.call<int, int>(i);
 				x += static_cast<int>(std::get<0>(v));
 				x += static_cast<int>(std::get<1>(v));
 			}
@@ -216,7 +218,7 @@ namespace lb {
 
 	void sol_return_userdata_measure(nonius::chronometer& meter) {
 		sol::state lua(panic_throw);
-		lua.set_function("f", basic_return);
+		lua.set_function("f", sol::c_call<decltype(&basic_return), basic_return>);
 		std::string code = repeated_code("b = f(i)");
 		meter.measure([&]() {
 			lua.script(code);
