@@ -16,3 +16,5 @@ paper/A Sun for the Moon.log
 paper/A Sun for the Moon.out
 paper/references/texput.log
 *.synctex.gz
+/*.csv
+/*.png

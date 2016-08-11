@@ -340,7 +340,28 @@ namespace lb {
 			}
 			return x;
 		});
-		lua_pop(L, 1);
+	}
+
+	void plain_c_implicit_inheritance_call_measure(nonius::chronometer& meter) {
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
+		complex_ab** s = static_cast<complex_ab**>(lua_newuserdata(L, sizeof(complex_ab*)));
+		complex_ab b;
+		*s = &b;
+		luaL_Reg funcs[] = {
+			{ "__index", &complex_ab_index_wrap },
+			{ nullptr, nullptr }
+		};
+		luaL_newmetatable(L, "struct_complex_ab");
+		luaL_setfuncs(L, funcs, 0);
+		lua_setmetatable(L, -2);
+		lua_setglobal(L, "b");
+
+		auto code = repeated_code("b:b_func()");
+		meter.measure([&]() {
+			lua_do_or_die(L, code.c_str());
+		});
 	}
 
 }

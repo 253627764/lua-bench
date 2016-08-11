@@ -5,7 +5,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>7e83f1e4-69eb-4dd3-84c4-06834c1028c2</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>lua_crunch.py</StartupFile>
+    <StartupFile>lua crunch.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,7 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="lua_crunch.py" />
+    <Compile Include="lua crunch.py" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

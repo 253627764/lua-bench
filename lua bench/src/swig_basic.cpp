@@ -2622,8 +2622,11 @@ SWIG_Lua_dostring(lua_State *L, const char *str) {
 
 #define SWIGTYPE_p_basic swig_types[0]
 #define SWIGTYPE_p_basic_stateful swig_types[1]
-static swig_type_info *swig_types[3];
-static swig_module_info swig_module = {swig_types, 2, 0, 0, 0, 0};
+#define SWIGTYPE_p_complex_ab swig_types[2]
+#define SWIGTYPE_p_complex_base_a swig_types[3]
+#define SWIGTYPE_p_complex_base_b swig_types[4]
+static swig_type_info *swig_types[6];
+static swig_module_info swig_module = {swig_types, 5, 0, 0, 0, 0};
 #define SWIG_TypeQuery(name) SWIG_TypeQueryModule(&swig_module, &swig_module, name)
 #define SWIG_MangledTypeQuery(name) SWIG_MangledTypeQueryModule(&swig_module, &swig_module, name)
 
@@ -2807,6 +2810,476 @@ static swig_lua_class *swig_basic_bases[] = {0};
 static const char *swig_basic_base_names[] = {0};
 static swig_lua_class _wrap_class_basic = { "basic", "basic", &SWIGTYPE_p_basic,_proxy__wrap_new_basic, swig_delete_basic, swig_basic_methods, swig_basic_attributes, &swig_basic_Sf_SwigStatic, swig_basic_meta, swig_basic_bases, swig_basic_base_names };
 
+static int _wrap_complex_base_a_a_set(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_base_a *arg1 = (struct complex_base_a *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("complex_base_a::a",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_base_a::a",1,"struct complex_base_a *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("complex_base_a::a",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_base_a,0))){
+    SWIG_fail_ptr("complex_base_a_a_set",1,SWIGTYPE_p_complex_base_a);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  if (arg1) (arg1)->a = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_base_a_a_get(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_base_a *arg1 = (struct complex_base_a *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("complex_base_a::a",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_base_a::a",1,"struct complex_base_a *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_base_a,0))){
+    SWIG_fail_ptr("complex_base_a_a_get",1,SWIGTYPE_p_complex_base_a);
+  }
+  
+  result = (int) ((arg1)->a);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_base_a_a_func(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_base_a *arg1 = (struct complex_base_a *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("complex_base_a::a_func",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_base_a::a_func",1,"struct complex_base_a const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_base_a,0))){
+    SWIG_fail_ptr("complex_base_a_a_func",1,SWIGTYPE_p_complex_base_a);
+  }
+  
+  result = (int)((struct complex_base_a const *)arg1)->a_func();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_complex_base_a(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_base_a *result = 0 ;
+  
+  SWIG_check_num_args("complex_base_a::complex_base_a",0,0)
+  result = (struct complex_base_a *)calloc(1, sizeof(struct complex_base_a));
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_complex_base_a,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_complex_base_a(void *obj) {
+struct complex_base_a *arg1 = (struct complex_base_a *) obj;
+free((char *) arg1);
+}
+static int _proxy__wrap_new_complex_base_a(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_complex_base_a);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_complex_base_a_attributes[] = {
+    { "a", _wrap_complex_base_a_a_get, _wrap_complex_base_a_a_set },
+    {0,0,0}
+};
+static swig_lua_method swig_complex_base_a_methods[]= {
+    { "a_func", _wrap_complex_base_a_a_func},
+    {0,0}
+};
+static swig_lua_method swig_complex_base_a_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_complex_base_a_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_complex_base_a_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_complex_base_a_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_complex_base_a_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_complex_base_a_Sf_SwigStatic = {
+    "complex_base_a",
+    swig_complex_base_a_Sf_SwigStatic_methods,
+    swig_complex_base_a_Sf_SwigStatic_attributes,
+    swig_complex_base_a_Sf_SwigStatic_constants,
+    swig_complex_base_a_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_complex_base_a_bases[] = {0};
+static const char *swig_complex_base_a_base_names[] = {0};
+static swig_lua_class _wrap_class_complex_base_a = { "complex_base_a", "complex_base_a", &SWIGTYPE_p_complex_base_a,_proxy__wrap_new_complex_base_a, swig_delete_complex_base_a, swig_complex_base_a_methods, swig_complex_base_a_attributes, &swig_complex_base_a_Sf_SwigStatic, swig_complex_base_a_meta, swig_complex_base_a_bases, swig_complex_base_a_base_names };
+
+static int _wrap_complex_base_b_b_set(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_base_b *arg1 = (struct complex_base_b *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("complex_base_b::b",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_base_b::b",1,"struct complex_base_b *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("complex_base_b::b",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_base_b,0))){
+    SWIG_fail_ptr("complex_base_b_b_set",1,SWIGTYPE_p_complex_base_b);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  if (arg1) (arg1)->b = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_base_b_b_get(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_base_b *arg1 = (struct complex_base_b *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("complex_base_b::b",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_base_b::b",1,"struct complex_base_b *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_base_b,0))){
+    SWIG_fail_ptr("complex_base_b_b_get",1,SWIGTYPE_p_complex_base_b);
+  }
+  
+  result = (int) ((arg1)->b);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_base_b_b_func(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_base_b *arg1 = (struct complex_base_b *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("complex_base_b::b_func",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_base_b::b_func",1,"struct complex_base_b const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_base_b,0))){
+    SWIG_fail_ptr("complex_base_b_b_func",1,SWIGTYPE_p_complex_base_b);
+  }
+  
+  result = (int)((struct complex_base_b const *)arg1)->b_func();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_complex_base_b(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_base_b *result = 0 ;
+  
+  SWIG_check_num_args("complex_base_b::complex_base_b",0,0)
+  result = (struct complex_base_b *)calloc(1, sizeof(struct complex_base_b));
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_complex_base_b,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_complex_base_b(void *obj) {
+struct complex_base_b *arg1 = (struct complex_base_b *) obj;
+free((char *) arg1);
+}
+static int _proxy__wrap_new_complex_base_b(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_complex_base_b);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_complex_base_b_attributes[] = {
+    { "b", _wrap_complex_base_b_b_get, _wrap_complex_base_b_b_set },
+    {0,0,0}
+};
+static swig_lua_method swig_complex_base_b_methods[]= {
+    { "b_func", _wrap_complex_base_b_b_func},
+    {0,0}
+};
+static swig_lua_method swig_complex_base_b_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_complex_base_b_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_complex_base_b_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_complex_base_b_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_complex_base_b_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_complex_base_b_Sf_SwigStatic = {
+    "complex_base_b",
+    swig_complex_base_b_Sf_SwigStatic_methods,
+    swig_complex_base_b_Sf_SwigStatic_attributes,
+    swig_complex_base_b_Sf_SwigStatic_constants,
+    swig_complex_base_b_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_complex_base_b_bases[] = {0};
+static const char *swig_complex_base_b_base_names[] = {0};
+static swig_lua_class _wrap_class_complex_base_b = { "complex_base_b", "complex_base_b", &SWIGTYPE_p_complex_base_b,_proxy__wrap_new_complex_base_b, swig_delete_complex_base_b, swig_complex_base_b_methods, swig_complex_base_b_attributes, &swig_complex_base_b_Sf_SwigStatic, swig_complex_base_b_meta, swig_complex_base_b_bases, swig_complex_base_b_base_names };
+
+static int _wrap_complex_ab_ab_set(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_ab *arg1 = (struct complex_ab *) 0 ;
+  int arg2 ;
+  
+  SWIG_check_num_args("complex_ab::ab",2,2)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_ab::ab",1,"struct complex_ab *");
+  if(!lua_isnumber(L,2)) SWIG_fail_arg("complex_ab::ab",2,"int");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_ab,0))){
+    SWIG_fail_ptr("complex_ab_ab_set",1,SWIGTYPE_p_complex_ab);
+  }
+  
+  arg2 = (int)lua_tonumber(L, 2);
+  if (arg1) (arg1)->ab = arg2;
+  
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_ab_ab_get(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_ab *arg1 = (struct complex_ab *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("complex_ab::ab",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_ab::ab",1,"struct complex_ab *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_ab,0))){
+    SWIG_fail_ptr("complex_ab_ab_get",1,SWIGTYPE_p_complex_ab);
+  }
+  
+  result = (int) ((arg1)->ab);
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_ab_a_func(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_ab *arg1 = (struct complex_ab *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("complex_ab::a_func",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_ab::a_func",1,"struct complex_ab const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_ab,0))){
+    SWIG_fail_ptr("complex_ab_a_func",1,SWIGTYPE_p_complex_ab);
+  }
+  
+  result = (int)((struct complex_ab const *)arg1)->a_func();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_ab_b_func(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_ab *arg1 = (struct complex_ab *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("complex_ab::b_func",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_ab::b_func",1,"struct complex_ab const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_ab,0))){
+    SWIG_fail_ptr("complex_ab_b_func",1,SWIGTYPE_p_complex_ab);
+  }
+  
+  result = (int)((struct complex_ab const *)arg1)->b_func();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_complex_ab_ab_func(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_ab *arg1 = (struct complex_ab *) 0 ;
+  int result;
+  
+  SWIG_check_num_args("complex_ab::ab_func",1,1)
+  if(!SWIG_isptrtype(L,1)) SWIG_fail_arg("complex_ab::ab_func",1,"struct complex_ab const *");
+  
+  if (!SWIG_IsOK(SWIG_ConvertPtr(L,1,(void**)&arg1,SWIGTYPE_p_complex_ab,0))){
+    SWIG_fail_ptr("complex_ab_ab_func",1,SWIGTYPE_p_complex_ab);
+  }
+  
+  result = (int)((struct complex_ab const *)arg1)->ab_func();
+  lua_pushnumber(L, (lua_Number) result); SWIG_arg++;
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static int _wrap_new_complex_ab(lua_State* L) {
+  int SWIG_arg = 0;
+  struct complex_ab *result = 0 ;
+  
+  SWIG_check_num_args("complex_ab::complex_ab",0,0)
+  result = (struct complex_ab *)calloc(1, sizeof(struct complex_ab));
+  SWIG_NewPointerObj(L,result,SWIGTYPE_p_complex_ab,1); SWIG_arg++; 
+  return SWIG_arg;
+  
+  if(0) SWIG_fail;
+  
+fail:
+  lua_error(L);
+  return SWIG_arg;
+}
+
+
+static void swig_delete_complex_ab(void *obj) {
+struct complex_ab *arg1 = (struct complex_ab *) obj;
+free((char *) arg1);
+}
+static int _proxy__wrap_new_complex_ab(lua_State *L) {
+    assert(lua_istable(L,1));
+    lua_pushcfunction(L,_wrap_new_complex_ab);
+    assert(!lua_isnil(L,-1));
+    lua_replace(L,1); /* replace our table with real constructor */
+    lua_call(L,lua_gettop(L)-1,1);
+    return 1;
+}
+static swig_lua_attribute swig_complex_ab_attributes[] = {
+    { "ab", _wrap_complex_ab_ab_get, _wrap_complex_ab_ab_set },
+    {0,0,0}
+};
+static swig_lua_method swig_complex_ab_methods[]= {
+    { "a_func", _wrap_complex_ab_a_func},
+    { "b_func", _wrap_complex_ab_b_func},
+    { "ab_func", _wrap_complex_ab_ab_func},
+    {0,0}
+};
+static swig_lua_method swig_complex_ab_meta[] = {
+    {0,0}
+};
+
+static swig_lua_attribute swig_complex_ab_Sf_SwigStatic_attributes[] = {
+    {0,0,0}
+};
+static swig_lua_const_info swig_complex_ab_Sf_SwigStatic_constants[]= {
+    {0,0,0,0,0,0}
+};
+static swig_lua_method swig_complex_ab_Sf_SwigStatic_methods[]= {
+    {0,0}
+};
+static swig_lua_class* swig_complex_ab_Sf_SwigStatic_classes[]= {
+    0
+};
+
+static swig_lua_namespace swig_complex_ab_Sf_SwigStatic = {
+    "complex_ab",
+    swig_complex_ab_Sf_SwigStatic_methods,
+    swig_complex_ab_Sf_SwigStatic_attributes,
+    swig_complex_ab_Sf_SwigStatic_constants,
+    swig_complex_ab_Sf_SwigStatic_classes,
+    0
+};
+static swig_lua_class *swig_complex_ab_bases[] = {0,0,0};
+static const char *swig_complex_ab_base_names[] = {"complex_base_a *","complex_base_b *",0};
+static swig_lua_class _wrap_class_complex_ab = { "complex_ab", "complex_ab", &SWIGTYPE_p_complex_ab,_proxy__wrap_new_complex_ab, swig_delete_complex_ab, swig_complex_ab_methods, swig_complex_ab_attributes, &swig_complex_ab_Sf_SwigStatic, swig_complex_ab_meta, swig_complex_ab_bases, swig_complex_ab_base_names };
+
 static int _wrap_basic_stateful_storage_set(lua_State* L) {
   int SWIG_arg = 0;
   struct basic_stateful *arg1 = (struct basic_stateful *) 0 ;
@@ -2980,6 +3453,9 @@ static swig_lua_method swig_SwigModule_methods[]= {
 };
 static swig_lua_class* swig_SwigModule_classes[]= {
 &_wrap_class_basic,
+&_wrap_class_complex_base_a,
+&_wrap_class_complex_base_b,
+&_wrap_class_complex_ab,
 &_wrap_class_basic_stateful,
     0
 };
@@ -3001,20 +3477,38 @@ static swig_lua_namespace swig_SwigModule = {
 
 /* -------- TYPE CONVERSION AND EQUIVALENCE RULES (BEGIN) -------- */
 
+static void *_p_complex_abTo_p_complex_base_a(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((complex_base_a *)  ((complex_ab *) x));
+}
+static void *_p_complex_abTo_p_complex_base_b(void *x, int *SWIGUNUSEDPARM(newmemory)) {
+    return (void *)((complex_base_b *)  ((complex_ab *) x));
+}
 static swig_type_info _swigt__p_basic = {"_p_basic", "struct basic *|basic *", 0, 0, (void*)&_wrap_class_basic, 0};
 static swig_type_info _swigt__p_basic_stateful = {"_p_basic_stateful", "struct basic_stateful *|basic_stateful *", 0, 0, (void*)&_wrap_class_basic_stateful, 0};
+static swig_type_info _swigt__p_complex_ab = {"_p_complex_ab", "struct complex_ab *|complex_ab *", 0, 0, (void*)&_wrap_class_complex_ab, 0};
+static swig_type_info _swigt__p_complex_base_a = {"_p_complex_base_a", "complex_base_a *|struct complex_base_a *", 0, 0, (void*)&_wrap_class_complex_base_a, 0};
+static swig_type_info _swigt__p_complex_base_b = {"_p_complex_base_b", "complex_base_b *|struct complex_base_b *", 0, 0, (void*)&_wrap_class_complex_base_b, 0};
 
 static swig_type_info *swig_type_initial[] = {
   &_swigt__p_basic,
   &_swigt__p_basic_stateful,
+  &_swigt__p_complex_ab,
+  &_swigt__p_complex_base_a,
+  &_swigt__p_complex_base_b,
 };
 
 static swig_cast_info _swigc__p_basic[] = {  {&_swigt__p_basic, 0, 0, 0},{0, 0, 0, 0}};
 static swig_cast_info _swigc__p_basic_stateful[] = {  {&_swigt__p_basic_stateful, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_complex_ab[] = {  {&_swigt__p_complex_ab, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_complex_base_a[] = {  {&_swigt__p_complex_ab, _p_complex_abTo_p_complex_base_a, 0, 0},  {&_swigt__p_complex_base_a, 0, 0, 0},{0, 0, 0, 0}};
+static swig_cast_info _swigc__p_complex_base_b[] = {  {&_swigt__p_complex_ab, _p_complex_abTo_p_complex_base_b, 0, 0},  {&_swigt__p_complex_base_b, 0, 0, 0},{0, 0, 0, 0}};
 
 static swig_cast_info *swig_cast_initial[] = {
   _swigc__p_basic,
   _swigc__p_basic_stateful,
+  _swigc__p_complex_ab,
+  _swigc__p_complex_base_a,
+  _swigc__p_complex_base_b,
 };
 
 

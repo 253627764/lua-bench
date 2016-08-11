@@ -145,7 +145,7 @@ namespace lb {
 			.endClass();
 
 		lua.doString("b = basic()");
-		auto code = repeated_code("b:set(i) b:get(i)");
+		auto code = repeated_code("b:set(i) b:get()");
 		meter.measure([&lua, &code]() {
 			lua.doString(code.c_str());
 		});
@@ -244,6 +244,40 @@ namespace lb {
 				}
 			}
 			return x;
+		});
+	}
+
+	void lua_intf_implicit_inheritance_call_measure(nonius::chronometer& meter) {
+		// Unsupported?
+		// Ask author
+		LuaIntf::LuaContext lua;
+		lua_atpanic(lua, panic_throw);
+
+		LuaIntf::LuaBinding(lua)
+			.beginClass<complex_base_a>("complex_base_a")
+			.addConstructor(LUA_ARGS())
+			.addFunction("a_func", &complex_base_a::a_func)
+			.addVariable("a", &complex_base_a::a)
+			.endClass();
+
+		LuaIntf::LuaBinding(lua)
+			.beginClass<complex_base_b>("complex_base_b")
+			.addConstructor(LUA_ARGS())
+			.addFunction("b_func", &complex_base_b::b_func)
+			.addVariable("b", &complex_base_b::b)
+			.endClass();
+
+		LuaIntf::LuaBinding(lua)
+			.beginClass<complex_ab>("complex_ab")
+			.addConstructor(LUA_ARGS())
+			.addFunction("ab_func", &complex_ab::ab_func)
+			.addVariable("ab", &complex_ab::ab)
+			.endClass();
+
+		lua.doString("b = complex_ab()");
+		auto code = repeated_code("b:b_func()");
+		meter.measure([&lua, &code]() {
+			lua.doString(code.c_str());
 		});
 	}
 

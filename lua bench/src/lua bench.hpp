@@ -6,6 +6,7 @@ namespace lb {
 
 	void plain_c_global_string_get_measure(nonius::chronometer& meter);
 	void sol_global_string_get_measure(nonius::chronometer& meter);
+	void old_sol_global_string_get_measure(nonius::chronometer& meter);
 	void kaguya_global_string_get_measure(nonius::chronometer& meter);
 	void lua_api_pp_global_string_get_measure(nonius::chronometer& meter);
 	void luabind_global_string_get_measure(nonius::chronometer& meter);
@@ -20,6 +21,7 @@ namespace lb {
 
 	void plain_c_global_string_set_measure(nonius::chronometer& meter);
 	void sol_global_string_set_measure(nonius::chronometer& meter);
+	void old_sol_global_string_set_measure(nonius::chronometer& meter);
 	void kaguya_global_string_set_measure(nonius::chronometer& meter);
 	void lua_api_pp_global_string_set_measure(nonius::chronometer& meter);
 	void luabind_global_string_set_measure(nonius::chronometer& meter);
@@ -34,6 +36,7 @@ namespace lb {
 
 	void plain_c_chained_get_measure(nonius::chronometer& meter);
 	void sol_chained_get_measure(nonius::chronometer& meter);
+	void old_sol_chained_get_measure(nonius::chronometer& meter);
 	void kaguya_chained_get_measure(nonius::chronometer& meter);
 	void lua_api_pp_chained_get_measure(nonius::chronometer& meter);
 	void luabind_chained_get_measure(nonius::chronometer& meter);
@@ -48,6 +51,7 @@ namespace lb {
 
 	void plain_c_chained_set_measure(nonius::chronometer& meter);
 	void sol_chained_set_measure(nonius::chronometer& meter);
+	void old_sol_chained_set_measure(nonius::chronometer& meter);
 	void kaguya_chained_set_measure(nonius::chronometer& meter);
 	void lua_api_pp_chained_set_measure(nonius::chronometer& meter);
 	void luabind_chained_set_measure(nonius::chronometer& meter);
@@ -62,6 +66,7 @@ namespace lb {
 
 	void plain_c_table_get_measure(nonius::chronometer& meter);
 	void sol_table_get_measure(nonius::chronometer& meter);
+	void old_sol_table_get_measure(nonius::chronometer& meter);
 	void kaguya_table_get_measure(nonius::chronometer& meter);
 	void lua_api_pp_table_get_measure(nonius::chronometer& meter);
 	void luabind_table_get_measure(nonius::chronometer& meter);
@@ -76,6 +81,7 @@ namespace lb {
 
 	void plain_c_table_set_measure(nonius::chronometer& meter);
 	void sol_table_set_measure(nonius::chronometer& meter);
+	void old_sol_table_set_measure(nonius::chronometer& meter);
 	void kaguya_table_set_measure(nonius::chronometer& meter);
 	void lua_api_pp_table_set_measure(nonius::chronometer& meter);
 	void luabind_table_set_measure(nonius::chronometer& meter);
@@ -90,6 +96,7 @@ namespace lb {
 
 	void plain_c_c_function_measure(nonius::chronometer& meter);
 	void sol_c_function_measure(nonius::chronometer& meter);
+	void old_sol_c_function_measure(nonius::chronometer& meter);
 	void kaguya_c_function_measure(nonius::chronometer& meter);
 	void lua_api_pp_c_function_measure(nonius::chronometer& meter);
 	void luabind_c_function_measure(nonius::chronometer& meter);
@@ -104,6 +111,7 @@ namespace lb {
 
 	void plain_c_lua_function_measure(nonius::chronometer& meter);
 	void sol_lua_function_measure(nonius::chronometer& meter);
+	void old_sol_lua_function_measure(nonius::chronometer& meter);
 	void kaguya_lua_function_measure(nonius::chronometer& meter);
 	void lua_api_pp_lua_function_measure(nonius::chronometer& meter);
 	void luabind_lua_function_measure(nonius::chronometer& meter);
@@ -118,6 +126,7 @@ namespace lb {
 
 	void plain_c_c_through_lua_function_measure(nonius::chronometer& meter);
 	void sol_c_through_lua_function_measure(nonius::chronometer& meter);
+	void old_sol_c_through_lua_function_measure(nonius::chronometer& meter);
 	void kaguya_c_through_lua_function_measure(nonius::chronometer& meter);
 	void lua_api_pp_c_through_lua_function_measure(nonius::chronometer& meter);
 	void luabind_c_through_lua_function_measure(nonius::chronometer& meter);
@@ -132,6 +141,7 @@ namespace lb {
 
 	void plain_c_stateful_function_object_measure(nonius::chronometer& meter);
 	void sol_stateful_function_object_measure(nonius::chronometer& meter);
+	void old_sol_stateful_function_object_measure(nonius::chronometer& meter);
 	void kaguya_stateful_function_object_measure(nonius::chronometer& meter);
 	void lua_api_pp_stateful_function_object_measure(nonius::chronometer& meter);
 	void luabind_stateful_function_object_measure(nonius::chronometer& meter);
@@ -146,6 +156,7 @@ namespace lb {
 
 	void plain_c_base_derived_measure(nonius::chronometer& meter);
 	void sol_base_derived_measure(nonius::chronometer& meter);
+	void old_sol_base_derived_measure(nonius::chronometer& meter);
 	void kaguya_base_derived_measure(nonius::chronometer& meter);
 	void lua_api_pp_base_derived_measure(nonius::chronometer& meter);
 	void luabind_base_derived_measure(nonius::chronometer& meter);
@@ -160,6 +171,7 @@ namespace lb {
 
 	void plain_c_multi_return_measure(nonius::chronometer& meter);
 	void sol_multi_return_measure(nonius::chronometer& meter);
+	void old_sol_multi_return_measure(nonius::chronometer& meter);
 	void kaguya_multi_return_measure(nonius::chronometer& meter);
 	void lua_api_pp_multi_return_measure(nonius::chronometer& meter);
 	void luabind_multi_return_measure(nonius::chronometer& meter);
@@ -174,6 +186,7 @@ namespace lb {
 
 	void plain_c_member_function_call_measure(nonius::chronometer& meter);
 	void sol_member_function_call_measure(nonius::chronometer& meter);
+	void old_sol_member_function_call_measure(nonius::chronometer& meter);
 	void kaguya_member_function_call_measure(nonius::chronometer& meter);
 	void lua_api_pp_member_function_call_measure(nonius::chronometer& meter);
 	void luabind_member_function_call_measure(nonius::chronometer& meter);
@@ -188,6 +201,7 @@ namespace lb {
 
 	void plain_c_member_variable_measure(nonius::chronometer& meter);
 	void sol_member_variable_measure(nonius::chronometer& meter);
+	void old_sol_member_variable_measure(nonius::chronometer& meter);
 	void kaguya_member_variable_measure(nonius::chronometer& meter);
 	void lua_api_pp_member_variable_measure(nonius::chronometer& meter);
 	void luabind_member_variable_measure(nonius::chronometer& meter);
@@ -202,6 +216,7 @@ namespace lb {
 
 	void plain_c_return_userdata_measure(nonius::chronometer& meter);
 	void sol_return_userdata_measure(nonius::chronometer& meter);
+	void old_sol_return_userdata_measure(nonius::chronometer& meter);
 	void kaguya_return_userdata_measure(nonius::chronometer& meter);
 	void lua_api_pp_return_userdata_measure(nonius::chronometer& meter);
 	void luabind_return_userdata_measure(nonius::chronometer& meter);
@@ -216,6 +231,7 @@ namespace lb {
 
 	void plain_c_optional_measure(nonius::chronometer& meter);
 	void sol_optional_measure(nonius::chronometer& meter);
+	void old_sol_optional_measure(nonius::chronometer& meter);
 	void kaguya_optional_measure(nonius::chronometer& meter);
 	void lua_api_pp_optional_measure(nonius::chronometer& meter);
 	void luabind_optional_measure(nonius::chronometer& meter);
@@ -227,6 +243,21 @@ namespace lb {
 	void slb3_optional_measure(nonius::chronometer& meter);
 	void swig_optional_measure(nonius::chronometer& meter);
 	void luwra_optional_measure(nonius::chronometer& meter);
+
+	void plain_c_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void sol_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void old_sol_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void kaguya_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void lua_api_pp_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void luabind_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void lua_intf_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void luawrapper_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void oolua_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void selene_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void luacppinterface_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void slb3_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void swig_implicit_inheritance_call_measure(nonius::chronometer& meter);
+	void luwra_implicit_inheritance_call_measure(nonius::chronometer& meter);
 
 
 	const int repetition = 100;

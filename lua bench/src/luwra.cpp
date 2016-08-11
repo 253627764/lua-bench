@@ -295,4 +295,16 @@ namespace lb {
 		});
 	}
 
+	void luwra_implicit_inheritance_call_measure(nonius::chronometer& meter) {
+		// Unsupported?
+		// Should contact Lua author about whether or not this would work
+
+		luwra::StateWrapper lua;
+		lua_atpanic(lua, panic_throw);
+
+		meter.measure([&]() {
+			
+		});
+	}
+
 }

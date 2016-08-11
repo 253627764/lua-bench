@@ -218,4 +218,31 @@ namespace lb {
 		});
 	}
 
+	void selene_implicit_inheritance_call_measure(nonius::chronometer& meter) {
+		// UNSUPPORTED
+		// The below code doesn't work and calls panic
+		sel::State lua;
+		lua.HandleExceptionsWith(selene_panic_throw);
+
+		lua["complex_base_a"].SetClass<complex_base_a>(
+			"a", &complex_base_a::a,
+			"a_func", &complex_base_a::a_func
+		);
+		lua["complex_base_b"].SetClass<complex_base_b>(
+			"b", &complex_base_b::b,
+			"b_func", &complex_base_b::b_func
+		);
+		lua["complex_ab"].SetClass<complex_ab>(
+			"ab", &complex_ab::ab,
+			"ab_func", &complex_ab::ab_func
+		);
+
+		lua("b = complex_ab.new()");
+
+		auto code = repeated_code("b:b_func()");
+		meter.measure([&]() {
+			lua(code.c_str());
+		});
+	}
+
 }

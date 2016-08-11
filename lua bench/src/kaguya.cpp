@@ -204,6 +204,7 @@ namespace lb {
 
 		lua["complex_ab"].setClass(
 			kaguya::ClassMetatable<complex_ab, kaguya::MultipleBase<complex_base_a, complex_base_b>>()
+			.addConstructor()
 			.addMemberFunction("a_func", &complex_ab::a_func)
 			.addMemberFunction("b_func", &complex_ab::b_func)
 			.addMemberFunction("ab_func", &complex_ab::ab_func)
@@ -233,21 +234,14 @@ namespace lb {
 		});
 	}
 
-	void kaguya_return_userdata(nonius::chronometer& meter) {
+	void kaguya_return_userdata_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
 		lua.setErrorHandler(kaguya_panic_throw);
 
 		lua["f"].setFunction(basic_return);
-		kaguya::LuaFunction f = lua["f"];
+		auto code = repeated_code("b = f(i)");
 		meter.measure([&]() {
-			int x = 0;
-			for (int i = 0; i < repetition; ++i) {
-				int a, b;
-				kaguya::tie(a, b) = f(i);
-				x += a;
-				x += b;
-			}
-			return x;
+			lua(code.c_str());
 		});
 	}
 
@@ -268,16 +262,35 @@ namespace lb {
 		});
 	}
 
-	void kaguya_return_userdata_measure(nonius::chronometer& meter) {
+	void kaguya_implicit_inheritance_call_measure(nonius::chronometer& meter) {
 		kaguya::State lua;
 		lua.setErrorHandler(kaguya_panic_throw);
+		lua["complex_base_a"].setClass(
+			kaguya::ClassMetatable<complex_base_a>()
+			.addConstructor()
+			.addMemberFunction("a_func", &complex_base_a::a_func)
+			.addMember("a", &complex_base_a::a)
+		);
 
-		lua["f"].setFunction(basic_return);
-		auto code = repeated_code("b = f(i)");
+		lua["complex_base_b"].setClass(
+			kaguya::ClassMetatable<complex_base_b>()
+			.addConstructor()
+			.addMemberFunction("b_func", &complex_base_b::b_func)
+			.addMember("b", &complex_base_b::b)
+		);
+
+		lua["complex_ab"].setClass(
+			kaguya::ClassMetatable<complex_ab, kaguya::MultipleBase<complex_base_a, complex_base_b>>()
+			.addConstructor()
+			.addMemberFunction("ab_func", &complex_ab::ab_func)
+			.addMember("ab", &complex_ab::ab)
+		);
+
+		lua("b = complex_ab.new()");
+
+		auto code = repeated_code("b:b_func()");
 		meter.measure([&]() {
-			if (!lua(code)) {
-				lua_error(lua.state());
-			}
+			lua(code.c_str());
 		});
 	}
 

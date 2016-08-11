@@ -18,6 +18,7 @@ int main(int argc, char* argv[]) {
 	static const char base_derived_measure_name[] = "base from derived";
 	static const char return_userdata_measure_name[] = "return userdata";
 	static const char optional_measure_name[] = "get optional";
+	static const char implicit_inheritance_call_measure_name[] = "base call on derived";
 
 	static const std::string kaguya_name = "kaguya";
 	static const std::string lua_api_pp_name = "lua-api-pp";
@@ -31,22 +32,24 @@ int main(int argc, char* argv[]) {
 	static const std::string selene_name = "selene";
 	static const std::string slb3_name = "slb3";
 	static const std::string sol_name = "sol";
+	static const std::string old_sol_name = "old sol";
 	static const std::string swig_name = "swig";
 
 #if _DEBUG
-	static const bool do_kaguya = false;
-	static const bool do_lua_api_pp = false;
-	static const bool do_luabind = false;
-	static const bool do_luacppinterface = false;
-	static const bool do_lua_intf = false;
-	static const bool do_luawrapper = false;
+	static const bool do_kaguya = true;
+	static const bool do_lua_api_pp = true;
+	static const bool do_luabind = true;
+	static const bool do_luacppinterface = true;
+	static const bool do_lua_intf = true;
+	static const bool do_luawrapper = true;
 	static const bool do_luwra = true;
-	static const bool do_oolua = false;
-	static const bool do_plain_c = false;
-	static const bool do_selene = false;
-	static const bool do_slb3 = false;
-	static const bool do_sol = false;
-	static const bool do_swig = false;
+	static const bool do_oolua = true;
+	static const bool do_plain_c = true;
+	static const bool do_selene = true;
+	static const bool do_slb3 = true;
+	static const bool do_sol = true;
+	static const bool do_old_sol = true;
+	static const bool do_swig = true;
 #else
 	static const bool do_kaguya = true;
 	static const bool do_lua_api_pp = true;
@@ -60,6 +63,7 @@ int main(int argc, char* argv[]) {
 	static const bool do_selene = true;
 	static const bool do_slb3 = true;
 	static const bool do_sol = true;
+	static const bool do_old_sol = true;
 	static const bool do_swig = true;
 #endif
 	nonius::configuration rootcfg;
@@ -92,6 +96,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(plain_c_name + " - " + base_derived_measure_name, lb::plain_c_base_derived_measure),
 			nonius::benchmark(plain_c_name + " - " + return_userdata_measure_name, lb::plain_c_return_userdata_measure),
 			nonius::benchmark(plain_c_name + " - " + optional_measure_name, lb::plain_c_optional_measure),
+			nonius::benchmark(plain_c_name + " - " + implicit_inheritance_call_measure_name, lb::plain_c_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " plain C";
@@ -117,10 +122,37 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(sol_name + " - " + base_derived_measure_name, lb::sol_base_derived_measure),
 			nonius::benchmark(sol_name + " - " + return_userdata_measure_name, lb::sol_return_userdata_measure),
 			nonius::benchmark(sol_name + " - " + optional_measure_name, lb::sol_optional_measure),
+			nonius::benchmark(sol_name + " - " + implicit_inheritance_call_measure_name, lb::sol_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " sol";
 		cfg.output_file += " sol.csv";
+		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
+	}
+
+	if (do_old_sol) {
+		nonius::benchmark benchmarks[] = {
+			nonius::benchmark(old_sol_name + " - " + global_string_get_measure_name, lb::old_sol_global_string_get_measure),
+			nonius::benchmark(old_sol_name + " - " + global_string_set_measure_name, lb::old_sol_global_string_set_measure),
+			nonius::benchmark(old_sol_name + " - " + table_get_measure_name, lb::old_sol_table_get_measure),
+			nonius::benchmark(old_sol_name + " - " + table_set_measure_name, lb::old_sol_table_set_measure),
+			nonius::benchmark(old_sol_name + " - " + table_chained_get_measure_name, lb::old_sol_chained_get_measure),
+			nonius::benchmark(old_sol_name + " - " + table_chained_set_measure_name, lb::old_sol_chained_set_measure),
+			nonius::benchmark(old_sol_name + " - " + c_function_measure_name, lb::old_sol_c_function_measure),
+			nonius::benchmark(old_sol_name + " - " + c_through_lua_function_measure_name, lb::old_sol_c_through_lua_function_measure),
+			nonius::benchmark(old_sol_name + " - " + lua_function_measure_name, lb::old_sol_lua_function_measure),
+			nonius::benchmark(old_sol_name + " - " + member_function_call_name, lb::old_sol_member_function_call_measure),
+			nonius::benchmark(old_sol_name + " - " + member_variable_measure_name, lb::old_sol_member_variable_measure),
+			nonius::benchmark(old_sol_name + " - " + multi_return_measure_name, lb::old_sol_multi_return_measure),
+			nonius::benchmark(old_sol_name + " - " + stateful_function_object_measure_name, lb::old_sol_stateful_function_object_measure),
+			//nonius::benchmark(old_sol_name + " - " + base_derived_measure_name, lb::old_sol_base_derived_measure),
+			nonius::benchmark(old_sol_name + " - " + return_userdata_measure_name, lb::old_sol_return_userdata_measure),
+			//nonius::benchmark(old_sol_name + " - " + optional_measure_name, lb::old_sol_optional_measure),
+			//nonius::benchmark(old_sol_name + " - " + implicit_inheritance_call_measure_name, lb::old_sol_implicit_inheritance_measure),
+		};
+		auto cfg = rootcfg;
+		cfg.title += " old-sol";
+		cfg.output_file += " old-sol.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
 
@@ -142,6 +174,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(selene_name + " - " + base_derived_measure_name, lb::selene_base_derived_measure),
 			nonius::benchmark(selene_name + " - " + return_userdata_measure_name, lb::selene_return_userdata_measure),
 			//nonius::benchmark(selene_name + " - " + optional_measure_name, lb::selene_optional_measure),
+			//nonius::benchmark(selene_name + " - " + implicit_inheritance_call_measure_name, lb::selene_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " selene";
@@ -151,22 +184,23 @@ int main(int argc, char* argv[]) {
 	
 	if (do_kaguya) {
 		nonius::benchmark benchmarks[] = {
-			nonius::benchmark(global_string_get_measure_name, lb::kaguya_global_string_get_measure),
-			nonius::benchmark(global_string_set_measure_name, lb::kaguya_global_string_set_measure),
-			nonius::benchmark(table_get_measure_name, lb::kaguya_table_get_measure),
-			nonius::benchmark(table_set_measure_name, lb::kaguya_table_set_measure),
-			nonius::benchmark(table_chained_get_measure_name, lb::kaguya_chained_get_measure),
-			nonius::benchmark(table_chained_set_measure_name, lb::kaguya_chained_set_measure),
-			nonius::benchmark(c_function_measure_name, lb::kaguya_c_function_measure),
-			nonius::benchmark(c_through_lua_function_measure_name, lb::kaguya_c_through_lua_function_measure),
-			nonius::benchmark(lua_function_measure_name, lb::kaguya_lua_function_measure),
-			nonius::benchmark(member_function_call_name, lb::kaguya_member_function_call_measure),
-			//nonius::benchmark(member_variable_measure_name, lb::kaguya_member_variable_measure),
-			nonius::benchmark(multi_return_measure_name, lb::kaguya_multi_return_measure),
-			nonius::benchmark(stateful_function_object_measure_name, lb::kaguya_stateful_function_object_measure),
-			nonius::benchmark(base_derived_measure_name, lb::kaguya_base_derived_measure),
-			nonius::benchmark(optional_measure_name, lb::kaguya_optional_measure),
-			nonius::benchmark(return_userdata_measure_name, lb::kaguya_return_userdata_measure),
+			nonius::benchmark(kaguya_name + " - " + global_string_get_measure_name, lb::kaguya_global_string_get_measure),
+			nonius::benchmark(kaguya_name + " - " + global_string_set_measure_name, lb::kaguya_global_string_set_measure),
+			nonius::benchmark(kaguya_name + " - " + table_get_measure_name, lb::kaguya_table_get_measure),
+			nonius::benchmark(kaguya_name + " - " + table_set_measure_name, lb::kaguya_table_set_measure),
+			nonius::benchmark(kaguya_name + " - " + table_chained_get_measure_name, lb::kaguya_chained_get_measure),
+			nonius::benchmark(kaguya_name + " - " + table_chained_set_measure_name, lb::kaguya_chained_set_measure),
+			nonius::benchmark(kaguya_name + " - " + c_function_measure_name, lb::kaguya_c_function_measure),
+			nonius::benchmark(kaguya_name + " - " + c_through_lua_function_measure_name, lb::kaguya_c_through_lua_function_measure),
+			nonius::benchmark(kaguya_name + " - " + lua_function_measure_name, lb::kaguya_lua_function_measure),
+			nonius::benchmark(kaguya_name + " - " + member_function_call_name, lb::kaguya_member_function_call_measure),
+			//nonius::benchmark(kaguya_name + " - " + member_variable_measure_name, lb::kaguya_member_variable_measure),
+			nonius::benchmark(kaguya_name + " - " + multi_return_measure_name, lb::kaguya_multi_return_measure),
+			nonius::benchmark(kaguya_name + " - " + stateful_function_object_measure_name, lb::kaguya_stateful_function_object_measure),
+			nonius::benchmark(kaguya_name + " - " + base_derived_measure_name, lb::kaguya_base_derived_measure),
+			nonius::benchmark(kaguya_name + " - " + optional_measure_name, lb::kaguya_optional_measure),
+			nonius::benchmark(kaguya_name + " - " + return_userdata_measure_name, lb::kaguya_return_userdata_measure),
+			nonius::benchmark(kaguya_name + " - " + implicit_inheritance_call_measure_name, lb::kaguya_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " kaguya";
@@ -192,6 +226,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(slb3_name + " - " + base_derived_measure_name, lb::slb3_base_derived_measure),
 			//nonius::benchmark(slb3_name + " - " + optional_measure_name, lb::slb3_optional_measure),
 			//nonius::benchmark(slb3_name + " - " + return_userdata_measure_name, lb::slb3_return_userdata_measure),
+			//nonius::benchmark(slb3_name + " - " + implicit_inheritance_call_measure_name, lb::slb3_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " slb3";
@@ -217,6 +252,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(luawrapper_name + " - " + base_derived_measure_name, lb::luawrapper_base_derived_measure),
 			nonius::benchmark(luawrapper_name + " - " + return_userdata_measure_name, lb::luawrapper_return_userdata_measure),
 			//nonius::benchmark(luawrapper_name + " - " + optional_measure_name, lb::luawrapper_optional_measure),
+			//nonius::benchmark(luawrapper_name + " - " + implicit_inheritance_call_measure_name, lb::luawrapper_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luawrapper";
@@ -242,6 +278,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(swig_name + " - " + base_derived_measure_name, lb::swig_base_derived_measure),
 			nonius::benchmark(swig_name + " - " + return_userdata_measure_name, lb::swig_return_userdata_measure),
 			//nonius::benchmark(swig_name + " - " + optional_measure_name, lb::swig_optional_measure),
+			//nonius::benchmark(swig_name + " - " + implicit_inheritance_call_measure_name, lb::swig_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " swig";
@@ -267,6 +304,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(oolua_name + " - " + base_derived_measure_name, lb::oolua_base_derived_measure),
 			nonius::benchmark(oolua_name + " - " + return_userdata_measure_name, lb::oolua_return_userdata_measure),
 			//nonius::benchmark(oolua_name + " - " + optional_measure_name, lb::oolua_optional_measure),
+			//nonius::benchmark(oolua_name + " - " + implicit_inheritance_call_measure_name, lb::oolua_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " oolua";
@@ -292,6 +330,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(luacppinterface_name + " - " + base_derived_measure_name, lb::luacppinterface_base_derived_measure),
 			nonius::benchmark(luacppinterface_name + " - " + return_userdata_measure_name, lb::luacppinterface_return_userdata_measure),
 			//nonius::benchmark(luacppinterface_name + " - " + optional_measure_name, lb::luacppinterface_optional_measure),
+			//nonius::benchmark(luacppinterface_name + " - " + implicit_inheritance_call_measure_name, lb::luacppinterface_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luacppinterface";
@@ -317,6 +356,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(luwra_name + " - " + base_derived_measure_name, lb::luwra_base_derived_measure),
 			//nonius::benchmark(luwra_name + " - " + return_userdata_measure_name, lb::luwra_return_userdata_measure),
 			//nonius::benchmark(luwra_name + " - " + optional_measure_name, lb::luwra_optional_measure),
+			//nonius::benchmark(luwra_name + " - " + implicit_inheritance_call_measure_name, lb::luwra_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luwra";
@@ -342,6 +382,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(lua_api_pp_name + " - " + base_derived_measure_name, lb::lua_api_pp_base_derived_measure),
 			nonius::benchmark(lua_api_pp_name + " - " + return_userdata_measure_name, lb::lua_api_pp_return_userdata_measure),
 			//nonius::benchmark(lua_api_pp_name + " - " + optional_measure_name, lb::lua_api_pp_optional_measure),
+			//nonius::benchmark(lua_api_pp_name + " - " + implicit_inheritance_call_measure_name, lb::lua_api_pp_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " lua-api-pp";
@@ -367,6 +408,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(luabind_name + " - " + base_derived_measure_name, lb::luabind_base_derived_measure),
 			nonius::benchmark(luabind_name + " - " + return_userdata_measure_name, lb::luabind_return_userdata_measure),
 			//nonius::benchmark(luabind_name + " - " + optional_measure_name, lb::luabind_optional_measure),
+			//nonius::benchmark(luabind_name + " - " + implicit_inheritance_call_measure_name, lb::luabind_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " luabind";
@@ -392,6 +434,7 @@ int main(int argc, char* argv[]) {
 			//nonius::benchmark(lua_intf_name + " - " + base_derived_measure_name, lb::lua_intf_base_derived_measure),
 			nonius::benchmark(lua_intf_name + " - " + return_userdata_measure_name, lb::lua_intf_return_userdata_measure),
 			nonius::benchmark(lua_intf_name + " - " + optional_measure_name, lb::lua_intf_optional_measure),
+			//nonius::benchmark(lua_intf_name + " - " + implicit_inheritance_call_measure_name, lb::lua_intf_implicit_inheritance_call_measure),
 		};
 		auto cfg = rootcfg;
 		cfg.title += " lua-intf";

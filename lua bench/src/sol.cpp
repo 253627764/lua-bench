@@ -1,4 +1,3 @@
-#define SOL_NO_EXCEPTIONS
 #include <sol.hpp>
 #include "lua bench.hpp"
 #include "basic.hpp"
@@ -219,6 +218,35 @@ namespace lb {
 		sol::state lua(panic_throw);
 		lua.set_function("f", basic_return);
 		std::string code = repeated_code("b = f(i)");
+		meter.measure([&]() {
+			lua.script(code);
+		});
+	}
+
+	void sol_implicit_inheritance_call_measure(nonius::chronometer& meter) {
+		sol::state lua(panic_throw);
+
+		lua.new_usertype<complex_base_a>("complex_base_a",
+			"a", &complex_base_a::a,
+			"a_func", &complex_base_a::a_func
+		);
+
+		lua.new_usertype<complex_base_b>("complex_base_b",
+			"b", &complex_base_b::b,
+			"b_func", &complex_base_b::b_func
+		);
+
+		lua.new_usertype<complex_ab>("complex_ab",
+			"ab", &complex_ab::ab,
+			"ab_func", &complex_ab::ab_func,
+			sol::base_classes, sol::bases<complex_base_a, complex_base_b>()
+		);
+		
+		complex_ab ab;
+		// Set and verify correctness
+		lua.set("b", &ab);
+
+		std::string code = repeated_code("b:b_func()");
 		meter.measure([&]() {
 			lua.script(code);
 		});

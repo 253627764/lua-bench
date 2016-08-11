@@ -11,8 +11,9 @@ import bisect
 # ( Name, file, color )
 crunch_colors = ['#a6cee3','#1f78b4','#00c9ab','#33a02c',
 			  '#fb9a99','#e31a1c','#fdbf6f','#ff7f00',
-			  '#cab2d6','#6a3d9a','#ffff99','#b15928',
-			  '#b2df8a']
+			  '#cab2d6','#6a3d9a','#ffff99', '#f5f5f5', 
+			  '#b15928', '#b2df8a'
+]
 crunch_targets = [
 	( "lua-intf", "lua - results/lua bench tests lua-intf.csv", crunch_colors[0] ),
 	( "luabind", "lua - results/lua bench tests luabind.csv", crunch_colors[1] ),
@@ -25,8 +26,9 @@ crunch_targets = [
 	( "oolua", "lua - results/lua bench tests oolua.csv", crunch_colors[8] ),
 	( "kaguya", "lua - results/lua bench tests kaguya.csv", crunch_colors[9] ),
 	( "sol", "lua - results/lua bench tests sol.csv", crunch_colors[10] ),
-	( "luwra", "lua - results/lua bench tests luwra.csv", crunch_colors[11] ),
-	( "plain C", "lua - results/lua bench tests plain C.csv", crunch_colors[12] ),
+	( "old sol", "lua - results/lua bench tests old-sol.csv", crunch_colors[11] ),
+	( "luwra", "lua - results/lua bench tests luwra.csv", crunch_colors[12] ),
+	( "plain C", "lua - results/lua bench tests plain C.csv", crunch_colors[13] ),
 ]
 timescale = [
 	("picoseconds",  1e-12,      1e+12),

@@ -230,4 +230,10 @@ namespace lb {
 		});
 	}
 
+	void luawrapper_implicit_inheritance_call_measure(nonius::chronometer& meter) {
+		// Unsupported
+		meter.measure([&]() {
+		});
+	}
+
 }

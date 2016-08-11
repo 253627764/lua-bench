@@ -63,6 +63,9 @@
     <ClCompile Include="lua bench\src\oolua.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="lua bench\src\old-sol.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="lua bench\src\basic.hpp">

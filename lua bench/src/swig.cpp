@@ -177,4 +177,19 @@ namespace lb {
 		});
 	}
 
+	void swig_implicit_inheritance_call_measure(nonius::chronometer& meter) {
+		// Unsupported
+		// E.g., we're doing something wrong
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
+		luaopen_lb(L);
+		lua_do_or_die(L, "b = lb.complex_ab()");
+
+		std::string code = repeated_code("b:b_func()");
+		meter.measure([&]() {
+			lua_do_or_die(L, code.c_str());
+		});
+	}
+
 }

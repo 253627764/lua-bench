@@ -59,6 +59,66 @@ inline int basic_set_wrap(lua_State* L) {
 	return 0;
 }
 
+inline int complex_ab_ab_func_wrap(lua_State* L) {
+	void* x = lua_touserdata(L, 1);
+	complex_ab* b = *static_cast<complex_ab**>(x);
+	lua_pop(L, 1);
+	lua_pushinteger(L, b->ab_func());
+	return 1;
+}
+
+inline int complex_ab_b_func_wrap(lua_State* L) {
+	void* x = lua_touserdata(L, 1);
+	complex_ab* b = *static_cast<complex_ab**>(x);
+	lua_pop(L, 1);
+	lua_pushinteger(L, b->b_func());
+	return 1;
+}
+
+inline int complex_ab_a_func_wrap(lua_State* L) {
+	void* x = lua_touserdata(L, 1);
+	complex_ab* b = *static_cast<complex_ab**>(x);
+	lua_pop(L, 1);
+	lua_pushinteger(L, b->a_func());
+	return 1;
+}
+
+inline int complex_ab_index_wrap(lua_State* L) {
+	std::size_t sz;
+	const char* name = lua_tolstring(L, 2, &sz);
+	if (strcmp(name, "ab_func") == 0) {
+		lua_pushcclosure(L, complex_ab_ab_func_wrap, 0);
+		return 1;
+	}
+	if (strcmp(name, "a_func") == 0) {
+		lua_pushcclosure(L, complex_ab_a_func_wrap, 0);
+		return 1;
+	}
+	if (strcmp(name, "b_func") == 0) {
+		lua_pushcclosure(L, complex_ab_b_func_wrap, 0);
+		return 1;
+	}
+	void* x = lua_touserdata(L, 1);
+	complex_ab* b = static_cast<complex_ab*>(x);
+	if (strcmp(name, "ab") == 0) {
+		lua_pop(L, 1);
+		lua_pushinteger(L, b->ab);
+		return 1;
+	}
+	if (strcmp(name, "a") == 0) {
+		lua_pop(L, 1);
+		lua_pushinteger(L, b->a);
+		return 1;
+	}
+	if (strcmp(name, "b") == 0) {
+		lua_pop(L, 1);
+		lua_pushinteger(L, b->b);
+		return 1;
+	}
+	lua_pop(L, 2);
+	return 0;
+}
+
 inline int basic_index_wrap(lua_State* L) {
 	std::size_t sz;
 	const char* name = lua_tolstring(L, 2, &sz);
