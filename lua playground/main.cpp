@@ -18,7 +18,16 @@ inline int panic_throw(lua_State* L) {
 	throw std::runtime_error(err);
 }
 
-namespace OOLUA {
+OOLUA_PROXY(basic)
+OOLUA_MGET_MSET(var)
+OOLUA_MFUNC_CONST(get)
+OOLUA_MFUNC(set)
+OOLUA_PROXY_END
+
+OOLUA_EXPORT_FUNCTIONS(basic, set, set_var);
+OOLUA_EXPORT_FUNCTIONS_CONST(basic, get, get_var);
+
+/*namespace OOLUA {
 	template<> 
 	class Proxy_class<basic> {
 	public: 
@@ -61,7 +70,7 @@ namespace OOLUA {
 namespace OOLUA {
 	char const OOLUA::Proxy_class< basic >::class_name[] = "basic"; 
 	OOLUA::Proxy_class< basic >::Reg_type OOLUA::Proxy_class< basic >::class_methods[] = { { "set", &OOLUA::Proxy_class< basic >::set },{ 0, 0 } };
-}
+}*/
 
 
 int main(int argc, char* argv[]) {
@@ -74,19 +83,25 @@ int main(int argc, char* argv[]) {
 		auto str = OOLUA::get_last_error(vm);
 		luaL_error(vm, str.c_str());
 	}
+	lua_getglobal(vm.state(), "b");
+	basic*b = *static_cast<basic**>(lua_touserdata(vm.state(), -1));
+	lua_pop(vm.state(), 1);
 
-	std::string fcode = "b:set(1) b:get()";
+	std::string fcode = "b:set(2)\ny = b:get()";
 	if (!vm.run_chunk(fcode)) {
 		auto str = OOLUA::get_last_error(vm);
 		luaL_error(vm, str.c_str());
 	}
 
 
-	std::string code = "b.var = 1\nx = b.var";
+	std::string code = "b:set_var(1)\nx = b:get_var()";
 	if (!vm.run_chunk(code)) {
 		auto str = OOLUA::get_last_error(vm);
 		luaL_error(vm, str.c_str());
 	}
-	
+	lua_getglobal(vm.state(), "x");
+	int x = lua_tointeger(vm.state(), -1);
+	lua_pop(vm.state(), 1);
+
 	return 0;
 }

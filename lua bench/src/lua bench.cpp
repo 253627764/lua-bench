@@ -298,7 +298,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(oolua_name + " - " + c_through_lua_function_measure_name, lb::oolua_c_through_lua_function_measure),
 			nonius::benchmark(oolua_name + " - " + lua_function_measure_name, lb::oolua_lua_function_measure),
 			nonius::benchmark(oolua_name + " - " + member_function_call_name, lb::oolua_member_function_call_measure),
-			nonius::benchmark(oolua_name + " - " + member_variable_measure_name, lb::oolua_member_variable_measure),
+			//nonius::benchmark(oolua_name + " - " + member_variable_measure_name, lb::oolua_member_variable_measure),
 			//nonius::benchmark(oolua_name + " - " + multi_return_measure_name, lb::oolua_multi_return_measure),
 			//nonius::benchmark(oolua_name + " - " + stateful_function_object_measure_name, lb::oolua_stateful_function_object_measure),
 			//nonius::benchmark(oolua_name + " - " + base_derived_measure_name, lb::oolua_base_derived_measure),

@@ -233,7 +233,9 @@ namespace lb {
 	}
 
 	void oolua_member_variable_measure(nonius::chronometer& meter) {
-		using namespace OOLUA;
+		// Actually unsupported
+		// Turns it into member functions: illegal
+		/*using namespace OOLUA;
 		Script vm;
 		lua_atpanic(vm, panic_throw);
 		
@@ -245,7 +247,7 @@ namespace lb {
 				auto str = OOLUA::get_last_error(vm);
 				luaL_error(vm, str.c_str());
 			}
-		});
+		});*/
 	}
 
 	void oolua_stateful_function_object_measure(nonius::chronometer& meter) {
