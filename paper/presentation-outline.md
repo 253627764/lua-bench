@@ -32,7 +32,7 @@ sol2 - Doing Lua Justice
 
 Making it Fast
 ------------------
-- ... By being lazy (lazy evaluation of operator[] = LOOOADSA SPEEEED)
+- ... By being lazy (lazy evaluation of operator[] = LOOOADS-A-SPEEEED)
 - By encoding information into types and operations (global table -> sol::global_table -> trigger optmizations all the way in "stack")
 - Like all good systems, BATCHING (Get a table once, pull EVERYTHING YOU CAN FROM THE TABLE, then pop it off the stack)
 - No different from Mike Acton's style of C - we just put the information in types rather than forcing the user to type it out in copy-paste style of programming
