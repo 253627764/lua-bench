@@ -45,4 +45,4 @@ url=https://github.com/ThePhD/lua-api-pp.git
 url=https://github.com/vapourismo/luwra.git
 [submodule "vendor/old-sol"]
 	path = vendor/old-sol
-	url = https://github.com/Rapptz/sol.git
+url=https://github.com/ThePhD/sol.git
