@@ -214,6 +214,10 @@ namespace lb {
 	void swig_member_variable_measure(nonius::chronometer& meter);
 	void luwra_member_variable_measure(nonius::chronometer& meter);
 
+	void sol_member_variable_simple_measure(nonius::chronometer& meter);
+	void sol_member_function_call_simple_measure(nonius::chronometer& meter);
+
+
 	void plain_c_return_userdata_measure(nonius::chronometer& meter);
 	void sol_return_userdata_measure(nonius::chronometer& meter);
 	void old_sol_return_userdata_measure(nonius::chronometer& meter);

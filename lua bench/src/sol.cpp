@@ -139,6 +139,31 @@ namespace lb {
 		});
 	}
 
+	void sol_member_function_call_simple_measure(nonius::chronometer& meter) {
+		sol::state lua(panic_throw);
+		lua.new_simple_usertype<basic>("basic",
+			"get", sol::c_call<decltype(&basic::get), &basic::get>,
+			"set", sol::c_call<decltype(&basic::set), &basic::set>
+		);
+		lua.script("b = basic:new()");
+		std::string code = repeated_code("b:set(i) b:get()");
+		meter.measure([&]() {
+			lua.script(code);
+		});
+	}
+
+	void sol_member_variable_simple_measure(nonius::chronometer& meter) {
+		sol::state lua(panic_throw);
+		lua.new_simple_usertype<basic>("basic",
+			"var", &basic::var
+		);
+		lua.script("b = basic:new()");
+		std::string code = repeated_code("b.var = i\nx = b.var");
+		meter.measure([&]() {
+			lua.script(code);
+		});
+	}
+
 	void sol_stateful_function_object_measure(nonius::chronometer& meter) {
 		sol::state lua(panic_throw);
 		int storage = 0;
