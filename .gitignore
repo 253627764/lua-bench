@@ -18,3 +18,5 @@ paper/references/texput.log
 *.synctex.gz
 /*.csv
 /*.png
+*.VC.db
+*.VC.VC.opendb
