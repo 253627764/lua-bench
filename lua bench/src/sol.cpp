@@ -130,10 +130,198 @@ namespace lb {
 	void sol_member_variable_measure(nonius::chronometer& meter) {
 		sol::state lua(panic_throw);
 		lua.new_usertype<basic>("basic",
-			"var", &basic::var
+			"var0", &basic::var,
+			"var1", &basic::var,
+			"var2", &basic::var,
+			"var3", &basic::var,
+			"var4", &basic::var
 		);
 		lua.script("b = basic:new()");
-		std::string code = repeated_code("b.var = i\nx = b.var");
+		std::string code = repeated_code(
+			"b.var0 = i\n"
+			"x = b.var0\n"
+			"b.var4 = i\n"
+			"x = b.var4\n"
+			"b.var1 = i\n"
+			"x = b.var1\n"
+			"b.var3 = i\n"
+			"x = b.var3\n"
+			"b.var2 = i\n"
+			"x = b.var2\n"
+		);
+		meter.measure([&]() {
+			lua.script(code);
+		});
+	}
+
+	void sol_member_variable_complex_measure(nonius::chronometer& meter) {
+		sol::state lua(panic_throw);
+		lua.new_usertype<basic>("basic",
+			"var0", &basic::var,
+			"var1", &basic::var,
+			"var2", &basic::var,
+			"var3", &basic::var,
+			"var4", &basic::var,
+			"var5", &basic::var,
+			"var6", &basic::var,
+			"var7", &basic::var,
+			"var8", &basic::var,
+			"var9", &basic::var,
+			"var10", &basic::var,
+			"var11", &basic::var,
+			"var12", &basic::var,
+			"var13", &basic::var,
+			"var14", &basic::var,
+			"var15", &basic::var,
+			"var16", &basic::var,
+			"var17", &basic::var,
+			"var18", &basic::var,
+			"var19", &basic::var,
+			"var20", &basic::var,
+			"var21", &basic::var,
+			"var22", &basic::var,
+			"var23", &basic::var,
+			"var24", &basic::var,
+			"var25", &basic::var,
+			"var26", &basic::var,
+			"var27", &basic::var,
+			"var28", &basic::var,
+			"var29", &basic::var,
+			"var30", &basic::var,
+			"var31", &basic::var,
+			"var32", &basic::var,
+			"var33", &basic::var,
+			"var34", &basic::var,
+			"var35", &basic::var,
+			"var36", &basic::var,
+			"var37", &basic::var,
+			"var38", &basic::var,
+			"var39", &basic::var,
+			"var40", &basic::var,
+			"var41", &basic::var,
+			"var42", &basic::var,
+			"var43", &basic::var,
+			"var44", &basic::var,
+			"var45", &basic::var,
+			"var46", &basic::var,
+			"var47", &basic::var,
+			"var48", &basic::var,
+			"var49", &basic::var
+		);
+		lua.script("b = basic:new()");
+		std::string code = repeated_code(
+			"b.var0 = i\nx = b.var0\n"
+			"b.var49 = i\nx = b.var49\n"
+			"b.var2 = i\nx = b.var2\n"
+			"b.var47 = i\nx = b.var47\n"
+			"b.var4 = i\nx = b.var4\n"
+			"b.var45 = i\nx = b.var45\n"
+			"b.var6 = i\nx = b.var6\n"
+			"b.var43 = i\nx = b.var43\n"
+			"b.var8 = i\nx = b.var8\n"
+			"b.var41 = i\nx = b.var41\n"
+			"b.var10 = i\nx = b.var10\n"
+			"b.var39 = i\nx = b.var39\n"
+			"b.var12 = i\nx = b.var12\n"
+			"b.var37 = i\nx = b.var37\n"
+			"b.var14 = i\nx = b.var14\n"
+			"b.var35 = i\nx = b.var35\n"
+			"b.var16 = i\nx = b.var16\n"
+			"b.var33 = i\nx = b.var33\n"
+			"b.var18 = i\nx = b.var18\n"
+			"b.var31 = i\nx = b.var31\n"
+			"b.var20 = i\nx = b.var20\n"
+			"b.var29 = i\nx = b.var29\n"
+			"b.var22 = i\nx = b.var22\n"
+			"b.var27 = i\nx = b.var27\n"
+			"b.var24 = i\nx = b.var24\n"
+			"b.var25 = i\nx = b.var25\n"
+			"b.var26 = i\nx = b.var26\n"
+			"b.var23 = i\nx = b.var23\n"
+			"b.var28 = i\nx = b.var28\n"
+			"b.var21 = i\nx = b.var21\n"
+			"b.var30 = i\nx = b.var30\n"
+			"b.var19 = i\nx = b.var19\n"
+			"b.var32 = i\nx = b.var32\n"
+			"b.var17 = i\nx = b.var17\n"
+			"b.var34 = i\nx = b.var34\n"
+			"b.var15 = i\nx = b.var15\n"
+			"b.var36 = i\nx = b.var36\n"
+			"b.var13 = i\nx = b.var13\n"
+			"b.var38 = i\nx = b.var38\n"
+			"b.var11 = i\nx = b.var11\n"
+			"b.var40 = i\nx = b.var40\n"
+			"b.var9 = i\nx = b.var9\n"
+			"b.var42 = i\nx = b.var42\n"
+			"b.var7 = i\nx = b.var7\n"
+			"b.var44 = i\nx = b.var44\n"
+			"b.var5 = i\nx = b.var5\n"
+			"b.var46 = i\nx = b.var46\n"
+			"b.var3 = i\nx = b.var3\n"
+			"b.var48 = i\nx = b.var48\n"
+			"b.var1 = i\nx = b.var1\n"
+		);
+		meter.measure([&]() {
+			lua.script(code);
+		});
+	}
+
+	void sol_member_variable_last_measure(nonius::chronometer& meter) {
+		sol::state lua(panic_throw);
+		lua.new_usertype<basic>("basic",
+			"var0", &basic::var,
+			"var1", &basic::var,
+			"var2", &basic::var,
+			"var3", &basic::var,
+			"var4", &basic::var,
+			"var5", &basic::var,
+			"var6", &basic::var,
+			"var7", &basic::var,
+			"var8", &basic::var,
+			"var9", &basic::var,
+			"var10", &basic::var,
+			"var11", &basic::var,
+			"var12", &basic::var,
+			"var13", &basic::var,
+			"var14", &basic::var,
+			"var15", &basic::var,
+			"var16", &basic::var,
+			"var17", &basic::var,
+			"var18", &basic::var,
+			"var19", &basic::var,
+			"var20", &basic::var,
+			"var21", &basic::var,
+			"var22", &basic::var,
+			"var23", &basic::var,
+			"var24", &basic::var,
+			"var25", &basic::var,
+			"var26", &basic::var,
+			"var27", &basic::var,
+			"var28", &basic::var,
+			"var29", &basic::var,
+			"var30", &basic::var,
+			"var31", &basic::var,
+			"var32", &basic::var,
+			"var33", &basic::var,
+			"var34", &basic::var,
+			"var35", &basic::var,
+			"var36", &basic::var,
+			"var37", &basic::var,
+			"var38", &basic::var,
+			"var39", &basic::var,
+			"var40", &basic::var,
+			"var41", &basic::var,
+			"var42", &basic::var,
+			"var43", &basic::var,
+			"var44", &basic::var,
+			"var45", &basic::var,
+			"var46", &basic::var,
+			"var47", &basic::var,
+			"var48", &basic::var,
+			"var49", &basic::var
+		);
+		lua.script("b = basic:new()");
+		std::string code = repeated_code("b.var49 = i\nx = b.var49\n");
 		meter.measure([&]() {
 			lua.script(code);
 		});
@@ -155,10 +343,202 @@ namespace lb {
 	void sol_member_variable_simple_measure(nonius::chronometer& meter) {
 		sol::state lua(panic_throw);
 		lua.new_simple_usertype<basic>("basic",
-			"var", &basic::var
+			"var0", &basic::var,
+			"var1", &basic::var,
+			"var2", &basic::var,
+			"var3", &basic::var,
+			"var4", &basic::var
 		);
 		lua.script("b = basic:new()");
-		std::string code = repeated_code("b.var = i\nx = b.var");
+		std::string code = repeated_code(
+			"b.var0 = i\n"
+			"x = b.var0\n"
+			"b.var4 = i\n"
+			"x = b.var4\n"
+			"b.var1 = i\n"
+			"x = b.var1\n"
+			"b.var3 = i\n"
+			"x = b.var3\n"
+			"b.var2 = i\n"
+			"x = b.var2\n"
+		);
+		meter.measure([&]() {
+			lua.script(code);
+		});
+	}
+
+	void sol_member_variable_complex_simple_measure(nonius::chronometer& meter) {
+		sol::state lua(panic_throw);
+		lua.new_simple_usertype<basic>("basic",
+			"var0", &basic::var,
+			"var1", &basic::var,
+			"var2", &basic::var,
+			"var3", &basic::var,
+			"var4", &basic::var,
+			"var5", &basic::var,
+			"var6", &basic::var,
+			"var7", &basic::var,
+			"var8", &basic::var,
+			"var9", &basic::var,
+			"var10", &basic::var,
+			"var11", &basic::var,
+			"var12", &basic::var,
+			"var13", &basic::var,
+			"var14", &basic::var,
+			"var15", &basic::var,
+			"var16", &basic::var,
+			"var17", &basic::var,
+			"var18", &basic::var,
+			"var19", &basic::var,
+			"var20", &basic::var,
+			"var21", &basic::var,
+			"var22", &basic::var,
+			"var23", &basic::var,
+			"var24", &basic::var,
+			"var25", &basic::var,
+			"var26", &basic::var,
+			"var27", &basic::var,
+			"var28", &basic::var,
+			"var29", &basic::var,
+			"var30", &basic::var,
+			"var31", &basic::var,
+			"var32", &basic::var,
+			"var33", &basic::var,
+			"var34", &basic::var,
+			"var35", &basic::var,
+			"var36", &basic::var,
+			"var37", &basic::var,
+			"var38", &basic::var,
+			"var39", &basic::var,
+			"var40", &basic::var,
+			"var41", &basic::var,
+			"var42", &basic::var,
+			"var43", &basic::var,
+			"var44", &basic::var,
+			"var45", &basic::var,
+			"var46", &basic::var,
+			"var47", &basic::var,
+			"var48", &basic::var,
+			"var49", &basic::var
+		);
+
+		lua.script("b = basic:new()");
+		std::string code = repeated_code(
+			"b.var0 = i\nx = b.var0\n"
+			"b.var49 = i\nx = b.var49\n"
+			"b.var2 = i\nx = b.var2\n"
+			"b.var47 = i\nx = b.var47\n"
+			"b.var4 = i\nx = b.var4\n"
+			"b.var45 = i\nx = b.var45\n"
+			"b.var6 = i\nx = b.var6\n"
+			"b.var43 = i\nx = b.var43\n"
+			"b.var8 = i\nx = b.var8\n"
+			"b.var41 = i\nx = b.var41\n"
+			"b.var10 = i\nx = b.var10\n"
+			"b.var39 = i\nx = b.var39\n"
+			"b.var12 = i\nx = b.var12\n"
+			"b.var37 = i\nx = b.var37\n"
+			"b.var14 = i\nx = b.var14\n"
+			"b.var35 = i\nx = b.var35\n"
+			"b.var16 = i\nx = b.var16\n"
+			"b.var33 = i\nx = b.var33\n"
+			"b.var18 = i\nx = b.var18\n"
+			"b.var31 = i\nx = b.var31\n"
+			"b.var20 = i\nx = b.var20\n"
+			"b.var29 = i\nx = b.var29\n"
+			"b.var22 = i\nx = b.var22\n"
+			"b.var27 = i\nx = b.var27\n"
+			"b.var24 = i\nx = b.var24\n"
+			"b.var25 = i\nx = b.var25\n"
+			"b.var26 = i\nx = b.var26\n"
+			"b.var23 = i\nx = b.var23\n"
+			"b.var28 = i\nx = b.var28\n"
+			"b.var21 = i\nx = b.var21\n"
+			"b.var30 = i\nx = b.var30\n"
+			"b.var19 = i\nx = b.var19\n"
+			"b.var32 = i\nx = b.var32\n"
+			"b.var17 = i\nx = b.var17\n"
+			"b.var34 = i\nx = b.var34\n"
+			"b.var15 = i\nx = b.var15\n"
+			"b.var36 = i\nx = b.var36\n"
+			"b.var13 = i\nx = b.var13\n"
+			"b.var38 = i\nx = b.var38\n"
+			"b.var11 = i\nx = b.var11\n"
+			"b.var40 = i\nx = b.var40\n"
+			"b.var9 = i\nx = b.var9\n"
+			"b.var42 = i\nx = b.var42\n"
+			"b.var7 = i\nx = b.var7\n"
+			"b.var44 = i\nx = b.var44\n"
+			"b.var5 = i\nx = b.var5\n"
+			"b.var46 = i\nx = b.var46\n"
+			"b.var3 = i\nx = b.var3\n"
+			"b.var48 = i\nx = b.var48\n"
+			"b.var1 = i\nx = b.var1\n"
+		);
+		meter.measure([&]() {
+			lua.script(code);
+		});
+	}
+
+	void sol_member_variable_last_simple_measure(nonius::chronometer& meter) {
+		sol::state lua(panic_throw);
+		lua.new_simple_usertype<basic>("basic",
+			"var0", &basic::var,
+			"var1", &basic::var,
+			"var2", &basic::var,
+			"var3", &basic::var,
+			"var4", &basic::var,
+			"var5", &basic::var,
+			"var6", &basic::var,
+			"var7", &basic::var,
+			"var8", &basic::var,
+			"var9", &basic::var,
+			"var10", &basic::var,
+			"var11", &basic::var,
+			"var12", &basic::var,
+			"var13", &basic::var,
+			"var14", &basic::var,
+			"var15", &basic::var,
+			"var16", &basic::var,
+			"var17", &basic::var,
+			"var18", &basic::var,
+			"var19", &basic::var,
+			"var20", &basic::var,
+			"var21", &basic::var,
+			"var22", &basic::var,
+			"var23", &basic::var,
+			"var24", &basic::var,
+			"var25", &basic::var,
+			"var26", &basic::var,
+			"var27", &basic::var,
+			"var28", &basic::var,
+			"var29", &basic::var,
+			"var30", &basic::var,
+			"var31", &basic::var,
+			"var32", &basic::var,
+			"var33", &basic::var,
+			"var34", &basic::var,
+			"var35", &basic::var,
+			"var36", &basic::var,
+			"var37", &basic::var,
+			"var38", &basic::var,
+			"var39", &basic::var,
+			"var40", &basic::var,
+			"var41", &basic::var,
+			"var42", &basic::var,
+			"var43", &basic::var,
+			"var44", &basic::var,
+			"var45", &basic::var,
+			"var46", &basic::var,
+			"var47", &basic::var,
+			"var48", &basic::var,
+			"var49", &basic::var
+			);
+
+		lua.script("b = basic:new()");
+		std::string code = repeated_code(
+			"b.var49 = i\nx = b.var49\n"
+		);
 		meter.measure([&]() {
 			lua.script(code);
 		});
