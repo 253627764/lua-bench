@@ -57,6 +57,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "lua playground", "lua playg
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "old-sol", "vendor\old-sol.vcxproj", "{805BDE93-C78C-49F9-A2F1-82FDB7E9B604}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "misc bench", "misc bench.vcxproj", "{60903099-7004-4E59-B1A6-89CCCB1CE9FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -263,6 +265,16 @@ Global
 		{805BDE93-C78C-49F9-A2F1-82FDB7E9B604}.Release|x64.Build.0 = Release|x64
 		{805BDE93-C78C-49F9-A2F1-82FDB7E9B604}.Release|x86.ActiveCfg = Release|Win32
 		{805BDE93-C78C-49F9-A2F1-82FDB7E9B604}.Release|x86.Build.0 = Release|Win32
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Debug|x64.ActiveCfg = Debug|x64
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Debug|x64.Build.0 = Debug|x64
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Debug|x86.ActiveCfg = Debug|Win32
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Debug|x86.Build.0 = Debug|Win32
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Release|Any CPU.ActiveCfg = Release|Win32
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Release|x64.ActiveCfg = Release|x64
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Release|x64.Build.0 = Release|x64
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Release|x86.ActiveCfg = Release|Win32
+		{60903099-7004-4E59-B1A6-89CCCB1CE9FA}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,12 +13,12 @@ int main(int argc, char* argv[]) {
 	static const char lua_function_measure_name[] = "lua function";
 	static const char member_function_call_measure_name[] = "member function calls";
 	static const char member_variable_measure_name[] = "member variable";
-	static const char member_variable_complex_measure_name[] = "member variable complex";
-	static const char member_variable_last_measure_name[] = "member variable last";
+	static const char member_variable_complex_measure_name[] = "many member variables";
+	static const char member_variable_last_measure_name[] = "many member variables, last registered";
 	static const char member_function_call_simple_measure_name[] = "member function calls (simple)";
 	static const char member_variable_simple_measure_name[] = "member variable (simple)";
-	static const char member_variable_complex_simple_measure_name[] = "member variable complex (simple)";
-	static const char member_variable_last_simple_measure_name[] = "member variable last (simple)";
+	static const char member_variable_large_simple_measure_name[] = "many member variables (simple)";
+	static const char member_variable_last_simple_measure_name[] = "many member variables, last registered (simple)";
 	static const char multi_return_measure_name[] = "multi return";
 	static const char stateful_function_object_measure_name[] = "stateful c function";
 	static const char base_derived_measure_name[] = "base from derived";
@@ -96,10 +96,11 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(plain_c_name + " - " + c_through_lua_function_measure_name, lb::plain_c_c_through_lua_function_measure),
 			nonius::benchmark(plain_c_name + " - " + lua_function_measure_name, lb::plain_c_lua_function_measure),
 			nonius::benchmark(plain_c_name + " - " + member_function_call_measure_name, lb::plain_c_member_function_call_measure),
-			//nonius::benchmark(plain_c_name + " - " + member_variable_measure_name, lb::plain_c_member_variable_measure),
+			nonius::benchmark(plain_c_name + " - " + member_variable_measure_name, lb::plain_c_member_variable_measure),
 			nonius::benchmark(plain_c_name + " - " + member_function_call_simple_measure_name, lb::plain_c_member_function_call_measure),
-			//nonius::benchmark(plain_c_name + " - " + member_variable_simple_measure_name, lb::plain_c_member_variable_measure),
-			//nonius::benchmark(plain_c_name + " - " + member_variable_complex_simple_measure_name, lb::plain_c_member_variable_measure),
+			nonius::benchmark(plain_c_name + " - " + member_variable_simple_measure_name, lb::plain_c_member_variable_measure),
+			nonius::benchmark(plain_c_name + " - " + member_variable_complex_measure_name, lb::plain_c_member_variable_measure),
+			nonius::benchmark(plain_c_name + " - " + member_variable_large_simple_measure_name, lb::plain_c_member_variable_measure),
 			nonius::benchmark(plain_c_name + " - " + multi_return_measure_name, lb::plain_c_multi_return_measure),
 			nonius::benchmark(plain_c_name + " - " + stateful_function_object_measure_name, lb::plain_c_stateful_function_object_measure),
 			nonius::benchmark(plain_c_name + " - " + base_derived_measure_name, lb::plain_c_base_derived_measure),
@@ -130,7 +131,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(sol_name + " - " + member_variable_last_measure_name, lb::sol_member_variable_last_measure),
 			nonius::benchmark(sol_name + " - " + member_function_call_simple_measure_name, lb::sol_member_function_call_simple_measure),
 			nonius::benchmark(sol_name + " - " + member_variable_simple_measure_name, lb::sol_member_variable_simple_measure),
-			nonius::benchmark(sol_name + " - " + member_variable_complex_simple_measure_name, lb::sol_member_variable_complex_simple_measure),
+			nonius::benchmark(sol_name + " - " + member_variable_large_simple_measure_name, lb::sol_member_variable_complex_simple_measure),
 			nonius::benchmark(sol_name + " - " + member_variable_last_simple_measure_name, lb::sol_member_variable_last_simple_measure),
 			nonius::benchmark(sol_name + " - " + multi_return_measure_name, lb::sol_multi_return_measure),
 			nonius::benchmark(sol_name + " - " + stateful_function_object_measure_name, lb::sol_stateful_function_object_measure),
@@ -162,7 +163,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(old_sol_name + " - " + member_variable_last_measure_name, lb::old_sol_member_variable_last_measure),
 			nonius::benchmark(old_sol_name + " - " + member_function_call_simple_measure_name, lb::old_sol_member_function_call_measure),
 			nonius::benchmark(old_sol_name + " - " + member_variable_simple_measure_name, lb::old_sol_member_variable_measure),
-			nonius::benchmark(old_sol_name + " - " + member_variable_complex_simple_measure_name, lb::old_sol_member_variable_complex_measure),
+			nonius::benchmark(old_sol_name + " - " + member_variable_large_simple_measure_name, lb::old_sol_member_variable_complex_measure),
 			nonius::benchmark(old_sol_name + " - " + member_variable_last_simple_measure_name, lb::old_sol_member_variable_last_measure),
 			nonius::benchmark(old_sol_name + " - " + multi_return_measure_name, lb::old_sol_multi_return_measure),
 			nonius::benchmark(old_sol_name + " - " + stateful_function_object_measure_name, lb::old_sol_stateful_function_object_measure),
@@ -276,7 +277,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(luawrapper_name + " - " + member_variable_last_measure_name, lb::luawrapper_member_variable_last_measure),
 			nonius::benchmark(luawrapper_name + " - " + member_function_call_simple_measure_name, lb::luawrapper_member_function_call_measure),
 			nonius::benchmark(luawrapper_name + " - " + member_variable_simple_measure_name, lb::luawrapper_member_variable_measure),
-			nonius::benchmark(luawrapper_name + " - " + member_variable_complex_simple_measure_name, lb::luawrapper_member_variable_complex_measure),
+			nonius::benchmark(luawrapper_name + " - " + member_variable_large_simple_measure_name, lb::luawrapper_member_variable_complex_measure),
 			nonius::benchmark(luawrapper_name + " - " + member_variable_last_simple_measure_name, lb::luawrapper_member_variable_last_measure),
 			nonius::benchmark(luawrapper_name + " - " + multi_return_measure_name, lb::luawrapper_multi_return_measure),
 			nonius::benchmark(luawrapper_name + " - " + stateful_function_object_measure_name, lb::luawrapper_stateful_function_object_measure),
@@ -308,7 +309,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(swig_name + " - " + member_variable_last_measure_name, lb::swig_member_variable_last_measure),
 			nonius::benchmark(swig_name + " - " + member_function_call_simple_measure_name, lb::swig_member_function_call_measure),
 			nonius::benchmark(swig_name + " - " + member_variable_simple_measure_name, lb::swig_member_variable_measure),
-			nonius::benchmark(swig_name + " - " + member_variable_complex_simple_measure_name, lb::swig_member_variable_complex_measure),
+			nonius::benchmark(swig_name + " - " + member_variable_large_simple_measure_name, lb::swig_member_variable_complex_measure),
 			nonius::benchmark(swig_name + " - " + member_variable_last_simple_measure_name, lb::swig_member_variable_last_measure),
 			//nonius::benchmark(swig_name + " - " + multi_return_measure_name, lb::swig_multi_return_measure),
 			//nonius::benchmark(swig_name + " - " + stateful_function_object_measure_name, lb::swig_stateful_function_object_measure),
@@ -452,7 +453,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(luabind_name + " - " + member_variable_last_measure_name, lb::luabind_member_variable_last_measure),
 			nonius::benchmark(luabind_name + " - " + member_function_call_simple_measure_name, lb::luabind_member_function_call_measure),
 			nonius::benchmark(luabind_name + " - " + member_variable_simple_measure_name, lb::luabind_member_variable_measure),
-			nonius::benchmark(luabind_name + " - " + member_variable_complex_simple_measure_name, lb::luabind_member_variable_complex_measure),
+			nonius::benchmark(luabind_name + " - " + member_variable_large_simple_measure_name, lb::luabind_member_variable_complex_measure),
 			nonius::benchmark(luabind_name + " - " + member_variable_last_simple_measure_name, lb::luabind_member_variable_last_measure),
 			//nonius::benchmark(luabind_name + " - " + multi_return_measure_name, lb::luabind_multi_return_measure),
 			nonius::benchmark(luabind_name + " - " + stateful_function_object_measure_name, lb::luabind_stateful_function_object_measure),
@@ -484,7 +485,7 @@ int main(int argc, char* argv[]) {
 			nonius::benchmark(lua_intf_name + " - " + member_variable_last_measure_name, lb::lua_intf_member_variable_last_measure),
 			nonius::benchmark(lua_intf_name + " - " + member_function_call_simple_measure_name, lb::lua_intf_member_function_call_measure),
 			nonius::benchmark(lua_intf_name + " - " + member_variable_simple_measure_name, lb::lua_intf_member_variable_measure),
-			nonius::benchmark(lua_intf_name + " - " + member_variable_complex_simple_measure_name, lb::lua_intf_member_variable_complex_measure),
+			nonius::benchmark(lua_intf_name + " - " + member_variable_large_simple_measure_name, lb::lua_intf_member_variable_complex_measure),
 			nonius::benchmark(lua_intf_name + " - " + member_variable_last_simple_measure_name, lb::lua_intf_member_variable_last_measure),
 			nonius::benchmark(lua_intf_name + " - " + multi_return_measure_name, lb::lua_intf_multi_return_measure),
 			nonius::benchmark(lua_intf_name + " - " + stateful_function_object_measure_name, lb::lua_intf_stateful_function_object_measure),

@@ -145,7 +145,7 @@ namespace lb {
 			.endClass();
 
 		lua.doString("b = basic()");
-		auto code = repeated_code("b:set(i) b:get()");
+		auto code = repeated_code(member_function_call_code);
 		meter.measure([&lua, &code]() {
 			lua.doString(code.c_str());
 		});
@@ -158,25 +158,17 @@ namespace lb {
 		LuaIntf::LuaBinding(lua)
 			.beginClass<basic>("basic")
 			.addConstructor(LUA_ARGS())
-			.addVariable("var0", &basic::var)
-			.addVariable("var1", &basic::var)
-			.addVariable("var2", &basic::var)
-			.addVariable("var3", &basic::var)
-			.addVariable("var4", &basic::var)
+			.addVariable("var", &basic::var)
+			.addVariable("var0", &basic::var0)
+			.addVariable("var1", &basic::var1)
+			.addVariable("var2", &basic::var2)
+			.addVariable("var3", &basic::var3)
+			.addVariable("var4", &basic::var4)
 			.endClass();
 
 		lua.doString("b = basic()");
 		auto code = repeated_code(
-			"b.var0 = i\n"
-			"x = b.var0\n"
-			"b.var4 = i\n"
-			"x = b.var4\n"
-			"b.var1 = i\n"
-			"x = b.var1\n"
-			"b.var3 = i\n"
-			"x = b.var3\n"
-			"b.var2 = i\n"
-			"x = b.var2\n"
+			member_variable_code
 		);
 		meter.measure([&lua, &code]() {
 			lua.doString(code.c_str());
@@ -188,112 +180,64 @@ namespace lb {
 		lua_atpanic(lua, panic_throw);
 
 		LuaIntf::LuaBinding(lua)
-			.beginClass<basic>("basic")
+			.beginClass<basic_large>("basic_large")
 			.addConstructor(LUA_ARGS())
-			.addVariable("var0", &basic::var)
-			.addVariable("var1", &basic::var)
-			.addVariable("var2", &basic::var)
-			.addVariable("var3", &basic::var)
-			.addVariable("var4", &basic::var)
-			.addVariable("var5", &basic::var)
-			.addVariable("var6", &basic::var)
-			.addVariable("var7", &basic::var)
-			.addVariable("var8", &basic::var)
-			.addVariable("var9", &basic::var)
-			.addVariable("var10", &basic::var)
-			.addVariable("var11", &basic::var)
-			.addVariable("var12", &basic::var)
-			.addVariable("var13", &basic::var)
-			.addVariable("var14", &basic::var)
-			.addVariable("var15", &basic::var)
-			.addVariable("var16", &basic::var)
-			.addVariable("var17", &basic::var)
-			.addVariable("var18", &basic::var)
-			.addVariable("var19", &basic::var)
-			.addVariable("var20", &basic::var)
-			.addVariable("var21", &basic::var)
-			.addVariable("var22", &basic::var)
-			.addVariable("var23", &basic::var)
-			.addVariable("var24", &basic::var)
-			.addVariable("var25", &basic::var)
-			.addVariable("var26", &basic::var)
-			.addVariable("var27", &basic::var)
-			.addVariable("var28", &basic::var)
-			.addVariable("var29", &basic::var)
-			.addVariable("var30", &basic::var)
-			.addVariable("var31", &basic::var)
-			.addVariable("var32", &basic::var)
-			.addVariable("var33", &basic::var)
-			.addVariable("var34", &basic::var)
-			.addVariable("var35", &basic::var)
-			.addVariable("var36", &basic::var)
-			.addVariable("var37", &basic::var)
-			.addVariable("var38", &basic::var)
-			.addVariable("var39", &basic::var)
-			.addVariable("var40", &basic::var)
-			.addVariable("var41", &basic::var)
-			.addVariable("var42", &basic::var)
-			.addVariable("var43", &basic::var)
-			.addVariable("var44", &basic::var)
-			.addVariable("var45", &basic::var)
-			.addVariable("var46", &basic::var)
-			.addVariable("var47", &basic::var)
-			.addVariable("var48", &basic::var)
-			.addVariable("var49", &basic::var)
+			.addVariable("var", &basic_large::var)
+			.addVariable("var0", &basic_large::var0)
+			.addVariable("var1", &basic_large::var1)
+			.addVariable("var2", &basic_large::var2)
+			.addVariable("var3", &basic_large::var3)
+			.addVariable("var4", &basic_large::var4)
+			.addVariable("var5", &basic_large::var5)
+			.addVariable("var6", &basic_large::var6)
+			.addVariable("var7", &basic_large::var7)
+			.addVariable("var8", &basic_large::var8)
+			.addVariable("var9", &basic_large::var9)
+			.addVariable("var10", &basic_large::var10)
+			.addVariable("var11", &basic_large::var11)
+			.addVariable("var12", &basic_large::var12)
+			.addVariable("var13", &basic_large::var13)
+			.addVariable("var14", &basic_large::var14)
+			.addVariable("var15", &basic_large::var15)
+			.addVariable("var16", &basic_large::var16)
+			.addVariable("var17", &basic_large::var17)
+			.addVariable("var18", &basic_large::var18)
+			.addVariable("var19", &basic_large::var19)
+			.addVariable("var20", &basic_large::var20)
+			.addVariable("var21", &basic_large::var21)
+			.addVariable("var22", &basic_large::var22)
+			.addVariable("var23", &basic_large::var23)
+			.addVariable("var24", &basic_large::var24)
+			.addVariable("var25", &basic_large::var25)
+			.addVariable("var26", &basic_large::var26)
+			.addVariable("var27", &basic_large::var27)
+			.addVariable("var28", &basic_large::var28)
+			.addVariable("var29", &basic_large::var29)
+			.addVariable("var30", &basic_large::var30)
+			.addVariable("var31", &basic_large::var31)
+			.addVariable("var32", &basic_large::var32)
+			.addVariable("var33", &basic_large::var33)
+			.addVariable("var34", &basic_large::var34)
+			.addVariable("var35", &basic_large::var35)
+			.addVariable("var36", &basic_large::var36)
+			.addVariable("var37", &basic_large::var37)
+			.addVariable("var38", &basic_large::var38)
+			.addVariable("var39", &basic_large::var39)
+			.addVariable("var40", &basic_large::var40)
+			.addVariable("var41", &basic_large::var41)
+			.addVariable("var42", &basic_large::var42)
+			.addVariable("var43", &basic_large::var43)
+			.addVariable("var44", &basic_large::var44)
+			.addVariable("var45", &basic_large::var45)
+			.addVariable("var46", &basic_large::var46)
+			.addVariable("var47", &basic_large::var47)
+			.addVariable("var48", &basic_large::var48)
+			.addVariable("var49", &basic_large::var49)
 			.endClass();
 
-		lua.doString("b = basic()");
+		lua.doString("b = basic_large()");
 		auto code = repeated_code(
-			"b.var0 = i\nx = b.var0\n"
-			"b.var49 = i\nx = b.var49\n"
-			"b.var2 = i\nx = b.var2\n"
-			"b.var47 = i\nx = b.var47\n"
-			"b.var4 = i\nx = b.var4\n"
-			"b.var45 = i\nx = b.var45\n"
-			"b.var6 = i\nx = b.var6\n"
-			"b.var43 = i\nx = b.var43\n"
-			"b.var8 = i\nx = b.var8\n"
-			"b.var41 = i\nx = b.var41\n"
-			"b.var10 = i\nx = b.var10\n"
-			"b.var39 = i\nx = b.var39\n"
-			"b.var12 = i\nx = b.var12\n"
-			"b.var37 = i\nx = b.var37\n"
-			"b.var14 = i\nx = b.var14\n"
-			"b.var35 = i\nx = b.var35\n"
-			"b.var16 = i\nx = b.var16\n"
-			"b.var33 = i\nx = b.var33\n"
-			"b.var18 = i\nx = b.var18\n"
-			"b.var31 = i\nx = b.var31\n"
-			"b.var20 = i\nx = b.var20\n"
-			"b.var29 = i\nx = b.var29\n"
-			"b.var22 = i\nx = b.var22\n"
-			"b.var27 = i\nx = b.var27\n"
-			"b.var24 = i\nx = b.var24\n"
-			"b.var25 = i\nx = b.var25\n"
-			"b.var26 = i\nx = b.var26\n"
-			"b.var23 = i\nx = b.var23\n"
-			"b.var28 = i\nx = b.var28\n"
-			"b.var21 = i\nx = b.var21\n"
-			"b.var30 = i\nx = b.var30\n"
-			"b.var19 = i\nx = b.var19\n"
-			"b.var32 = i\nx = b.var32\n"
-			"b.var17 = i\nx = b.var17\n"
-			"b.var34 = i\nx = b.var34\n"
-			"b.var15 = i\nx = b.var15\n"
-			"b.var36 = i\nx = b.var36\n"
-			"b.var13 = i\nx = b.var13\n"
-			"b.var38 = i\nx = b.var38\n"
-			"b.var11 = i\nx = b.var11\n"
-			"b.var40 = i\nx = b.var40\n"
-			"b.var9 = i\nx = b.var9\n"
-			"b.var42 = i\nx = b.var42\n"
-			"b.var7 = i\nx = b.var7\n"
-			"b.var44 = i\nx = b.var44\n"
-			"b.var5 = i\nx = b.var5\n"
-			"b.var46 = i\nx = b.var46\n"
-			"b.var3 = i\nx = b.var3\n"
-			"b.var48 = i\nx = b.var48\n"
-			"b.var1 = i\nx = b.var1\n"
+			member_variable_large_code
 		);
 		meter.measure([&lua, &code]() {
 			lua.doString(code.c_str());
@@ -305,63 +249,64 @@ namespace lb {
 		lua_atpanic(lua, panic_throw);
 
 		LuaIntf::LuaBinding(lua)
-			.beginClass<basic>("basic")
+			.beginClass<basic_large>("basic_large")
 			.addConstructor(LUA_ARGS())
-			.addVariable("var0", &basic::var)
-			.addVariable("var1", &basic::var)
-			.addVariable("var2", &basic::var)
-			.addVariable("var3", &basic::var)
-			.addVariable("var4", &basic::var)
-			.addVariable("var5", &basic::var)
-			.addVariable("var6", &basic::var)
-			.addVariable("var7", &basic::var)
-			.addVariable("var8", &basic::var)
-			.addVariable("var9", &basic::var)
-			.addVariable("var10", &basic::var)
-			.addVariable("var11", &basic::var)
-			.addVariable("var12", &basic::var)
-			.addVariable("var13", &basic::var)
-			.addVariable("var14", &basic::var)
-			.addVariable("var15", &basic::var)
-			.addVariable("var16", &basic::var)
-			.addVariable("var17", &basic::var)
-			.addVariable("var18", &basic::var)
-			.addVariable("var19", &basic::var)
-			.addVariable("var20", &basic::var)
-			.addVariable("var21", &basic::var)
-			.addVariable("var22", &basic::var)
-			.addVariable("var23", &basic::var)
-			.addVariable("var24", &basic::var)
-			.addVariable("var25", &basic::var)
-			.addVariable("var26", &basic::var)
-			.addVariable("var27", &basic::var)
-			.addVariable("var28", &basic::var)
-			.addVariable("var29", &basic::var)
-			.addVariable("var30", &basic::var)
-			.addVariable("var31", &basic::var)
-			.addVariable("var32", &basic::var)
-			.addVariable("var33", &basic::var)
-			.addVariable("var34", &basic::var)
-			.addVariable("var35", &basic::var)
-			.addVariable("var36", &basic::var)
-			.addVariable("var37", &basic::var)
-			.addVariable("var38", &basic::var)
-			.addVariable("var39", &basic::var)
-			.addVariable("var40", &basic::var)
-			.addVariable("var41", &basic::var)
-			.addVariable("var42", &basic::var)
-			.addVariable("var43", &basic::var)
-			.addVariable("var44", &basic::var)
-			.addVariable("var45", &basic::var)
-			.addVariable("var46", &basic::var)
-			.addVariable("var47", &basic::var)
-			.addVariable("var48", &basic::var)
-			.addVariable("var49", &basic::var)
+			.addVariable("var", &basic_large::var)
+			.addVariable("var0", &basic_large::var0)
+			.addVariable("var1", &basic_large::var1)
+			.addVariable("var2", &basic_large::var2)
+			.addVariable("var3", &basic_large::var3)
+			.addVariable("var4", &basic_large::var4)
+			.addVariable("var5", &basic_large::var5)
+			.addVariable("var6", &basic_large::var6)
+			.addVariable("var7", &basic_large::var7)
+			.addVariable("var8", &basic_large::var8)
+			.addVariable("var9", &basic_large::var9)
+			.addVariable("var10", &basic_large::var10)
+			.addVariable("var11", &basic_large::var11)
+			.addVariable("var12", &basic_large::var12)
+			.addVariable("var13", &basic_large::var13)
+			.addVariable("var14", &basic_large::var14)
+			.addVariable("var15", &basic_large::var15)
+			.addVariable("var16", &basic_large::var16)
+			.addVariable("var17", &basic_large::var17)
+			.addVariable("var18", &basic_large::var18)
+			.addVariable("var19", &basic_large::var19)
+			.addVariable("var20", &basic_large::var20)
+			.addVariable("var21", &basic_large::var21)
+			.addVariable("var22", &basic_large::var22)
+			.addVariable("var23", &basic_large::var23)
+			.addVariable("var24", &basic_large::var24)
+			.addVariable("var25", &basic_large::var25)
+			.addVariable("var26", &basic_large::var26)
+			.addVariable("var27", &basic_large::var27)
+			.addVariable("var28", &basic_large::var28)
+			.addVariable("var29", &basic_large::var29)
+			.addVariable("var30", &basic_large::var30)
+			.addVariable("var31", &basic_large::var31)
+			.addVariable("var32", &basic_large::var32)
+			.addVariable("var33", &basic_large::var33)
+			.addVariable("var34", &basic_large::var34)
+			.addVariable("var35", &basic_large::var35)
+			.addVariable("var36", &basic_large::var36)
+			.addVariable("var37", &basic_large::var37)
+			.addVariable("var38", &basic_large::var38)
+			.addVariable("var39", &basic_large::var39)
+			.addVariable("var40", &basic_large::var40)
+			.addVariable("var41", &basic_large::var41)
+			.addVariable("var42", &basic_large::var42)
+			.addVariable("var43", &basic_large::var43)
+			.addVariable("var44", &basic_large::var44)
+			.addVariable("var45", &basic_large::var45)
+			.addVariable("var46", &basic_large::var46)
+			.addVariable("var47", &basic_large::var47)
+			.addVariable("var48", &basic_large::var48)
+			.addVariable("var49", &basic_large::var49)
 			.endClass();
 
-		lua.doString("b = basic()");
+		lua.doString("b = basic_large()");
 		auto code = repeated_code(
-			"b.var49 = i\nx = b.var49\n"
+			member_variable_large_last_code
 		);
 		meter.measure([&lua, &code]() {
 			lua.doString(code.c_str());

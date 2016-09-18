@@ -197,7 +197,7 @@ namespace lb {
 		lua_setmetatable(L, -2);
 		lua_setglobal(L, "b");
 
-		auto code = repeated_code("b:set(i) b:get()");
+		auto code = repeated_code(member_function_call_code);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());
 		});
@@ -220,7 +220,53 @@ namespace lb {
 		lua_setmetatable(L, -2);
 		lua_setglobal(L, "b");
 
-		auto code = repeated_code("b.var = i\nx = b.var");
+		auto code = repeated_code(member_variable_code);
+		meter.measure([&]() {
+			lua_do_or_die(L, code.c_str());
+		});
+	}
+
+	void plain_c_member_variable_complex_measure(nonius::chronometer& meter) {
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
+		basic_large** s = static_cast<basic_large**>(lua_newuserdata(L, sizeof(basic_large*)));
+		basic_large b;
+		*s = &b;
+		luaL_Reg funcs[] = {
+			{ "__index", &basic_large_index_wrap },
+			{ "__newindex", &basic_large_newindex_wrap },
+			{ nullptr, nullptr }
+		};
+		luaL_newmetatable(L, "struct_basic_large");
+		luaL_setfuncs(L, funcs, 0);
+		lua_setmetatable(L, -2);
+		lua_setglobal(L, "b");
+
+		auto code = repeated_code(member_variable_large_code);
+		meter.measure([&]() {
+			lua_do_or_die(L, code.c_str());
+		});
+	}
+
+	void plain_c_member_variable_last_measure(nonius::chronometer& meter) {
+		lua_State* L = luaL_newstate();
+		lua_atpanic(L, panic_throw);
+
+		basic_large** s = static_cast<basic_large**>(lua_newuserdata(L, sizeof(basic_large*)));
+		basic_large b;
+		*s = &b;
+		luaL_Reg funcs[] = {
+			{ "__index", &basic_large_index_wrap },
+			{ "__newindex", &basic_large_newindex_wrap },
+			{ nullptr, nullptr }
+		};
+		luaL_newmetatable(L, "struct_basic_large");
+		luaL_setfuncs(L, funcs, 0);
+		lua_setmetatable(L, -2);
+		lua_setglobal(L, "b");
+
+		auto code = repeated_code(member_variable_large_last_code);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());
 		});

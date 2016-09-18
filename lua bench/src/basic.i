@@ -5,6 +5,11 @@
 
 struct basic {
 	int var;
+	int var0;
+	int var1;
+	int var2;
+	int var3;
+	int var4;
 
 	basic();
 
@@ -13,17 +18,8 @@ struct basic {
 	void set(int x);
 };
 
-struct basic_var {
-	int var0;
-	int var1;
-	int var2;
-	int var3;
-	int var4;
-
-	basic_var();
-};
-
-struct basic_var_complex {
+struct basic_large {
+	int var;
 	int var0;
 	int var1;
 	int var2;
@@ -75,7 +71,7 @@ struct basic_var_complex {
 	int var48;
 	int var49;
 
-	basic_var_complex();
+	basic_large();
 };
 
 struct complex_base_a {

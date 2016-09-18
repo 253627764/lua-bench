@@ -69,16 +69,16 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IntDir>$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
+    <IntDir>$(PlatformShortName)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IntDir>$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
+    <IntDir>$(PlatformShortName)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IntDir>$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
+    <IntDir>$(PlatformShortName)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IntDir>$(Platform)\$(Configuration)\$(ProjectName)</IntDir>
+    <IntDir>$(PlatformShortName)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -86,7 +86,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\old-sol;vendor\sol;vendor\luwra\lib;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>OOLUA_RUNTIME_CHECKS_ENABLED=0;LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX=0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;OOLUA_RUNTIME_CHECKS_ENABLED=0;LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX=0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
   </ItemDefinitionGroup>
@@ -96,7 +96,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\old-sol;vendor\sol;vendor\luwra\lib;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>OOLUA_RUNTIME_CHECKS_ENABLED=0;LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX=0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;OOLUA_RUNTIME_CHECKS_ENABLED=0;LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX=0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link />
   </ItemDefinitionGroup>
@@ -108,7 +108,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\old-sol;vendor\sol;vendor\luwra\lib;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>OOLUA_RUNTIME_CHECKS_ENABLED=0;LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX=0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;OOLUA_RUNTIME_CHECKS_ENABLED=0;LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX=0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -123,7 +123,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>vendor\lua\include;vendor\lua-intf;vendor\selene\include;vendor\luabind;vendor\lua-api-pp;vendor\old-sol;vendor\sol;vendor\luwra\lib;vendor\slb\include;vendor\luawrapper\include;vendor\luawrapper.deps\include;vendor\kaguya\include;vendor\luacppinterface\LuaCppInterface;vendor\oolua\include;vendor\nonius;vendor\nonius.deps\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>OOLUA_RUNTIME_CHECKS_ENABLED=0;LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX=0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SCL_SECURE_NO_WARNINGS;OOLUA_RUNTIME_CHECKS_ENABLED=0;LUAINTF_HEADERS_ONLY;LUAINTF_LINK_LUA_COMPILED_IN_CXX=0;SLB_EXTERNAL_LUA;SLB_DYNAMIC_LIBRARY;LUABIND_DYNAMIC_LINK;BOOST_WINDOWS;LUA_COMPAT_ALL;LUA_COMPAT_52;LUA_COMPAT_51;LUA_COMPAT_APIINTCASTS;NDEBUG;%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions);%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

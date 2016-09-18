@@ -4,7 +4,12 @@
 #include <string>
 
 struct basic {
-	int var = 500;
+	int var = 499;
+	int var0 = 501;
+	int var1 = 502;
+	int var2 = 503;
+	int var3 = 504;
+	int var4 = 505;
 
 	basic() = default;
 	basic(int x) : var(x) {}
@@ -18,69 +23,58 @@ struct basic {
 	}
 };
 
-struct basic_var {
+struct basic_large {
+	int var = 499;
 	int var0 = 500;
-	int var1 = 500;
-	int var2 = 500;
-	int var3 = 500;
-	int var4 = 500;
-
-	basic_var() = default;
-};
-
-struct basic_var_complex {
-	int var0 = 500;
-	int var1 = 500;
-	int var2 = 500;
-	int var3 = 500;
-	int var4 = 500;
-	int var5 = 500;
-	int var6 = 500;
-	int var7 = 500;
-	int var8 = 500;
-	int var9 = 500;
-	int var10 = 500;
-	int var11 = 500;
-	int var12 = 500;
-	int var13 = 500;
-	int var14 = 500;
-	int var15 = 500;
-	int var16 = 500;
-	int var17 = 500;
-	int var18 = 500;
-	int var19 = 500;
-	int var20 = 500;
-	int var21 = 500;
-	int var22 = 500;
-	int var23 = 500;
-	int var24 = 500;
-	int var25 = 500;
-	int var26 = 500;
-	int var27 = 500;
-	int var28 = 500;
-	int var29 = 500;
-	int var30 = 500;
-	int var31 = 500;
-	int var32 = 500;
-	int var33 = 500;
-	int var34 = 500;
-	int var35 = 500;
-	int var36 = 500;
-	int var37 = 500;
-	int var38 = 500;
-	int var39 = 500;
-	int var40 = 500;
-	int var41 = 500;
-	int var42 = 500;
-	int var43 = 500;
-	int var44 = 500;
-	int var45 = 500;
-	int var46 = 500;
-	int var47 = 500;
-	int var48 = 500;
-	int var49 = 500;
-
-	basic_var_complex() = default;
+	int var1 = 501;
+	int var2 = 502;
+	int var3 = 503;
+	int var4 = 504;
+	int var5 = 505;
+	int var6 = 506;
+	int var7 = 507;
+	int var8 = 508;
+	int var9 = 509;
+	int var10 = 510;
+	int var11 = 511;
+	int var12 = 512;
+	int var13 = 513;
+	int var14 = 514;
+	int var15 = 515;
+	int var16 = 516;
+	int var17 = 517;
+	int var18 = 518;
+	int var19 = 519;
+	int var20 = 520;
+	int var21 = 521;
+	int var22 = 522;
+	int var23 = 523;
+	int var24 = 524;
+	int var25 = 525;
+	int var26 = 526;
+	int var27 = 527;
+	int var28 = 528;
+	int var29 = 529;
+	int var30 = 530;
+	int var31 = 531;
+	int var32 = 532;
+	int var33 = 533;
+	int var34 = 534;
+	int var35 = 535;
+	int var36 = 536;
+	int var37 = 537;
+	int var38 = 538;
+	int var39 = 539;
+	int var40 = 540;
+	int var41 = 541;
+	int var42 = 542;
+	int var43 = 543;
+	int var44 = 544;
+	int var45 = 545;
+	int var46 = 546;
+	int var47 = 547;
+	int var48 = 548;
+	int var49 = 549;
 };
 
 struct basic_stateful {

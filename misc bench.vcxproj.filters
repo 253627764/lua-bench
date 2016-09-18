@@ -15,6 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="nonius\nonius.h++" />
+    <ClCompile Include="misc bench\misc bench.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="misc bench\ordered.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="misc bench\string_generation.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
