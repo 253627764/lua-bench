@@ -567,8 +567,8 @@ namespace nonius {
 
 #pragma optimize("", off)
     template <typename T>
-    inline void keep_memory(T* p) {
-        // thanks @milleniumbug
+    inline void keep_memory(T&& p) {
+        p = p;
     }
     // TODO equivalent keep_memory()
 #pragma optimize("", on)

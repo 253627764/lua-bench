@@ -192,7 +192,7 @@ namespace lb {
 			return 0;
 		}
 		void* x = lua_touserdata(L, 1);
-		basic* b = static_cast<basic*>(x);
+		basic* b = *static_cast<basic**>(x);
 		lua_pop(L, 1);
 		lua_pushinteger(L, b->var);
 		return 1;
@@ -207,7 +207,7 @@ namespace lb {
 		}
 		void* x = lua_touserdata(L, 1);
 		int arg1 = static_cast<int>(lua_tointeger(L, 3));
-		basic* b = static_cast<basic*>(x);
+		basic* b = *static_cast<basic**>(x);
 		lua_pop(L, 3);
 		b->var = arg1;
 		return 0;
@@ -225,12 +225,13 @@ namespace lb {
 			return 1;
 		}
 		void* x = lua_touserdata(L, 1);
-		basic_large* b = static_cast<basic_large*>(x);
+		basic_large** pb = static_cast<basic_large**>(x);
+		basic_large& b = **pb;
 		auto it = basic_large_members.find(name);
 		if (it != basic_large_members.cend()) {
 			const auto& bv = it->second;
 			lua_pop(L, 3);
-			lua_pushinteger(L, (b->*bv));
+			lua_pushinteger(L, (b.*bv));
 			return 1;
 		}
 		return 0;
@@ -244,13 +245,14 @@ namespace lb {
 			return 0;
 		}
 		void* x = lua_touserdata(L, 1);
-		basic_large* b = static_cast<basic_large*>(x);
+		basic_large** pb = static_cast<basic_large**>(x);
+		basic_large& b = **pb;
 		int arg1 = static_cast<int>(lua_tointeger(L, 3));
 		auto it = basic_large_members.find(name);
 		if (it != basic_large_members.cend()) {
 			const auto& bv = it->second;
 			int arg1 = static_cast<int>(lua_tointeger(L, 3));
-			(b->*bv) = arg1;
+			(b.*bv) = arg1;
 			return 0;
 		}
 		return 0;

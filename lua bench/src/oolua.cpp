@@ -223,7 +223,7 @@ namespace lb {
 		
 		vm.register_class<basic>();
 		vm.run_chunk("b = basic.new()");
-		std::string code = repeated_code("b:set(i) b:get()");
+		std::string code = repeated_code(member_function_call_code);
 		meter.measure([&]() {
 			if (!vm.run_chunk(code)) {
 				auto str = OOLUA::get_last_error(vm);

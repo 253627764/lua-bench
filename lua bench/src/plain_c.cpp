@@ -226,7 +226,7 @@ namespace lb {
 		});
 	}
 
-	void plain_c_member_variable_complex_measure(nonius::chronometer& meter) {
+	void plain_c_member_variable_large_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
