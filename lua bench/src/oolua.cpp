@@ -193,6 +193,7 @@ namespace lb {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = f("f", i);
+				lua_pop(vm, 1);
 				x += v;
 			}
 			return x;
@@ -210,6 +211,7 @@ namespace lb {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = f("f", i);
+				lua_pop(vm, 1);
 				x += v;
 			}
 			return x;
@@ -275,6 +277,7 @@ namespace lb {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = f("f", i);
+				lua_pop(vm, 1);
 				x += v;
 			}
 			return x;
@@ -305,6 +308,7 @@ namespace lb {
 			int x = 0;
 			for (int i = 0; i < repetition; ++i) {
 				int v = f("f", i);
+				lua_pop(vm, 1);
 				x += v;
 			}
 			return x;

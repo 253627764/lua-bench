@@ -64,7 +64,7 @@ int main(int argc, char* argv[]) {
 	static const bool do_lua_intf = true;
 	static const bool do_luawrapper = true;
 	static const bool do_luwra = true;
-	static const bool do_oolua = false;
+	static const bool do_oolua = true;
 	static const bool do_plain_c = true;
 	static const bool do_selene = true;
 	static const bool do_slb3 = true;

@@ -6,6 +6,12 @@ import numpy
 import math
 import random
 import bisect
+import os
+import argparse
+
+parser = argparse.ArgumentParser(description='Generate graphs from bench test directory')
+parser.add_argument('dir', nargs='?', default=os.getcwd())
+args = parser.parse_args()
 
 # The various targets we're going to crunch data for
 # ( Name, file, color )
@@ -14,21 +20,22 @@ crunch_colors = ['#a6cee3','#1f78b4','#00c9ab','#33a02c',
 			  '#cab2d6','#6a3d9a','#ffff99', '#f5f5f5', 
 			  '#b15928', '#b2df8a'
 ]
+
 crunch_targets = [
-	( "lua-intf", "lua bench tests lua-intf.csv", crunch_colors[0] ),
-	( "luabind", "lua bench tests luabind.csv", crunch_colors[1] ),
-	( "lua-api-pp", "lua bench tests lua-api-pp.csv", crunch_colors[2] ),
-	( "luacppinterface", "lua bench tests luacppinterface.csv", crunch_colors[3] ),
-	( "luawrapper", "lua bench tests luawrapper.csv", crunch_colors[4] ),
-	( "selene", "lua bench tests selene.csv", crunch_colors[5] ),
-	( "slb3", "lua bench tests slb3.csv", crunch_colors[6] ),
-	( "swig", "lua bench tests swig.csv", crunch_colors[7] ),
-	( "oolua", "lua bench tests oolua.csv", crunch_colors[8] ),
-	( "kaguya", "lua bench tests kaguya.csv", crunch_colors[9] ),
-	( "sol", "lua bench tests sol.csv", crunch_colors[10] ),
-	( "old sol", "lua bench tests old-sol.csv", crunch_colors[11] ),
-	( "luwra", "lua bench tests luwra.csv", crunch_colors[12] ),
-	( "plain C", "lua bench tests plain C.csv", crunch_colors[13] ),
+	( "lua-intf", os.path.join( args.dir, "lua bench tests lua-intf.csv" ), crunch_colors[0] ),
+	( "luabind", os.path.join( args.dir, "lua bench tests luabind.csv" ), crunch_colors[1] ),
+	( "lua-api-pp", os.path.join( args.dir, "lua bench tests lua-api-pp.csv" ), crunch_colors[2] ),
+	( "luacppinterface", os.path.join( args.dir, "lua bench tests luacppinterface.csv" ), crunch_colors[3] ),
+	( "luawrapper", os.path.join( args.dir, "lua bench tests luawrapper.csv" ), crunch_colors[4] ),
+	( "selene", os.path.join( args.dir, "lua bench tests selene.csv" ), crunch_colors[5] ),
+	( "slb3", os.path.join( args.dir, "lua bench tests slb3.csv" ), crunch_colors[6] ),
+	( "swig", os.path.join( args.dir, "lua bench tests swig.csv" ), crunch_colors[7] ),
+	( "oolua", os.path.join( args.dir, "lua bench tests oolua.csv" ), crunch_colors[8] ),
+	( "kaguya", os.path.join( args.dir, "lua bench tests kaguya.csv" ), crunch_colors[9] ),
+	( "sol", os.path.join( args.dir, "lua bench tests sol.csv" ), crunch_colors[10] ),
+	( "old sol", os.path.join( args.dir, "lua bench tests old-sol.csv" ), crunch_colors[11] ),
+	( "luwra", os.path.join( args.dir, "lua bench tests luwra.csv" ), crunch_colors[12] ),
+	( "plain C", os.path.join( args.dir, "lua bench tests plain C.csv" ), crunch_colors[13] ),
 ]
 timescale = [
 	("picoseconds",  1e-12,      1e+12),
