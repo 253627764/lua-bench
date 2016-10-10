@@ -46,3 +46,6 @@ url=https://github.com/vapourismo/luwra.git
 [submodule "vendor/old-sol"]
 	path = vendor/old-sol
 url=https://github.com/ThePhD/sol.git
+[submodule "vendor/lualite"]
+	path = vendor/lualite
+	url = https://github.com/user1095108/lualite.git

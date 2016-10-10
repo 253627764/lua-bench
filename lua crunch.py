@@ -18,7 +18,7 @@ args = parser.parse_args()
 crunch_colors = ['#a6cee3','#1f78b4','#00c9ab','#33a02c',
 			  '#fb9a99','#e31a1c','#fdbf6f','#ff7f00',
 			  '#cab2d6','#6a3d9a','#ffff99', '#f5f5f5', 
-			  '#b15928', '#b2df8a'
+			  '#b15928', '#b2df8a', '#cc33cc'
 ]
 
 crunch_targets = [
@@ -36,6 +36,7 @@ crunch_targets = [
 	( "old sol", os.path.join( args.dir, "lua bench tests old-sol.csv" ), crunch_colors[11] ),
 	( "luwra", os.path.join( args.dir, "lua bench tests luwra.csv" ), crunch_colors[12] ),
 	( "plain C", os.path.join( args.dir, "lua bench tests plain C.csv" ), crunch_colors[13] ),
+	( "lualite", os.path.join( args.dir, "lua bench tests lualite.csv" ), crunch_colors[14] ),
 ]
 timescale = [
 	("picoseconds",  1e-12,      1e+12),
@@ -114,6 +115,8 @@ crunch_categories = []
 results = []
 
 for t in crunch_targets:
+	if not os.path.exists(t[1]):
+		continue
 	b = benchmark_result(t[0], t[1], t[2])
 	results.append(b)
 	for category in b.samples:

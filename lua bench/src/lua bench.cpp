@@ -40,6 +40,7 @@ int main(int argc, char* argv[]) {
 	static const std::string sol_name = "sol";
 	static const std::string old_sol_name = "old sol";
 	static const std::string swig_name = "swig";
+	static const std::string lualite_name = "lualite";
 
 #if _DEBUG
 	static const bool do_kaguya = true;
@@ -56,6 +57,7 @@ int main(int argc, char* argv[]) {
 	static const bool do_sol = true;
 	static const bool do_old_sol = true;
 	static const bool do_swig = true;
+	static const bool do_lualite = true;
 #else
 	static const bool do_kaguya = true;
 	static const bool do_lua_api_pp = true;
@@ -71,6 +73,7 @@ int main(int argc, char* argv[]) {
 	static const bool do_sol = true;
 	static const bool do_old_sol = true;
 	static const bool do_swig = true;
+	static const bool do_lualite = true;
 #endif
 	nonius::configuration rootcfg{};
 	rootcfg.summary = true;
@@ -507,6 +510,40 @@ int main(int argc, char* argv[]) {
 		cfg.output_file += " lua-intf.csv";
 		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
 	}
+
+	/*
+	if (do_lualite) {
+		nonius::benchmark benchmarks[] = {
+			nonius::benchmark(lualite_name + " - " + global_string_get_measure_name, lb::lualite_global_string_get_measure),
+			nonius::benchmark(lualite_name + " - " + global_string_set_measure_name, lb::lualite_global_string_set_measure),
+			nonius::benchmark(lualite_name + " - " + table_get_measure_name, lb::lualite_table_get_measure),
+			nonius::benchmark(lualite_name + " - " + table_set_measure_name, lb::lualite_table_set_measure),
+			nonius::benchmark(lualite_name + " - " + table_chained_get_measure_name, lb::lualite_chained_get_measure),
+			nonius::benchmark(lualite_name + " - " + table_chained_set_measure_name, lb::lualite_chained_set_measure),
+			nonius::benchmark(lualite_name + " - " + c_function_measure_name, lb::lualite_c_function_measure),
+			nonius::benchmark(lualite_name + " - " + c_through_lua_function_measure_name, lb::lualite_c_through_lua_function_measure),
+			nonius::benchmark(lualite_name + " - " + lua_function_measure_name, lb::lualite_lua_function_measure),
+			nonius::benchmark(lualite_name + " - " + member_function_call_measure_name, lb::lualite_member_function_call_measure),
+			nonius::benchmark(lualite_name + " - " + member_function_call_simple_measure_name, lb::lualite_member_function_call_measure),
+			nonius::benchmark(lualite_name + " - " + member_variable_measure_name, lb::lualite_member_variable_measure),
+			nonius::benchmark(lualite_name + " - " + member_variable_large_measure_name, lb::lualite_member_variable_complex_measure),
+			nonius::benchmark(lualite_name + " - " + member_variable_last_measure_name, lb::lualite_member_variable_last_measure),
+			nonius::benchmark(lualite_name + " - " + member_variable_simple_measure_name, lb::lualite_member_variable_measure),
+			nonius::benchmark(lualite_name + " - " + member_variable_large_simple_measure_name, lb::lualite_member_variable_complex_measure),
+			nonius::benchmark(lualite_name + " - " + member_variable_last_simple_measure_name, lb::lualite_member_variable_last_measure),
+			nonius::benchmark(lualite_name + " - " + multi_return_measure_name, lb::lualite_multi_return_measure),
+			nonius::benchmark(lualite_name + " - " + stateful_function_object_measure_name, lb::lualite_stateful_function_object_measure),
+			//nonius::benchmark(lualite_name + " - " + base_derived_measure_name, lb::lualite_base_derived_measure),
+			nonius::benchmark(lualite_name + " - " + return_userdata_measure_name, lb::lualite_return_userdata_measure),
+			nonius::benchmark(lualite_name + " - " + optional_measure_name, lb::lualite_optional_measure),
+			//nonius::benchmark(lualite_name + " - " + implicit_inheritance_call_measure_name, lb::lualite_implicit_inheritance_call_measure),
+		};
+		auto cfg = rootcfg;
+		cfg.title += " lualite";
+		cfg.output_file += " lualite.csv";
+		nonius::go(cfg, std::begin(benchmarks), std::end(benchmarks), nonius::csv_reporter());
+	}
+	*/
 
 	return 0;
 }

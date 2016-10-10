@@ -18,6 +18,7 @@ namespace lb {
 	void slb3_global_string_get_measure(nonius::chronometer& meter);
 	void swig_global_string_get_measure(nonius::chronometer& meter);
 	void luwra_global_string_get_measure(nonius::chronometer& meter);
+	void lualite_global_string_get_measure(nonius::chronometer& meter);
 
 	void plain_c_global_string_set_measure(nonius::chronometer& meter);
 	void sol_global_string_set_measure(nonius::chronometer& meter);
@@ -33,6 +34,7 @@ namespace lb {
 	void slb3_global_string_set_measure(nonius::chronometer& meter);
 	void swig_global_string_set_measure(nonius::chronometer& meter);
 	void luwra_global_string_set_measure(nonius::chronometer& meter);
+	void lualite_global_string_set_measure(nonius::chronometer& meter);
 
 	void plain_c_chained_get_measure(nonius::chronometer& meter);
 	void sol_chained_get_measure(nonius::chronometer& meter);
@@ -48,6 +50,7 @@ namespace lb {
 	void slb3_chained_get_measure(nonius::chronometer& meter);
 	void swig_chained_get_measure(nonius::chronometer& meter);
 	void luwra_chained_get_measure(nonius::chronometer& meter);
+	void lualite_chained_get_measure(nonius::chronometer& meter);
 
 	void plain_c_chained_set_measure(nonius::chronometer& meter);
 	void sol_chained_set_measure(nonius::chronometer& meter);
@@ -63,6 +66,7 @@ namespace lb {
 	void slb3_chained_set_measure(nonius::chronometer& meter);
 	void swig_chained_set_measure(nonius::chronometer& meter);
 	void luwra_chained_set_measure(nonius::chronometer& meter);
+	void lualite_chained_set_measure(nonius::chronometer& meter);
 
 	void plain_c_table_get_measure(nonius::chronometer& meter);
 	void sol_table_get_measure(nonius::chronometer& meter);
@@ -78,6 +82,8 @@ namespace lb {
 	void slb3_table_get_measure(nonius::chronometer& meter);
 	void swig_table_get_measure(nonius::chronometer& meter);
 	void luwra_table_get_measure(nonius::chronometer& meter);
+	void lualite_table_get_measure(nonius::chronometer& meter);
+
 
 	void plain_c_table_set_measure(nonius::chronometer& meter);
 	void sol_table_set_measure(nonius::chronometer& meter);
@@ -93,6 +99,7 @@ namespace lb {
 	void slb3_table_set_measure(nonius::chronometer& meter);
 	void swig_table_set_measure(nonius::chronometer& meter);
 	void luwra_table_set_measure(nonius::chronometer& meter);
+	void lualite_table_set_measure(nonius::chronometer& meter);
 
 	void plain_c_c_function_measure(nonius::chronometer& meter);
 	void sol_c_function_measure(nonius::chronometer& meter);
@@ -108,6 +115,7 @@ namespace lb {
 	void slb3_c_function_measure(nonius::chronometer& meter);
 	void swig_c_function_measure(nonius::chronometer& meter);
 	void luwra_c_function_measure(nonius::chronometer& meter);
+	void lualite_c_function_measure(nonius::chronometer& meter);
 
 	void plain_c_lua_function_measure(nonius::chronometer& meter);
 	void sol_lua_function_measure(nonius::chronometer& meter);
@@ -123,6 +131,7 @@ namespace lb {
 	void slb3_lua_function_measure(nonius::chronometer& meter);
 	void swig_lua_function_measure(nonius::chronometer& meter);
 	void luwra_lua_function_measure(nonius::chronometer& meter);
+	void lualite_lua_function_measure(nonius::chronometer& meter);
 
 	void plain_c_c_through_lua_function_measure(nonius::chronometer& meter);
 	void sol_c_through_lua_function_measure(nonius::chronometer& meter);
@@ -138,6 +147,7 @@ namespace lb {
 	void slb3_c_through_lua_function_measure(nonius::chronometer& meter);
 	void swig_c_through_lua_function_measure(nonius::chronometer& meter);
 	void luwra_c_through_lua_function_measure(nonius::chronometer& meter);
+	void lualite_c_through_lua_function_measure(nonius::chronometer& meter);
 
 	void plain_c_stateful_function_object_measure(nonius::chronometer& meter);
 	void sol_stateful_function_object_measure(nonius::chronometer& meter);
@@ -153,6 +163,7 @@ namespace lb {
 	void slb3_stateful_function_object_measure(nonius::chronometer& meter);
 	void swig_stateful_function_object_measure(nonius::chronometer& meter);
 	void luwra_stateful_function_object_measure(nonius::chronometer& meter);
+	void lualite_stateful_function_object_measure(nonius::chronometer& meter);
 
 	void plain_c_base_derived_measure(nonius::chronometer& meter);
 	void sol_base_derived_measure(nonius::chronometer& meter);
@@ -168,6 +179,7 @@ namespace lb {
 	void slb3_base_derived_measure(nonius::chronometer& meter);
 	void swig_base_derived_measure(nonius::chronometer& meter);
 	void luwra_base_derived_measure(nonius::chronometer& meter);
+	void lualite_base_derived_measure(nonius::chronometer& meter);
 
 	void plain_c_multi_return_measure(nonius::chronometer& meter);
 	void sol_multi_return_measure(nonius::chronometer& meter);
@@ -183,6 +195,7 @@ namespace lb {
 	void slb3_multi_return_measure(nonius::chronometer& meter);
 	void swig_multi_return_measure(nonius::chronometer& meter);
 	void luwra_multi_return_measure(nonius::chronometer& meter);
+	void lualite_multi_return_measure(nonius::chronometer& meter);
 
 	void plain_c_member_function_call_measure(nonius::chronometer& meter);
 	void sol_member_function_call_measure(nonius::chronometer& meter);
@@ -198,6 +211,7 @@ namespace lb {
 	void slb3_member_function_call_measure(nonius::chronometer& meter);
 	void swig_member_function_call_measure(nonius::chronometer& meter);
 	void luwra_member_function_call_measure(nonius::chronometer& meter);
+	void lualite_member_function_call_measure(nonius::chronometer& meter);
 
 	void plain_c_member_variable_measure(nonius::chronometer& meter);
 	void sol_member_variable_measure(nonius::chronometer& meter);
@@ -213,6 +227,7 @@ namespace lb {
 	void slb3_member_variable_measure(nonius::chronometer& meter);
 	void swig_member_variable_measure(nonius::chronometer& meter);
 	void luwra_member_variable_measure(nonius::chronometer& meter);
+	void lualite_member_variable_measure(nonius::chronometer& meter);
 
 	void plain_c_member_variable_large_measure(nonius::chronometer& meter);
 	void sol_member_variable_complex_measure(nonius::chronometer& meter);
@@ -252,6 +267,7 @@ namespace lb {
 	void slb3_return_userdata_measure(nonius::chronometer& meter);
 	void swig_return_userdata_measure(nonius::chronometer& meter);
 	void luwra_return_userdata_measure(nonius::chronometer& meter);
+	void lualite_return_userdata_measure(nonius::chronometer& meter);
 
 	void plain_c_optional_measure(nonius::chronometer& meter);
 	void sol_optional_measure(nonius::chronometer& meter);
@@ -267,6 +283,7 @@ namespace lb {
 	void slb3_optional_measure(nonius::chronometer& meter);
 	void swig_optional_measure(nonius::chronometer& meter);
 	void luwra_optional_measure(nonius::chronometer& meter);
+	void lualite_optional_measure(nonius::chronometer& meter);
 
 	void plain_c_implicit_inheritance_call_measure(nonius::chronometer& meter);
 	void sol_implicit_inheritance_call_measure(nonius::chronometer& meter);
@@ -282,7 +299,7 @@ namespace lb {
 	void slb3_implicit_inheritance_call_measure(nonius::chronometer& meter);
 	void swig_implicit_inheritance_call_measure(nonius::chronometer& meter);
 	void luwra_implicit_inheritance_call_measure(nonius::chronometer& meter);
-
+	void lualite_implicit_inheritance_call_measure(nonius::chronometer& meter);
 
 	const int repetition = 100;
 	const std::string repetition_s = "100";
