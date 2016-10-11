@@ -147,7 +147,7 @@ namespace lb {
 		});
 	}
 
-	void luawrapper_member_variable_measure(nonius::chronometer& meter) {
+	void luawrapper_table_variable_access_measure(nonius::chronometer& meter) {
 		LuaContext lua;
 		lua.registerMember("var", &basic::var);
 		lua.registerMember("var0", &basic::var0);
@@ -157,14 +157,14 @@ namespace lb {
 		lua.registerMember("var4", &basic::var4);
 		lua.writeVariable("b", basic());
 		auto code = repeated_code(
-			member_variable_code
+			table_variable_access_code
 		);
 		meter.measure([&]() {
 			lua.executeCode(code.c_str());
 		});
 	}
 
-	void luawrapper_member_variable_complex_measure(nonius::chronometer& meter) {
+	void luawrapper_table_variable_access_complex_measure(nonius::chronometer& meter) {
 		LuaContext lua;
 		lua.registerMember("var", &basic_large::var);
 		lua.registerMember("var0", &basic_large::var0);
@@ -220,14 +220,14 @@ namespace lb {
 		lua.writeVariable("b", basic_large());
 
 		auto code = repeated_code(
-			member_variable_large_code
+			table_variable_access_large_code
 		);
 		meter.measure([&]() {
 			lua.executeCode(code.c_str());
 		});
 	}
 
-	void luawrapper_member_variable_last_measure(nonius::chronometer& meter) {
+	void luawrapper_table_variable_access_last_measure(nonius::chronometer& meter) {
 		LuaContext lua;
 		lua.registerMember("var", &basic_large::var);
 		lua.registerMember("var0", &basic_large::var0);
@@ -283,7 +283,7 @@ namespace lb {
 		lua.writeVariable("b", basic_large());
 
 		auto code = repeated_code(
-			member_variable_large_last_code
+			table_variable_access_large_last_code
 		);
 		meter.measure([&]() {
 			lua.executeCode(code.c_str());

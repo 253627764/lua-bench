@@ -157,7 +157,7 @@ namespace lb {
 		});
 	}
 
-	void luwra_member_variable_measure(nonius::chronometer& meter) {
+	void luwra_table_variable_access_measure(nonius::chronometer& meter) {
 		// Unsupported
 		/*luwra::StateWrapper lua;
 		lua_atpanic(lua, panic_throw);

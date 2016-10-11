@@ -157,7 +157,7 @@ namespace lb {
 		});
 	}
 
-	void kaguya_member_variable_measure(nonius::chronometer& meter) {
+	void kaguya_table_variable_access_measure(nonius::chronometer& meter) {
 		// Does not support member variable syntax:
 		// turns it into a function, unfortunately
 		//meter.measure([&]() {

@@ -104,7 +104,7 @@ namespace lb {
 		});
 	}
 
-	void swig_member_variable_measure(nonius::chronometer& meter) {
+	void swig_table_variable_access_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -112,14 +112,14 @@ namespace lb {
 		lua_do_or_die(L, "b = lb.basic()");
 		
 		auto code = repeated_code(
-			member_variable_code
+			table_variable_access_code
 		);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());
 		});
 	}
 
-	void swig_member_variable_complex_measure(nonius::chronometer& meter) {
+	void swig_table_variable_access_complex_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -127,14 +127,14 @@ namespace lb {
 		lua_do_or_die(L, "b = lb.basic_large()");
 
 		auto code = repeated_code(
-			member_variable_large_code
+			table_variable_access_large_code
 		);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());
 		});
 	}
 
-	void swig_member_variable_last_measure(nonius::chronometer& meter) {
+	void swig_table_variable_access_last_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -142,7 +142,7 @@ namespace lb {
 		lua_do_or_die(L, "b = lb.basic_large()");
 
 		auto code = repeated_code(
-			member_variable_large_last_code
+			table_variable_access_large_last_code
 		);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());

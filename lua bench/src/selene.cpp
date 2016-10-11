@@ -142,7 +142,7 @@ namespace lb {
 		});
 	}
 
-	void selene_member_variable_measure(nonius::chronometer& meter) {
+	void selene_table_variable_access_measure(nonius::chronometer& meter) {
 		/*sel::State lua;
 		lua["basic"].SetClass<basic>(
 			"var", &basic::var,

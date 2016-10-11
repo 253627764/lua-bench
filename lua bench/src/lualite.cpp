@@ -173,7 +173,7 @@ namespace lb {
 		});*/
 	}
 
-	void lualite_member_variable_measure(nonius::chronometer& meter) {
+	void lualite_table_variable_access_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -183,14 +183,14 @@ namespace lb {
 			);
 		lua.script("b = basic:new()");
 		std::string code = repeated_code(
-			member_variable_code
+			table_variable_access_code
 		);
 		meter.measure([&]() {
 			lua.script(code);
 		});*/
 	}
 
-	void lualite_member_variable_simple_measure(nonius::chronometer& meter) {
+	void lualite_table_variable_access_simple_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -200,14 +200,14 @@ namespace lb {
 			);
 		lua.script("b = basic:new()");
 		std::string code = repeated_code(
-			member_variable_code
+			table_variable_access_code
 		);
 		meter.measure([&]() {
 			lua.script(code);
 		});*/
 	}
 
-	void lualite_member_variable_complex_measure(nonius::chronometer& meter) {
+	void lualite_table_variable_access_complex_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -267,14 +267,14 @@ namespace lb {
 			);
 		lua.script("b = basic:new()");
 		std::string code = repeated_code(
-			member_variable_large_code
+			table_variable_access_large_code
 		);
 		meter.measure([&]() {
 			lua.script(code);
 		});*/
 	}
 
-	void lualite_member_variable_complex_simple_measure(nonius::chronometer& meter) {
+	void lualite_table_variable_access_complex_simple_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -335,14 +335,14 @@ namespace lb {
 
 		lua.script("b = basic_large:new()");
 		std::string code = repeated_code(
-			member_variable_large_code
+			table_variable_access_large_code
 		);
 		meter.measure([&]() {
 			lua.script(code);
 		});*/
 	}
 
-	void lualite_member_variable_last_measure(nonius::chronometer& meter) {
+	void lualite_table_variable_access_last_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -401,13 +401,13 @@ namespace lb {
 			"var49", &basic_large::var49
 			);
 		lua.script("b = basic_large:new()");
-		std::string code = repeated_code(member_variable_large_last_code);
+		std::string code = repeated_code(table_variable_access_large_last_code);
 		meter.measure([&]() {
 			lua.script(code);
 		});*/
 	}
 
-	void lualite_member_variable_last_simple_measure(nonius::chronometer& meter) {
+	void lualite_table_variable_access_last_simple_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -468,7 +468,7 @@ namespace lb {
 
 		lua.script("b = basic_large:new()");
 		std::string code = repeated_code(
-			member_variable_large_last_code
+			table_variable_access_large_last_code
 		);
 		meter.measure([&]() {
 			lua.script(code);

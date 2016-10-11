@@ -162,7 +162,7 @@ namespace lb {
 		});
 	}
 
-	void luacppinterface_member_variable_measure(nonius::chronometer& meter) {
+	void luacppinterface_table_variable_access_measure(nonius::chronometer& meter) {
 		// Unsupported
 		//meter.measure([]() {});
 	}

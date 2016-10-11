@@ -182,7 +182,7 @@ namespace lb {
 		});
 	}
 
-	void lua_api_pp_member_variable_measure(nonius::chronometer& meter) {
+	void lua_api_pp_table_variable_access_measure(nonius::chronometer& meter) {
 		// Unsupported
 		/*lua::State l;
 		lua_atpanic(l.getRawState(), panic_throw);
