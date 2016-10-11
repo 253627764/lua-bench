@@ -182,7 +182,7 @@ namespace lb {
 		});
 	}
 
-	void luabind_table_variable_access_measure(nonius::chronometer& meter) {
+	void luabind_userdata_variable_access_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -200,14 +200,14 @@ namespace lb {
 		];
 		lua_do_or_die(L, "b = basic()");
 		std::string code = repeated_code(
-			table_variable_access_code
+			userdata_variable_access_code
 		);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());
 		});
 	}
 
-	void luabind_table_variable_access_complex_measure(nonius::chronometer& meter) {
+	void luabind_userdata_variable_access_complex_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -270,14 +270,14 @@ namespace lb {
 		];
 		lua_do_or_die(L, "b = basic_large()");
 		std::string code = repeated_code(
-			table_variable_access_large_code
+			userdata_variable_access_large_code
 		);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());
 		});
 	}
 
-	void luabind_table_variable_access_last_measure(nonius::chronometer& meter) {
+	void luabind_userdata_variable_access_last_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -340,7 +340,7 @@ namespace lb {
 		];
 		lua_do_or_die(L, "b = basic_large()");
 		std::string code = repeated_code(
-			table_variable_access_large_last_code
+			userdata_variable_access_large_last_code
 		);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());

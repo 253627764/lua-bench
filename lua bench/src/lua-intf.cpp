@@ -151,7 +151,7 @@ namespace lb {
 		});
 	}
 
-	void lua_intf_table_variable_access_measure(nonius::chronometer& meter) {
+	void lua_intf_userdata_variable_access_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
 		lua_atpanic(lua, panic_throw);
 
@@ -168,14 +168,14 @@ namespace lb {
 
 		lua.doString("b = basic()");
 		auto code = repeated_code(
-			table_variable_access_code
+			userdata_variable_access_code
 		);
 		meter.measure([&lua, &code]() {
 			lua.doString(code.c_str());
 		});
 	}
 
-	void lua_intf_table_variable_access_complex_measure(nonius::chronometer& meter) {
+	void lua_intf_userdata_variable_access_complex_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
 		lua_atpanic(lua, panic_throw);
 
@@ -237,14 +237,14 @@ namespace lb {
 
 		lua.doString("b = basic_large()");
 		auto code = repeated_code(
-			table_variable_access_large_code
+			userdata_variable_access_large_code
 		);
 		meter.measure([&lua, &code]() {
 			lua.doString(code.c_str());
 		});
 	}
 
-	void lua_intf_table_variable_access_last_measure(nonius::chronometer& meter) {
+	void lua_intf_userdata_variable_access_last_measure(nonius::chronometer& meter) {
 		LuaIntf::LuaContext lua;
 		lua_atpanic(lua, panic_throw);
 
@@ -306,7 +306,7 @@ namespace lb {
 
 		lua.doString("b = basic_large()");
 		auto code = repeated_code(
-			table_variable_access_large_last_code
+			userdata_variable_access_large_last_code
 		);
 		meter.measure([&lua, &code]() {
 			lua.doString(code.c_str());

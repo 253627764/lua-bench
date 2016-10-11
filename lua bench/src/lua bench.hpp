@@ -213,43 +213,43 @@ namespace lb {
 	void luwra_member_function_call_measure(nonius::chronometer& meter);
 	void lualite_member_function_call_measure(nonius::chronometer& meter);
 
-	void plain_c_table_variable_access_measure(nonius::chronometer& meter);
-	void sol_table_variable_access_measure(nonius::chronometer& meter);
-	void old_sol_table_variable_access_measure(nonius::chronometer& meter);
-	void kaguya_table_variable_access_measure(nonius::chronometer& meter);
-	void lua_api_pp_table_variable_access_measure(nonius::chronometer& meter);
-	void luabind_table_variable_access_measure(nonius::chronometer& meter);
-	void lua_intf_table_variable_access_measure(nonius::chronometer& meter);
-	void luawrapper_table_variable_access_measure(nonius::chronometer& meter);
-	void oolua_table_variable_access_measure(nonius::chronometer& meter);
-	void selene_table_variable_access_measure(nonius::chronometer& meter);
-	void luacppinterface_table_variable_access_measure(nonius::chronometer& meter);
-	void slb3_table_variable_access_measure(nonius::chronometer& meter);
-	void swig_table_variable_access_measure(nonius::chronometer& meter);
-	void luwra_table_variable_access_measure(nonius::chronometer& meter);
-	void lualite_table_variable_access_measure(nonius::chronometer& meter);
+	void plain_c_userdata_variable_access_measure(nonius::chronometer& meter);
+	void sol_userdata_variable_access_measure(nonius::chronometer& meter);
+	void old_sol_userdata_variable_access_measure(nonius::chronometer& meter);
+	void kaguya_userdata_variable_access_measure(nonius::chronometer& meter);
+	void lua_api_pp_userdata_variable_access_measure(nonius::chronometer& meter);
+	void luabind_userdata_variable_access_measure(nonius::chronometer& meter);
+	void lua_intf_userdata_variable_access_measure(nonius::chronometer& meter);
+	void luawrapper_userdata_variable_access_measure(nonius::chronometer& meter);
+	void oolua_userdata_variable_access_measure(nonius::chronometer& meter);
+	void selene_userdata_variable_access_measure(nonius::chronometer& meter);
+	void luacppinterface_userdata_variable_access_measure(nonius::chronometer& meter);
+	void slb3_userdata_variable_access_measure(nonius::chronometer& meter);
+	void swig_userdata_variable_access_measure(nonius::chronometer& meter);
+	void luwra_userdata_variable_access_measure(nonius::chronometer& meter);
+	void lualite_userdata_variable_access_measure(nonius::chronometer& meter);
 
-	void plain_c_table_variable_access_large_measure(nonius::chronometer& meter);
-	void sol_table_variable_access_complex_measure(nonius::chronometer& meter);
-	void old_sol_table_variable_access_complex_measure(nonius::chronometer& meter);
-	void swig_table_variable_access_complex_measure(nonius::chronometer& meter);
-	void luabind_table_variable_access_complex_measure(nonius::chronometer& meter);
-	void lua_intf_table_variable_access_complex_measure(nonius::chronometer& meter);
-	void luawrapper_table_variable_access_complex_measure(nonius::chronometer& meter);
+	void plain_c_userdata_variable_access_large_measure(nonius::chronometer& meter);
+	void sol_userdata_variable_access_complex_measure(nonius::chronometer& meter);
+	void old_sol_userdata_variable_access_complex_measure(nonius::chronometer& meter);
+	void swig_userdata_variable_access_complex_measure(nonius::chronometer& meter);
+	void luabind_userdata_variable_access_complex_measure(nonius::chronometer& meter);
+	void lua_intf_userdata_variable_access_complex_measure(nonius::chronometer& meter);
+	void luawrapper_userdata_variable_access_complex_measure(nonius::chronometer& meter);
 	
-	void plain_c_table_variable_access_last_measure(nonius::chronometer& meter);
-	void sol_table_variable_access_last_measure(nonius::chronometer& meter);
-	void old_sol_table_variable_access_last_measure(nonius::chronometer& meter);
-	void swig_table_variable_access_last_measure(nonius::chronometer& meter);
-	void luabind_table_variable_access_last_measure(nonius::chronometer& meter);
-	void lua_intf_table_variable_access_last_measure(nonius::chronometer& meter);
-	void luawrapper_table_variable_access_last_measure(nonius::chronometer& meter);
+	void plain_c_userdata_variable_access_last_measure(nonius::chronometer& meter);
+	void sol_userdata_variable_access_last_measure(nonius::chronometer& meter);
+	void old_sol_userdata_variable_access_last_measure(nonius::chronometer& meter);
+	void swig_userdata_variable_access_last_measure(nonius::chronometer& meter);
+	void luabind_userdata_variable_access_last_measure(nonius::chronometer& meter);
+	void lua_intf_userdata_variable_access_last_measure(nonius::chronometer& meter);
+	void luawrapper_userdata_variable_access_last_measure(nonius::chronometer& meter);
 	
-	void sol_table_variable_access_simple_measure(nonius::chronometer& meter);
+	void sol_userdata_variable_access_simple_measure(nonius::chronometer& meter);
 
-	void sol_table_variable_access_complex_simple_measure(nonius::chronometer& meter);
+	void sol_userdata_variable_access_complex_simple_measure(nonius::chronometer& meter);
 
-	void sol_table_variable_access_last_simple_measure(nonius::chronometer& meter);
+	void sol_userdata_variable_access_last_simple_measure(nonius::chronometer& meter);
 
 	void sol_member_function_call_simple_measure(nonius::chronometer& meter);
 

@@ -134,7 +134,7 @@ namespace lb {
 		});
 	}
 
-	void old_sol_table_variable_access_measure(nonius::chronometer& meter) {
+	void old_sol_userdata_variable_access_measure(nonius::chronometer& meter) {
 		old_sol::state lua;
 		lua_atpanic(lua.lua_state(), panic_throw);
 		lua.new_usertype<basic_large>("basic_large",
@@ -147,7 +147,7 @@ namespace lb {
 		);
 		lua.script("b = basic_large:new()");
 		std::string code = repeated_code(
-			table_variable_access_code
+			userdata_variable_access_code
 		);
 
 		meter.measure([&]() {
@@ -155,7 +155,7 @@ namespace lb {
 		});
 	}
 
-	void old_sol_table_variable_access_complex_measure(nonius::chronometer& meter) {
+	void old_sol_userdata_variable_access_complex_measure(nonius::chronometer& meter) {
 		old_sol::state lua;
 		lua_atpanic(lua.lua_state(), panic_throw);
 		lua.new_usertype<basic_large>("basic_large",
@@ -214,14 +214,14 @@ namespace lb {
 
 		lua.script("b = basic_large:new()");
 		std::string code = repeated_code(
-			table_variable_access_large_code
+			userdata_variable_access_large_code
 		);
 		meter.measure([&]() {
 			lua.script(code);
 		});
 	}
 
-	void old_sol_table_variable_access_last_measure(nonius::chronometer& meter) {
+	void old_sol_userdata_variable_access_last_measure(nonius::chronometer& meter) {
 		old_sol::state lua;
 		lua_atpanic(lua.lua_state(), panic_throw);
 		lua.new_usertype<basic_large>("basic_large",
@@ -280,7 +280,7 @@ namespace lb {
 
 		lua.script("b = basic_large:new()");
 		std::string code = repeated_code(
-			table_variable_access_large_last_code
+			userdata_variable_access_large_last_code
 		);
 		meter.measure([&]() {
 			lua.script(code);

@@ -203,7 +203,7 @@ namespace lb {
 		});
 	}
 
-	void plain_c_table_variable_access_measure(nonius::chronometer& meter) {
+	void plain_c_userdata_variable_access_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -220,13 +220,13 @@ namespace lb {
 		lua_setmetatable(L, -2);
 		lua_setglobal(L, "b");
 
-		auto code = repeated_code(table_variable_access_code);
+		auto code = repeated_code(userdata_variable_access_code);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());
 		});
 	}
 
-	void plain_c_table_variable_access_large_measure(nonius::chronometer& meter) {
+	void plain_c_userdata_variable_access_large_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -243,13 +243,13 @@ namespace lb {
 		lua_setmetatable(L, -2);
 		lua_setglobal(L, "b");
 
-		auto code = repeated_code(table_variable_access_large_code);
+		auto code = repeated_code(userdata_variable_access_large_code);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());
 		});
 	}
 
-	void plain_c_table_variable_access_last_measure(nonius::chronometer& meter) {
+	void plain_c_userdata_variable_access_last_measure(nonius::chronometer& meter) {
 		lua_State* L = luaL_newstate();
 		lua_atpanic(L, panic_throw);
 
@@ -266,7 +266,7 @@ namespace lb {
 		lua_setmetatable(L, -2);
 		lua_setglobal(L, "b");
 
-		auto code = repeated_code(table_variable_access_large_last_code);
+		auto code = repeated_code(userdata_variable_access_large_last_code);
 		meter.measure([&]() {
 			lua_do_or_die(L, code.c_str());
 		});

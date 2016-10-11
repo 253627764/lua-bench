@@ -124,7 +124,7 @@ namespace lb {
 		});
 	}
 
-	void slb3_table_variable_access_measure(nonius::chronometer& meter) {
+	void slb3_userdata_variable_access_measure(nonius::chronometer& meter) {
 		// Unsupported
 		//meter.measure([]() {});
 	}

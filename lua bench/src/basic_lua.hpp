@@ -296,9 +296,9 @@ namespace lb {
 		do_panic_throw(err);
 	}
 
-	const std::string table_variable_access_code = "b.var = i x = b.var";
-	const std::string table_variable_access_large_last_code = "b.var49 = i x = b.var49";
-	const std::string table_variable_access_large_code = "b.var = i x = b.var "
+	const std::string userdata_variable_access_code = "b.var = i x = b.var";
+	const std::string userdata_variable_access_large_last_code = "b.var49 = i x = b.var49";
+	const std::string userdata_variable_access_large_code = "b.var = i x = b.var "
 		"b.var0 = i x = b.var0 "
 		"b.var49 = i x = b.var49 "
 		"b.var2 = i x = b.var2 "

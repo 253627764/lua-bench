@@ -234,7 +234,7 @@ namespace lb {
 		});
 	}
 
-	void oolua_table_variable_access_measure(nonius::chronometer& meter) {
+	void oolua_userdata_variable_access_measure(nonius::chronometer& meter) {
 		// Actually unsupported
 		// Turns it into member functions: illegal
 		/*using namespace OOLUA;
