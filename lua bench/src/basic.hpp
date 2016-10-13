@@ -74,7 +74,7 @@ struct basic_large {
 	int var46 = 546;
 	int var47 = 547;
 	int var48 = 548;
-	int var49 = 549;
+	int64_t var49 = 549;
 };
 
 struct basic_stateful {

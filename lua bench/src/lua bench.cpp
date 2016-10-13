@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
 	static const char userdata_variable_access_last_measure_name[] = "many userdata variables access, last registered";
 	static const char member_function_call_simple_measure_name[] = "member function calls (simple)";
 	static const char userdata_variable_access_simple_measure_name[] = "userdata variable access (simple)";
-	static const char userdata_variable_access_large_simple_measure_name[] = "userdata variable access (simple)";
+	static const char userdata_variable_access_large_simple_measure_name[] = "many userdata variable access (simple)";
 	static const char userdata_variable_access_last_simple_measure_name[] = "many userdata variables access, last registered (simple)";
 	static const char multi_return_measure_name[] = "multi return";
 	static const char stateful_function_object_measure_name[] = "stateful c function";

@@ -122,59 +122,111 @@ namespace lb {
 		return 0;
 	}
 
-	const std::unordered_map<std::string, decltype(&basic_large::var)> basic_large_members = {
-		{ "var", &basic_large::var },
-		{ "var0", &basic_large::var0 },
-		{ "var1", &basic_large::var1 },
-		{ "var2", &basic_large::var2 },
-		{ "var3", &basic_large::var3 },
-		{ "var4", &basic_large::var4 },
-		{ "var5", &basic_large::var5 },
-		{ "var6", &basic_large::var6 },
-		{ "var7", &basic_large::var7 },
-		{ "var8", &basic_large::var8 },
-		{ "var9", &basic_large::var9 },
-		{ "var10", &basic_large::var10 },
-		{ "var11", &basic_large::var11 },
-		{ "var12", &basic_large::var12 },
-		{ "var13", &basic_large::var13 },
-		{ "var14", &basic_large::var14 },
-		{ "var15", &basic_large::var15 },
-		{ "var16", &basic_large::var16 },
-		{ "var17", &basic_large::var17 },
-		{ "var18", &basic_large::var18 },
-		{ "var19", &basic_large::var19 },
-		{ "var20", &basic_large::var20 },
-		{ "var21", &basic_large::var21 },
-		{ "var22", &basic_large::var22 },
-		{ "var23", &basic_large::var23 },
-		{ "var24", &basic_large::var24 },
-		{ "var25", &basic_large::var25 },
-		{ "var26", &basic_large::var26 },
-		{ "var27", &basic_large::var27 },
-		{ "var28", &basic_large::var28 },
-		{ "var29", &basic_large::var29 },
-		{ "var30", &basic_large::var30 },
-		{ "var31", &basic_large::var31 },
-		{ "var32", &basic_large::var32 },
-		{ "var33", &basic_large::var33 },
-		{ "var34", &basic_large::var34 },
-		{ "var35", &basic_large::var35 },
-		{ "var36", &basic_large::var36 },
-		{ "var37", &basic_large::var37 },
-		{ "var38", &basic_large::var38 },
-		{ "var39", &basic_large::var39 },
-		{ "var40", &basic_large::var40 },
-		{ "var41", &basic_large::var41 },
-		{ "var42", &basic_large::var42 },
-		{ "var43", &basic_large::var43 },
-		{ "var44", &basic_large::var44 },
-		{ "var45", &basic_large::var45 },
-		{ "var46", &basic_large::var46 },
-		{ "var47", &basic_large::var47 },
-		{ "var48", &basic_large::var48 },
-		{ "var49", &basic_large::var49 }
+	struct basic_binding_base {
+		virtual int indexing(lua_State* L) = 0;
+		virtual int new_indexing(lua_State* L) = 0;
+		virtual ~basic_binding_base() {}
 	};
+
+	template <typename F>
+	struct variable_binding : basic_binding_base {
+		F f;
+		variable_binding(F f) : f(std::move(f)) {}
+
+		virtual int indexing(lua_State* L) override {
+			void* x = lua_touserdata(L, 1);
+			basic_large** pb = static_cast<basic_large**>(x);
+			basic_large& b = **pb;
+			auto value = (b.*f);
+			if (std::is_integral<decltype(value)>::value) {
+				lua_pushinteger(L, static_cast<lua_Integer>(value));
+			}
+			else {
+				lua_pushnumber(L, static_cast<lua_Number>(value));
+			}
+			return 1;
+		}
+
+		virtual int new_indexing(lua_State* L) override {
+			void* x = lua_touserdata(L, 1);
+			basic_large** pb = static_cast<basic_large**>(x);
+			basic_large& b = **pb;
+			typedef std::decay_t<decltype((b.*f))> T;
+			if (std::is_integral<T>::value) {
+				lua_Integer arg1 = lua_tointeger(L, 3);
+				(b.*f) = static_cast<T>(arg1);
+			}
+			else {
+				lua_Number arg1 = lua_tonumber(L, 3);
+				(b.*f) = static_cast<T>(arg1);
+			}
+			return 0;
+		}
+	};
+
+	template <typename Base, typename T, typename... Args>
+	inline std::unique_ptr<Base> make_base_unique(Args&&... args) {
+		return std::make_unique<T>(std::forward<Args>(args)...);
+	}
+
+	inline auto& basic_large_members() {
+		static std::unordered_map<std::string, std::unique_ptr<basic_binding_base>> members = []() {
+			std::unordered_map<std::string, std::unique_ptr<basic_binding_base>> m;
+			m.emplace_hint(m.cend(), "var", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var)>>(&basic_large::var));
+			m.emplace_hint(m.cend(), "var0", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var0)>>(&basic_large::var0));
+			m.emplace_hint(m.cend(), "var1", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var1)>>(&basic_large::var1));
+			m.emplace_hint(m.cend(), "var2", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var2)>>(&basic_large::var2));
+			m.emplace_hint(m.cend(), "var3", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var3)>>(&basic_large::var3));
+			m.emplace_hint(m.cend(), "var4", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var4)>>(&basic_large::var4));
+			m.emplace_hint(m.cend(), "var5", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var5)>>(&basic_large::var5));
+			m.emplace_hint(m.cend(), "var6", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var6)>>(&basic_large::var6));
+			m.emplace_hint(m.cend(), "var7", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var7)>>(&basic_large::var7));
+			m.emplace_hint(m.cend(), "var8", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var8)>>(&basic_large::var8));
+			m.emplace_hint(m.cend(), "var9", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var9)>>(&basic_large::var9));
+			m.emplace_hint(m.cend(), "var10", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var10)>>(&basic_large::var10));
+			m.emplace_hint(m.cend(), "var11", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var11)>>(&basic_large::var11));
+			m.emplace_hint(m.cend(), "var12", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var12)>>(&basic_large::var12));
+			m.emplace_hint(m.cend(), "var13", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var13)>>(&basic_large::var13));
+			m.emplace_hint(m.cend(), "var14", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var14)>>(&basic_large::var14));
+			m.emplace_hint(m.cend(), "var15", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var15)>>(&basic_large::var15));
+			m.emplace_hint(m.cend(), "var16", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var16)>>(&basic_large::var16));
+			m.emplace_hint(m.cend(), "var17", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var17)>>(&basic_large::var17));
+			m.emplace_hint(m.cend(), "var18", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var18)>>(&basic_large::var18));
+			m.emplace_hint(m.cend(), "var19", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var19)>>(&basic_large::var19));
+			m.emplace_hint(m.cend(), "var20", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var20)>>(&basic_large::var20));
+			m.emplace_hint(m.cend(), "var21", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var21)>>(&basic_large::var21));
+			m.emplace_hint(m.cend(), "var22", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var22)>>(&basic_large::var22));
+			m.emplace_hint(m.cend(), "var23", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var23)>>(&basic_large::var23));
+			m.emplace_hint(m.cend(), "var24", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var24)>>(&basic_large::var24));
+			m.emplace_hint(m.cend(), "var25", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var25)>>(&basic_large::var25));
+			m.emplace_hint(m.cend(), "var26", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var26)>>(&basic_large::var26));
+			m.emplace_hint(m.cend(), "var27", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var27)>>(&basic_large::var27));
+			m.emplace_hint(m.cend(), "var28", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var28)>>(&basic_large::var28));
+			m.emplace_hint(m.cend(), "var29", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var29)>>(&basic_large::var29));
+			m.emplace_hint(m.cend(), "var30", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var30)>>(&basic_large::var30));
+			m.emplace_hint(m.cend(), "var31", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var31)>>(&basic_large::var31));
+			m.emplace_hint(m.cend(), "var32", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var32)>>(&basic_large::var32));
+			m.emplace_hint(m.cend(), "var33", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var33)>>(&basic_large::var33));
+			m.emplace_hint(m.cend(), "var34", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var34)>>(&basic_large::var34));
+			m.emplace_hint(m.cend(), "var35", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var35)>>(&basic_large::var35));
+			m.emplace_hint(m.cend(), "var36", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var36)>>(&basic_large::var36));
+			m.emplace_hint(m.cend(), "var37", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var37)>>(&basic_large::var37));
+			m.emplace_hint(m.cend(), "var38", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var38)>>(&basic_large::var38));
+			m.emplace_hint(m.cend(), "var39", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var39)>>(&basic_large::var39));
+			m.emplace_hint(m.cend(), "var40", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var40)>>(&basic_large::var40));
+			m.emplace_hint(m.cend(), "var41", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var41)>>(&basic_large::var41));
+			m.emplace_hint(m.cend(), "var42", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var42)>>(&basic_large::var42));
+			m.emplace_hint(m.cend(), "var43", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var43)>>(&basic_large::var43));
+			m.emplace_hint(m.cend(), "var44", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var44)>>(&basic_large::var44));
+			m.emplace_hint(m.cend(), "var45", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var45)>>(&basic_large::var45));
+			m.emplace_hint(m.cend(), "var46", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var46)>>(&basic_large::var46));
+			m.emplace_hint(m.cend(), "var47", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var47)>>(&basic_large::var47));
+			m.emplace_hint(m.cend(), "var48", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var48)>>(&basic_large::var48));
+			m.emplace_hint(m.cend(), "var49", make_base_unique<basic_binding_base, variable_binding<decltype(&basic_large::var49)>>(&basic_large::var49));
+			return m;
+		}();
+		return members;
+	}
 
 	inline int basic_index_wrap(lua_State* L) {
 		std::size_t sz;
@@ -227,12 +279,10 @@ namespace lb {
 		void* x = lua_touserdata(L, 1);
 		basic_large** pb = static_cast<basic_large**>(x);
 		basic_large& b = **pb;
-		auto it = basic_large_members.find(name);
-		if (it != basic_large_members.cend()) {
-			const auto& bv = it->second;
-			lua_pop(L, 3);
-			lua_pushinteger(L, (b.*bv));
-			return 1;
+		auto it = basic_large_members().find(name);
+		if (it != basic_large_members().cend()) {
+			auto& bv = it->second;
+			return bv->indexing(L);
 		}
 		return 0;
 	}
@@ -248,12 +298,10 @@ namespace lb {
 		basic_large** pb = static_cast<basic_large**>(x);
 		basic_large& b = **pb;
 		int arg1 = static_cast<int>(lua_tointeger(L, 3));
-		auto it = basic_large_members.find(name);
-		if (it != basic_large_members.cend()) {
-			const auto& bv = it->second;
-			int arg1 = static_cast<int>(lua_tointeger(L, 3));
-			(b.*bv) = arg1;
-			return 0;
+		auto it = basic_large_members().find(name);
+		if (it != basic_large_members().cend()) {
+			auto& bv = it->second;
+			return bv->new_indexing(L);
 		}
 		return 0;
 	}
