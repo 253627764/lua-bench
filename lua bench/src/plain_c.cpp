@@ -148,8 +148,8 @@ namespace lb {
 				lua_pushinteger(L, i);
 				lua_pcallk(L, 1, 1, LUA_NOREF, 0, nullptr);
 				int v = static_cast<int>(lua_tointeger(L, -1));
-				x += v;
 				lua_pop(L, 1);
+				x += v;
 			}
 			return x;
 		});

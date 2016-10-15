@@ -114,9 +114,13 @@ class benchmark_result:
 crunch_categories = []
 results = []
 
+print("Starting lua crunch graphers...")
+
 for t in crunch_targets:
 	if not os.path.exists(t[1]):
+		print("Skipping {}, {} does not exist".format(t[0], t[1]))
 		continue
+	print("Crunching {}, from {}".format(t[0], t[1]))
 	b = benchmark_result(t[0], t[1], t[2])
 	results.append(b)
 	for category in b.samples:
@@ -201,7 +205,9 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 	
 	# Ensure tight layout
 	figure.tight_layout()
-	plt.savefig('lua bench graph - ' + category + '.png', format='png')
+	savetarget = 'lua bench graph - ' + category + '.png'
+	print("Crunching {}, from {}".format(t[0], t[1]))
+	plt.savefig(savetarget, format='png')
 	plt.close(figure)
 
 
