@@ -84,8 +84,8 @@ int main(int argc, char* argv[]) {
 	rootcfg.samples = 1;
 	rootcfg.resamples = 1;
 #else
-	rootcfg.samples = 250;
-	rootcfg.resamples = 250;
+	rootcfg.samples = 600;
+	rootcfg.resamples = 600;
 #endif
 
 	if (do_plain_c) {

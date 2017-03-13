@@ -206,7 +206,7 @@ for category_index, category_info in enumerate(sorted(crunch_categories, key=lam
 	# Ensure tight layout
 	figure.tight_layout()
 	savetarget = 'lua bench graph - ' + category + '.png'
-	print("Crunching {}, from {}".format(t[0], t[1]))
+	print("Saving graph: {} (to - '{}')".format(category, savetarget))
 	plt.savefig(savetarget, format='png')
 	plt.close(figure)
 

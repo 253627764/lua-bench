@@ -142,12 +142,11 @@ namespace lb {
 		kaguya::State lua;
 		lua.setErrorHandler(kaguya_panic_throw);
 
-		lua["basic"].setClass<basic>(kaguya::ClassMetatable<basic>()
-			.addConstructor()
-			.addMember("var", &basic::var)
-			.addMemberFunction("get", &basic::get)
-			.addMemberFunction("set", &basic::set)
-			);
+		lua["basic"].setClass<basic>(kaguya::UserdataMetatable<basic>()
+			.setConstructors<basic()>()
+			.addFunction("get", &basic::get)
+			.addFunction("set", &basic::set)
+		);
 		lua("b = basic.new()");
 		auto code = repeated_code("b:set(i) b:get()");
 		meter.measure([&]() {
@@ -203,11 +202,11 @@ namespace lb {
 		lua.setErrorHandler(kaguya_panic_throw);
 
 		lua["complex_ab"].setClass(
-			kaguya::ClassMetatable<complex_ab, kaguya::MultipleBase<complex_base_a, complex_base_b>>()
-			.addConstructor()
-			.addMemberFunction("a_func", &complex_ab::a_func)
-			.addMemberFunction("b_func", &complex_ab::b_func)
-			.addMemberFunction("ab_func", &complex_ab::ab_func)
+			kaguya::UserdataMetatable<complex_ab, kaguya::MultipleBase<complex_base_a, complex_base_b>>()
+			.setConstructors<complex_ab()>()
+			.addFunction("a_func", &complex_ab::a_func)
+			.addFunction("b_func", &complex_ab::b_func)
+			.addFunction("ab_func", &complex_ab::ab_func)
 		);
 		complex_ab ab;
 		// Set and verify correctness
@@ -266,24 +265,24 @@ namespace lb {
 		kaguya::State lua;
 		lua.setErrorHandler(kaguya_panic_throw);
 		lua["complex_base_a"].setClass(
-			kaguya::ClassMetatable<complex_base_a>()
-			.addConstructor()
-			.addMemberFunction("a_func", &complex_base_a::a_func)
-			.addMember("a", &complex_base_a::a)
+			kaguya::UserdataMetatable<complex_base_a>()
+			.setConstructors<complex_base_a()>()
+			.addFunction("a_func", &complex_base_a::a_func)
+			.addFunction("a", &complex_base_a::a)
 		);
 
 		lua["complex_base_b"].setClass(
-			kaguya::ClassMetatable<complex_base_b>()
-			.addConstructor()
-			.addMemberFunction("b_func", &complex_base_b::b_func)
-			.addMember("b", &complex_base_b::b)
+			kaguya::UserdataMetatable<complex_base_b>()
+			.setConstructors<complex_base_b()>()
+			.addFunction("b_func", &complex_base_b::b_func)
+			.addFunction("b", &complex_base_b::b)
 		);
 
 		lua["complex_ab"].setClass(
-			kaguya::ClassMetatable<complex_ab, kaguya::MultipleBase<complex_base_a, complex_base_b>>()
-			.addConstructor()
-			.addMemberFunction("ab_func", &complex_ab::ab_func)
-			.addMember("ab", &complex_ab::ab)
+			kaguya::UserdataMetatable<complex_ab, kaguya::MultipleBase<complex_base_a, complex_base_b>>()
+			.setConstructors<complex_ab()>()
+			.addFunction("ab_func", &complex_ab::ab_func)
+			.addFunction("ab", &complex_ab::ab)
 		);
 
 		lua("b = complex_ab.new()");
